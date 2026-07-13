@@ -4,6 +4,10 @@ import {
   canonicalDevelopmentSnapshot,
   type DevelopmentSnapshot,
 } from "@/src/domain/development/snapshot";
+import {
+  canonicalCommercialSnapshot,
+  type CommercialSnapshot,
+} from "@/src/domain/commercial/snapshot";
 
 export type SearchGroup =
   | "Navigation"
@@ -13,6 +17,16 @@ export type SearchGroup =
   | "Experiments"
   | "Product notes"
   | "Product decisions"
+  | "Suppliers"
+  | "Supplier products"
+  | "Manufacturers"
+  | "Catalog products"
+  | "Quotes"
+  | "Packaging"
+  | "Configurations"
+  | "Documents"
+  | "Cost scenarios"
+  | "Cost snapshots"
   | "Product lines"
   | "Settings"
   | "Documentation";
@@ -44,6 +58,7 @@ export const searchRegistry: readonly SearchEntry[] = [
     keywords: [productLine.slug, productLine.accentTheme],
   })),
   ...developmentSearchEntries(canonicalDevelopmentSnapshot),
+  ...commercialSearchEntries(canonicalCommercialSnapshot),
   {
     id: "settings:formatting",
     label: "Formatting defaults",
@@ -78,6 +93,109 @@ export const searchRegistry: readonly SearchEntry[] = [
     keywords: ["ADR", "decisions", "architecture"],
   },
 ];
+
+export function commercialSearchEntries(
+  snapshot: CommercialSnapshot,
+): SearchEntry[] {
+  const map = <T extends { id: string }>(
+    rows: readonly T[],
+    group: SearchGroup,
+    prefix: string,
+    label: (row: T) => string,
+    description: (row: T) => string,
+    href: (row: T) => string,
+  ) =>
+    rows.map((row) => ({
+      id: `${prefix}:${row.id}`,
+      label: label(row),
+      description: description(row),
+      href: href(row),
+      group,
+      keywords: [description(row)],
+    }));
+  return [
+    ...map(
+      snapshot.suppliers,
+      "Suppliers",
+      "supplier",
+      (r) => r.name,
+      (r) => `${r.supplierType} · ${r.status}`,
+      (r) => `/suppliers/${r.id}`,
+    ),
+    ...map(
+      snapshot.supplierProducts,
+      "Supplier products",
+      "supplier-product",
+      (r) => r.name,
+      (r) => `${r.status} · ${r.availabilityStatus}`,
+      () => "/modules/suppliers",
+    ),
+    ...map(
+      snapshot.manufacturers,
+      "Manufacturers",
+      "manufacturer",
+      (r) => r.name,
+      (r) => `${r.manufacturerType} · ${r.status}`,
+      (r) => `/manufacturers/${r.id}`,
+    ),
+    ...map(
+      snapshot.catalogProducts,
+      "Catalog products",
+      "catalog",
+      (r) => r.name,
+      (r) => r.status,
+      () => "/modules/manufacturers",
+    ),
+    ...map(
+      snapshot.quotes,
+      "Quotes",
+      "quote",
+      (r) => r.quoteNumber,
+      (r) => `${r.currency} · ${r.quoteStatus}`,
+      () => "/modules/manufacturers",
+    ),
+    ...map(
+      snapshot.packaging,
+      "Packaging",
+      "packaging",
+      (r) => r.name,
+      (r) => r.componentType,
+      (r) => `/packaging/${r.id}`,
+    ),
+    ...map(
+      snapshot.configurations,
+      "Configurations",
+      "configuration",
+      (r) => r.name,
+      (r) => `${r.fillSize} ${r.fillSizeUnit}`,
+      (r) => `/configurations/${r.id}`,
+    ),
+    ...map(
+      snapshot.documents,
+      "Documents",
+      "document",
+      (r) => r.title,
+      (r) => `${r.documentType} · ${r.status}`,
+      (r) => `/documents/${r.id}`,
+    ),
+    ...map(
+      snapshot.scenarios,
+      "Cost scenarios",
+      "scenario",
+      (r) => r.name,
+      (r) => r.description ?? "Saved cost scenario",
+      () => "/modules/costing",
+    ),
+    ...map(
+      snapshot.snapshots,
+      "Cost snapshots",
+      "snapshot",
+      (r) => `Cost snapshot · ${r.calculatedAt.toLocaleDateString()}`,
+      (r) => `${r.fullyLoadedCogsPerUnit} per unit`,
+      () => "/modules/costing",
+    ),
+  ];
+}
 
 export function developmentSearchEntries(
   snapshot: DevelopmentSnapshot,

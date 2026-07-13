@@ -80,13 +80,17 @@ Run every command that exists and applies: migrations or migration checks, fixtu
 
 Record commands and exact results in `BUILD_STATUS.md`. Fix errors introduced by the active work. Do not advance with failing required validation.
 
-## Replit and environment
+## Vercel and environment
 
 - Keep setup reproducible from repository files and standard commands; do not rely on local-only paths or uncommitted global tools.
-- Bind the web server to `0.0.0.0` and respect the provided `PORT` when an application exists.
 - Keep secrets in environment variables, document them in `.env.example`, and never commit credentials.
-- Use PostgreSQL through a single `DATABASE_URL`; make migrations explicit and safe.
-- A Replit runtime check is required before a feature phase is complete. Lack of Replit configuration must be reported, not guessed around.
+- Vercel is the official hosting platform. Keep the single root Next.js application compatible with normal Vercel framework detection.
+- Use PostgreSQL through one environment-scoped `DATABASE_URL`; use a serverless-compatible pooled URL where the provider offers one.
+- Never run migrations or seeds as part of `pnpm build` or every deployment. Database release commands are explicit, reviewed operations.
+- Preview and Production must use different database credentials. Preview writes are disabled by default.
+- Never use the Vercel Function filesystem as persistent storage. Private documents require authenticated external object storage behind the repository interface.
+- Production data access remains disabled until the separate Private Beta authentication gate is implemented and verified.
+- Vercel runtime and protected Preview checks replace the historical Replit acceptance requirement.
 
 ## Git restrictions
 
@@ -96,4 +100,4 @@ Record commands and exact results in `BUILD_STATUS.md`. Fix errors introduced by
 
 ## Reporting contract
 
-Every major handoff reports: scope completed; files changed; work preserved; architecture/data decisions; migrations; validation commands and results; accessibility/responsive coverage; Replit result; known issues and blockers; Git status; and the single recommended next action. Claims must be evidence-based.
+Every major handoff reports: scope completed; files changed; work preserved; architecture/data decisions; migrations; validation commands and results; accessibility/responsive coverage; Vercel result; known issues and blockers; Git status; and the single recommended next action. Claims must be evidence-based.

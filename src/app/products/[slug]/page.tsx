@@ -10,6 +10,7 @@ import { DecisionJournal } from "@/src/presentation/development/decision-journal
 import { ProductControls } from "@/src/presentation/development/product-controls";
 import { ProductMemoryForms } from "@/src/presentation/development/product-memory-forms";
 import { loadDevelopmentSnapshot } from "@/src/services/development/load-development";
+import { loadCommercialSnapshot } from "@/src/services/commercial/load-commercial";
 
 const tabs = [
   "Overview",
@@ -33,7 +34,10 @@ export default async function ProductPage({
   params: Promise<{ slug: string }>;
 }) {
   const { slug } = await params;
-  const snapshot = await loadDevelopmentSnapshot();
+  const [snapshot, commercial] = await Promise.all([
+    loadDevelopmentSnapshot(),
+    loadCommercialSnapshot(),
+  ]);
   const product = snapshot.products.find((item) => item.slug === slug);
   if (!product) notFound();
   const formulas = snapshot.formulas.filter(
@@ -105,6 +109,8 @@ export default async function ProductPage({
             "Development",
             "Formulas",
             "Ingredients",
+            "Sourcing",
+            "Documents",
             "Decisions",
           ].includes(tab);
           return (
@@ -357,13 +363,83 @@ export default async function ProductPage({
         />
       </section>
 
+      <section id="sourcing" className="workspace-section">
+        <div className="section-heading compact-heading">
+          <p className="eyebrow">Commercial workspace</p>
+          <h2>Sourcing, configuration, costing, and readiness</h2>
+        </div>
+        <dl className="fact-list">
+          <div>
+            <dt>Supplier options</dt>
+            <dd>
+              {
+                commercial.supplierProducts.filter((r) =>
+                  usedIngredients.some((i) => i.id === r.ingredientId),
+                ).length
+              }
+            </dd>
+          </div>
+          <div>
+            <dt>Manufacturer candidates</dt>
+            <dd>
+              {
+                commercial.candidates.filter((r) => r.productId === product.id)
+                  .length
+              }
+            </dd>
+          </div>
+          <div>
+            <dt>Finished configurations</dt>
+            <dd>
+              {
+                commercial.configurations.filter(
+                  (r) => r.productId === product.id,
+                ).length
+              }
+            </dd>
+          </div>
+          <div>
+            <dt>Cost snapshots</dt>
+            <dd>
+              {
+                commercial.snapshots.filter((r) =>
+                  commercial.configurations.some(
+                    (c) =>
+                      c.productId === product.id &&
+                      c.id === r.finishedProductConfigurationId,
+                  ),
+                ).length
+              }
+            </dd>
+          </div>
+        </dl>
+        <p>
+          {product.developmentPath === "custom_formula"
+            ? "Supplier coverage is evaluated against formula ingredients."
+            : "A manufacturer candidate is required; an internal formula is not."}
+        </p>
+      </section>
+      <section id="documents" className="workspace-section">
+        <div className="section-heading compact-heading">
+          <p className="eyebrow">Documents</p>
+          <h2>Linked commercial evidence</h2>
+        </div>
+        <p>
+          {commercial.documentLinks.filter(
+            (r) => r.entityType === "product" && r.entityId === product.id,
+          ).length
+            ? "Linked document metadata is available in the Document Vault."
+            : "No documents linked. Missing evidence remains explicit."}
+        </p>
+      </section>
+
       <section id="future-phases" className="workspace-section phase-boundary">
         <p className="eyebrow">Protected future scope</p>
-        <h2>Sourcing through Market remain phase-aware.</h2>
+        <h2>Inventory through Market remain phase-aware.</h2>
         <p>
-          Those tabs are permanent orientation points, but Phase 02 does not
-          create suppliers, inventory, production consumption, quality,
-          launches, market data, or fake controls.
+          Those tabs are permanent orientation points, but Phase 03 does not
+          create inventory, production consumption, quality, launches, market
+          data, or fake controls.
         </p>
       </section>
     </div>

@@ -4,9 +4,14 @@ import Link from "next/link";
 import type { Route } from "next";
 import { useEffect, useMemo, useRef, useState } from "react";
 
-import { searchEntries, type SearchGroup } from "@/src/search/search-registry";
+import {
+  commercialSearchEntries,
+  searchEntries,
+  type SearchGroup,
+} from "@/src/search/search-registry";
 import { developmentSearchEntries } from "@/src/search/search-registry";
 import type { DevelopmentSnapshot } from "@/src/domain/development/snapshot";
+import type { CommercialSnapshot } from "@/src/domain/commercial/snapshot";
 
 const groupOrder: readonly SearchGroup[] = [
   "Navigation",
@@ -16,6 +21,16 @@ const groupOrder: readonly SearchGroup[] = [
   "Experiments",
   "Product notes",
   "Product decisions",
+  "Suppliers",
+  "Supplier products",
+  "Manufacturers",
+  "Catalog products",
+  "Quotes",
+  "Packaging",
+  "Configurations",
+  "Documents",
+  "Cost scenarios",
+  "Cost snapshots",
   "Product lines",
   "Settings",
   "Documentation",
@@ -63,9 +78,20 @@ export function SearchDialog({
 
   useEffect(() => {
     if (!open) return;
-    fetch("/api/development")
-      .then(async (response) => (await response.json()) as DevelopmentSnapshot)
-      .then((snapshot) => setLiveEntries(developmentSearchEntries(snapshot)))
+    Promise.all([
+      fetch("/api/development").then(
+        async (response) => (await response.json()) as DevelopmentSnapshot,
+      ),
+      fetch("/api/commercial").then(
+        async (response) => (await response.json()) as CommercialSnapshot,
+      ),
+    ])
+      .then(([development, commercial]) =>
+        setLiveEntries([
+          ...developmentSearchEntries(development),
+          ...commercialSearchEntries(commercial),
+        ]),
+      )
       .catch(() => setLiveEntries([]));
   }, [open]);
 

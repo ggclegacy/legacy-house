@@ -1,12 +1,16 @@
 import { createProductLineInput } from "@/src/domain/product-lines/product-line";
 import { productLineSeedDefinitions } from "@/src/domain/product-lines/product-line-seeds";
-import { createDatabase } from "@/src/infrastructure/database/client";
+import {
+  createDatabase,
+  getRuntimeDatabaseUrl,
+} from "@/src/infrastructure/database/client";
+import { runtimeMutationDeniedResponse } from "@/src/config/runtime-policy";
 import { createDrizzleProductLineRepository } from "@/src/infrastructure/repositories/drizzle-product-line-repository";
 
 export const dynamic = "force-dynamic";
 
 export async function GET() {
-  const url = process.env.DATABASE_URL;
+  const url = getRuntimeDatabaseUrl();
   if (!url) {
     return Response.json({
       productLines: productLineSeedDefinitions,
@@ -31,6 +35,8 @@ export async function GET() {
 }
 
 export async function POST(request: Request) {
+  const denied = runtimeMutationDeniedResponse();
+  if (denied) return denied;
   const parsed = createProductLineInput.safeParse(
     await request.json().catch(() => null),
   );
@@ -44,7 +50,7 @@ export async function POST(request: Request) {
     );
   }
 
-  const url = process.env.DATABASE_URL;
+  const url = getRuntimeDatabaseUrl();
   if (!url) {
     return Response.json(
       {

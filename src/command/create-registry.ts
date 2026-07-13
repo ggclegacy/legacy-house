@@ -9,7 +9,16 @@ export interface CreateAction {
     | "ingredient"
     | "experiment"
     | "product-note"
-    | "product-decision";
+    | "product-decision"
+    | "supplier"
+    | "supplier-product"
+    | "manufacturer"
+    | "catalog-product"
+    | "quote"
+    | "packaging"
+    | "finished-configuration"
+    | "document"
+    | "cost-scenario";
 }
 
 export const createActionRegistry = [
@@ -58,5 +67,59 @@ export const createActionRegistry = [
     label: "New Product Decision",
     description: "Record a founder decision and its reason.",
     kind: "product-decision",
+  },
+  {
+    id: "supplier",
+    label: "New Supplier",
+    description: "Register an entered supplier without implying approval.",
+    kind: "supplier",
+  },
+  {
+    id: "supplier-product",
+    label: "New Supplier Product",
+    description: "Link a real supplier offer to one master ingredient.",
+    kind: "supplier-product",
+  },
+  {
+    id: "manufacturer",
+    label: "New Manufacturer",
+    description: "Register a manufacturer or white-label partner.",
+    kind: "manufacturer",
+  },
+  {
+    id: "catalog-product",
+    label: "New Catalog Product",
+    description: "Capture only manufacturer-supplied catalog facts.",
+    kind: "catalog-product",
+  },
+  {
+    id: "quote",
+    label: "New Quote",
+    description: "Preserve an identified manufacturer quote and its currency.",
+    kind: "quote",
+  },
+  {
+    id: "packaging",
+    label: "New Packaging Component",
+    description: "Register an actual component; price remains optional.",
+    kind: "packaging",
+  },
+  {
+    id: "finished-configuration",
+    label: "New Finished Configuration",
+    description: "Connect a product to a formula version or catalog product.",
+    kind: "finished-configuration",
+  },
+  {
+    id: "document",
+    label: "New Document Metadata",
+    description: "Register stored-object metadata after a real upload exists.",
+    kind: "document",
+  },
+  {
+    id: "cost-scenario",
+    label: "New Cost Scenario",
+    description: "Save non-destructive assumptions for a configuration.",
+    kind: "cost-scenario",
   },
 ] as const satisfies readonly CreateAction[];

@@ -19,7 +19,8 @@ export function LegacyHouseMark({
       alt={decorative ? "" : "Legacy House emblem"}
       width={size}
       height={size}
-      priority={priority}
+      preload={priority}
+      loading="eager"
       unoptimized
       className={className}
     />

@@ -1,6 +1,6 @@
 # Phase 1 — Foundation and Design System
 
-> **Implementation status (2026-07-13):** Implemented and locally validated. Final phase acceptance remains blocked on running the migration/seed against an actual supplied PostgreSQL service and validating a hosted Replit workspace. Phase 2 has not begun.
+> **Implementation status (2026-07-13):** Implemented and locally validated. The original Replit target was superseded by Vercel after Phase 03; external PostgreSQL and protected hosted acceptance remain outstanding historical evidence.
 
 ## Objective and dependencies
 
@@ -12,7 +12,7 @@ Create one reproducible, accessible application foundation on which every later 
 - Establish modular boundaries, environment validation, PostgreSQL connection, one migration workflow, health/readiness behavior, structured errors/logging, and initial authorization/audit interfaces.
 - Implement responsive application shell and the official `logo.png` hero with CREATE/BUILD/CONTROL/SCALE relationships, accessible static meaning, and reduced-motion support.
 - Define design tokens, typography, spacing, focus, form, status, table/mobile, dialog, feedback, empty/error/loading states, and product-line theming.
-- Add lint, formatting, type-check, unit/integration/browser tests, production build, CI baseline, `.env.example`, and Replit run configuration.
+- Add lint, formatting, type-check, unit/integration/browser tests, production build, CI baseline, `.env.example`, and reproducible hosting configuration.
 
 ## Initial data and service boundaries
 
@@ -30,7 +30,7 @@ Branded home/orientation hero; responsive authenticated shell/navigation; signed
 - Environment failure/success, database health, authorization deny-by-default, and audit envelope tests.
 - Keyboard navigation, focus management, semantic landmarks, contrast, reduced motion, zoom/reflow, and mobile-to-large-desktop layouts.
 - Logo source hash remains unchanged; hero static and reduced-motion states remain understandable.
-- Lint, strict type-check, test suites, production build, secret scan, Replit host/`PORT` smoke test.
+- Lint, strict type-check, test suites, production build, secret scan, and hosted runtime smoke test.
 
 ## Acceptance criteria
 
@@ -41,4 +41,4 @@ Branded home/orientation hero; responsive authenticated shell/navigation; signed
 
 ## Non-goals and stop conditions
 
-No product pipeline, formulas, vendors, stock, production, quality, commerce, forecasts, or fabricated data. Stop after foundation acceptance; also stop for unresolved identity/runtime choices, unsafe Git reconciliation, migration risk, inaccessible brand implementation, failing checks, or missing Replit proof. Recommend Phase 2 but do not begin it.
+No product pipeline, formulas, vendors, stock, production, quality, commerce, forecasts, or fabricated data. Stop after foundation acceptance; also stop for unresolved identity/runtime choices, unsafe Git reconciliation, migration risk, inaccessible brand implementation, failing checks, or missing hosted-runtime proof. Recommend Phase 2 but do not begin it.

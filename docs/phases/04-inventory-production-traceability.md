@@ -24,7 +24,7 @@ Double-submit/idempotency and concurrency; ledger sum and linked reversal; incom
 
 ## Acceptance criteria
 
-Every balance is explainable by transactions; every correction retains history; users can receive known goods, plan and record production, distinguish plan/actual and complete/released, and traverse full lot genealogy. No ineligible inventory appears available. Migrations, tests, build, responsive/accessibility, and Replit checks pass.
+Every balance is explainable by transactions; every correction retains history; users can receive known goods, plan and record production, distinguish plan/actual and complete/released, and traverse full lot genealogy. No ineligible inventory appears available. Migrations, tests, build, responsive/accessibility, and protected Vercel checks pass.
 
 ## Non-goals and stop conditions
 

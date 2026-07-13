@@ -8,7 +8,10 @@ const schemaInspectionUrl =
 
 export default defineConfig({
   dialect: "postgresql",
-  schema: "./src/infrastructure/database/schema.ts",
+  schema: [
+    "./src/infrastructure/database/schema.ts",
+    "./src/infrastructure/database/commercial-schema.ts",
+  ],
   out: "./drizzle",
   dbCredentials: { url: schemaInspectionUrl },
   strict: true,

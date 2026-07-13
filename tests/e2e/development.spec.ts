@@ -88,10 +88,10 @@ test("expands Command and global search with real Phase 02 definitions", async (
 }) => {
   await page.goto("/");
   await expect(
-    page.getByRole("heading", { name: "Product development command" }),
+    page.getByRole("heading", { name: "Product Build Workspace" }),
   ).toBeVisible();
   await expect(
-    page.getByRole("button", { name: "Create Product" }),
+    page.getByRole("button", { name: /Custom Formula/ }),
   ).toBeVisible();
   await page.keyboard.press("Control+k");
   const search = page.getByRole("textbox", { name: "Search destinations" });

@@ -1,8 +1,14 @@
 import { developmentActionSchema } from "@/src/domain/development/actions";
-import { createDatabase } from "@/src/infrastructure/database/client";
+import {
+  createDatabase,
+  getRuntimeDatabaseUrl,
+} from "@/src/infrastructure/database/client";
 import { createDrizzleDevelopmentRepository } from "@/src/infrastructure/repositories/drizzle-development-repository";
+import { runtimeMutationDeniedResponse } from "@/src/config/runtime-policy";
 
 export async function POST(request: Request) {
+  const denied = runtimeMutationDeniedResponse();
+  if (denied) return denied;
   const parsed = developmentActionSchema.safeParse(
     await request.json().catch(() => null),
   );
@@ -14,7 +20,7 @@ export async function POST(request: Request) {
       },
       { status: 400 },
     );
-  const url = process.env.DATABASE_URL;
+  const url = getRuntimeDatabaseUrl();
   if (!url)
     return Response.json(
       {

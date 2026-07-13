@@ -29,3 +29,7 @@ Users can evaluate sourced options using only entered/sourced facts, see unknown
 ## Non-goals and stop conditions
 
 No vendor portal, payments/accounting, purchase-order posting, stock, production, quality conclusions, Shopify, live exchange-rate dependency, or invented business records. Stop when authoritative commercial facts are absent, normalization would hide uncertainty, snapshot history is mutable, checks fail, or acceptance is met. Recommend Phase 4 only.
+
+## Implementation record
+
+Implemented in migration `0003_happy_marrow.sql` with a separate commercial schema module, centralized fixed-decimal unit/cost/readiness services, a typed database repository and commands, Phase 03 workspaces/detail routes, registry-backed search/create, settings, and an unavailable-by-default object-storage adapter. The only approved commercial seed is the Legacy Reserve Hair & Beard Oil 2 oz configuration. External PostgreSQL, private object storage, and protected Vercel Preview acceptance remain environment blockers; no Phase 04 model or workflow was started.

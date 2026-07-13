@@ -24,7 +24,7 @@ Official API contract fixtures; token-scope enforcement; signature validation; p
 
 ## Acceptance criteria
 
-Launch status is evidence-based; released product readiness can be reviewed without bypassing controls; authorized users can sync and reconcile read-only Shopify facts; metrics state definition, period, freshness, currency and lineage. Failure is recoverable and observable. All validation and Replit integration checks pass.
+Launch status is evidence-based; released product readiness can be reviewed without bypassing controls; authorized users can sync and reconcile read-only Shopify facts; metrics state definition, period, freshness, currency and lineage. Failure is recoverable and observable. All validation and Vercel integration checks pass.
 
 ## Non-goals and stop conditions
 

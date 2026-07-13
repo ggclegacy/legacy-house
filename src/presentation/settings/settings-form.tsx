@@ -225,6 +225,123 @@ function SettingsEditor({
 
         <section
           className="settings-section"
+          id="commercial"
+          aria-labelledby="commercial-settings-title"
+        >
+          <div className="settings-section-heading">
+            <p className="card-eyebrow">Commercial defaults</p>
+            <h2 id="commercial-settings-title">
+              Sourcing and costing thresholds
+            </h2>
+            <p>
+              Unknown monetary assumptions remain blank; only timing and display
+              defaults are initialized.
+            </p>
+          </div>
+          <div className="settings-fields">
+            <label>
+              <span>Supplier price stale after days</span>
+              <input
+                type="number"
+                min="1"
+                value={draft.supplierPriceStaleDays}
+                onChange={(e) =>
+                  setField("supplierPriceStaleDays", Number(e.target.value))
+                }
+              />
+            </label>
+            <label>
+              <span>Document expiring threshold days</span>
+              <input
+                type="number"
+                min="1"
+                value={draft.documentExpiringDays}
+                onChange={(e) =>
+                  setField("documentExpiringDays", Number(e.target.value))
+                }
+              />
+            </label>
+            <label>
+              <span>Default labor hourly rate</span>
+              <input
+                inputMode="decimal"
+                value={draft.defaultLaborHourlyRate ?? ""}
+                placeholder="Not entered"
+                onChange={(e) =>
+                  setField("defaultLaborHourlyRate", e.target.value || null)
+                }
+              />
+            </label>
+            <label>
+              <span>Default processing percentage</span>
+              <input
+                inputMode="decimal"
+                value={draft.defaultPaymentProcessingPercent ?? ""}
+                placeholder="Not entered"
+                onChange={(e) =>
+                  setField(
+                    "defaultPaymentProcessingPercent",
+                    e.target.value || null,
+                  )
+                }
+              />
+            </label>
+            <label>
+              <span>Default fixed processing fee</span>
+              <input
+                inputMode="decimal"
+                value={draft.defaultFixedProcessingFee ?? ""}
+                placeholder="Not entered"
+                onChange={(e) =>
+                  setField("defaultFixedProcessingFee", e.target.value || null)
+                }
+              />
+            </label>
+            <label>
+              <span>Target retail margin percentage</span>
+              <input
+                inputMode="decimal"
+                value={draft.defaultTargetRetailMargin ?? ""}
+                placeholder="Not entered"
+                onChange={(e) =>
+                  setField("defaultTargetRetailMargin", e.target.value || null)
+                }
+              />
+            </label>
+            <label>
+              <span>Target wholesale margin percentage</span>
+              <input
+                inputMode="decimal"
+                value={draft.defaultTargetWholesaleMargin ?? ""}
+                placeholder="Not entered"
+                onChange={(e) =>
+                  setField(
+                    "defaultTargetWholesaleMargin",
+                    e.target.value || null,
+                  )
+                }
+              />
+            </label>
+            <label>
+              <span>Cost display precision</span>
+              <select
+                value={draft.costDisplayPrecision}
+                onChange={(e) =>
+                  setField("costDisplayPrecision", Number(e.target.value))
+                }
+              >
+                {[0, 1, 2, 3, 4, 5, 6].map((v) => (
+                  <option key={v} value={v}>
+                    {v} decimal places
+                  </option>
+                ))}
+              </select>
+            </label>
+          </div>
+        </section>
+
+        <section
+          className="settings-section"
           id="experience"
           aria-labelledby="experience-title"
         >

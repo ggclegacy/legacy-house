@@ -6,6 +6,7 @@ import { asRoute } from "@/src/navigation/as-route";
 import { PersistenceBanner } from "@/src/presentation/development/persistence-banner";
 import { IngredientControls } from "@/src/presentation/development/ingredient-controls";
 import { loadDevelopmentSnapshot } from "@/src/services/development/load-development";
+import { loadCommercialSnapshot } from "@/src/services/commercial/load-commercial";
 
 export default async function IngredientPage({
   params,
@@ -13,7 +14,10 @@ export default async function IngredientPage({
   params: Promise<{ id: string }>;
 }) {
   const { id } = await params;
-  const snapshot = await loadDevelopmentSnapshot();
+  const [snapshot, commercial] = await Promise.all([
+    loadDevelopmentSnapshot(),
+    loadCommercialSnapshot(),
+  ]);
   const ingredient = snapshot.ingredients.find((item) => item.id === id);
   if (!ingredient) notFound();
   const formulas = snapshot.formulas.filter((formula) =>
@@ -151,13 +155,41 @@ export default async function IngredientPage({
           ))}
         </div>
       </section>
-      <section className="workspace-section phase-boundary">
-        <p className="eyebrow">Future supplier area · Phase 03</p>
-        <h2>No supplier facts have been added.</h2>
-        <p>
-          Supplier relationships, specifications, prices, and certifications
-          remain protected Phase 03 scope.
-        </p>
+      <section className="workspace-section">
+        <p className="eyebrow">Supplier options · Phase 03</p>
+        <h2>Entered products and price history</h2>
+        {commercial.supplierProducts.filter(
+          (r) => r.ingredientId === ingredient.id,
+        ).length ? (
+          <div className="record-grid">
+            {commercial.supplierProducts
+              .filter((r) => r.ingredientId === ingredient.id)
+              .map((r) => (
+                <article key={r.id}>
+                  <h3>{r.name}</h3>
+                  <p>
+                    {r.status.replaceAll("_", " ")} ·{" "}
+                    {r.landedCost
+                      ? `${r.currency ?? "Currency unknown"} ${r.landedCost} landed`
+                      : "Price not entered"}
+                  </p>
+                  <p>
+                    {
+                      commercial.supplierPrices.filter(
+                        (p) => p.supplierProductId === r.id,
+                      ).length
+                    }{" "}
+                    historical price record(s)
+                  </p>
+                </article>
+              ))}
+          </div>
+        ) : (
+          <p>
+            No supplier option has been entered. Supplier facts are not
+            inferred.
+          </p>
+        )}
       </section>
     </div>
   );

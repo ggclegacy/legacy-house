@@ -9,6 +9,7 @@ import { BatchCalculator } from "@/src/presentation/development/batch-calculator
 import { FormulaControls } from "@/src/presentation/development/formula-controls";
 import { PersistenceBanner } from "@/src/presentation/development/persistence-banner";
 import { loadDevelopmentSnapshot } from "@/src/services/development/load-development";
+import { loadCommercialSnapshot } from "@/src/services/commercial/load-commercial";
 
 export default async function FormulaPage({
   params,
@@ -16,7 +17,10 @@ export default async function FormulaPage({
   params: Promise<{ id: string }>;
 }) {
   const { id } = await params;
-  const snapshot = await loadDevelopmentSnapshot();
+  const [snapshot, commercial] = await Promise.all([
+    loadDevelopmentSnapshot(),
+    loadCommercialSnapshot(),
+  ]);
   const formula = snapshot.formulas.find((item) => item.versionId === id);
   if (!formula) notFound();
   const versions = snapshot.formulas.filter(
@@ -88,6 +92,7 @@ export default async function FormulaPage({
         <a href="#production-steps">Production Steps</a>
         <a href="#version-history">Version History</a>
         <a href="#experiments">Experiments</a>
+        <a href="#supplier-selections">Supplier Selections</a>
         <a href="#notes">Notes</a>
       </nav>
       <section id="composition" className="workspace-section">
@@ -256,6 +261,45 @@ export default async function FormulaPage({
         <p>
           A dedicated version-note record was not authorized in the Phase 02
           database contract; no duplicate note system was invented.
+        </p>
+      </section>
+      <section id="supplier-selections" className="workspace-section">
+        <div className="section-heading compact-heading">
+          <p className="eyebrow">Formula sourcing</p>
+          <h2>Supplier selections and cost blockers</h2>
+        </div>
+        <div className="record-grid">
+          {formula.ingredients.map((line) => {
+            const choices = commercial.supplierProducts.filter(
+              (r) => r.ingredientId === line.ingredientId,
+            );
+            const selection = commercial.supplierSelections.find(
+              (r) => r.formulaIngredientId === line.id && r.preferred,
+            );
+            return (
+              <article key={line.id}>
+                <h3>{line.ingredientName}</h3>
+                <p>
+                  Preferred:{" "}
+                  {selection
+                    ? (choices.find((r) => r.id === selection.supplierProductId)
+                        ?.name ?? "Linked product unavailable")
+                    : "Not selected"}
+                </p>
+                <p>
+                  {choices.length} supplier option
+                  {choices.length === 1 ? "" : "s"} ·{" "}
+                  {line.densityGramsPerMl
+                    ? "Density entered"
+                    : "Density unknown"}
+                </p>
+              </article>
+            );
+          })}
+        </div>
+        <p>
+          No consumed formula cost is reported until every required supplier
+          price and compatible unit conversion is available.
         </p>
       </section>
     </div>

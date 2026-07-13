@@ -7,13 +7,14 @@
     "node": ">=24.0.0"
   },
   "scripts": {
-    "dev": "node scripts/run-next.mjs dev",
+    "dev": "next dev",
     "build": "next build",
-    "start": "node scripts/run-next.mjs start",
+    "start": "next start",
     "lint": "eslint .",
     "format": "prettier --write .",
     "format:check": "prettier --check .",
     "typecheck": "tsc --noEmit",
+    "type-check": "pnpm typecheck",
     "test": "vitest run",
     "test:coverage": "vitest run --coverage",
     "test:e2e": "playwright test",

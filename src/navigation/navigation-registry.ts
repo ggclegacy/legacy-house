@@ -70,6 +70,24 @@ export const navigationDestinations = [
     phase: 3,
   },
   {
+    id: "packaging",
+    label: "Packaging",
+    href: "/modules/packaging",
+    group: "Build",
+    summary:
+      "Components, price history, compatibility, and finished configurations.",
+    phase: 3,
+  },
+  {
+    id: "costing",
+    label: "Costing",
+    href: "/modules/costing",
+    group: "Build",
+    summary:
+      "Traceable COGS, pricing margins, scenarios, and immutable snapshots.",
+    phase: 3,
+  },
+  {
     id: "inventory",
     label: "Inventory",
     href: "/modules/inventory",

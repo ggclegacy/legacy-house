@@ -10,6 +10,8 @@ import { PersistenceBanner } from "@/src/presentation/development/persistence-ba
 import { ProductPipelineView } from "@/src/presentation/development/product-pipeline-view";
 import { RndLabView } from "@/src/presentation/development/rnd-lab-view";
 import { loadDevelopmentSnapshot } from "@/src/services/development/load-development";
+import { CommercialHub } from "@/src/presentation/commercial/commercial-hub";
+import { loadCommercialSnapshot } from "@/src/services/commercial/load-commercial";
 
 export function generateStaticParams() {
   return navigationDestinations
@@ -69,7 +71,39 @@ export default async function ModuleDestinationPage({
     );
   }
 
-  const isDocuments = destination.id === "documents";
+  if (
+    [
+      "suppliers",
+      "manufacturers",
+      "packaging",
+      "costing",
+      "documents",
+    ].includes(destination.id)
+  ) {
+    const snapshot = await loadCommercialSnapshot();
+    return (
+      <div className="destination-page commercial-page">
+        <header className="destination-header">
+          <p className="eyebrow">Build · Phase 03</p>
+          <h1>{destination.label}</h1>
+          <p>{destination.summary}</p>
+        </header>
+        <PersistenceBanner persistence={snapshot.persistence} />
+        <CommercialHub
+          area={
+            destination.id as
+              | "suppliers"
+              | "manufacturers"
+              | "packaging"
+              | "costing"
+              | "documents"
+          }
+          snapshot={snapshot}
+        />
+      </div>
+    );
+  }
+
   return (
     <div className="destination-page">
       <header className="destination-header">
@@ -91,35 +125,6 @@ export default async function ModuleDestinationPage({
           placeholder records or pretend those controls exist.
         </p>
       </section>
-      {isDocuments ? (
-        <section className="document-map" aria-labelledby="document-map-title">
-          <p className="card-eyebrow">Repository operating system</p>
-          <h2 id="document-map-title">Authoritative project records</h2>
-          <div>
-            <article id="build-status">
-              <strong>BUILD_STATUS.md</strong>
-              <p>
-                Evidence-backed current phase, validation, limitations, and next
-                action.
-              </p>
-            </article>
-            <article id="architecture">
-              <strong>ARCHITECTURE_DECISIONS.md</strong>
-              <p>Durable architecture and data-integrity decisions.</p>
-            </article>
-            <article>
-              <strong>docs/MASTER_BUILD_PLAN.md</strong>
-              <p>Dependency-ordered product roadmap and stop conditions.</p>
-            </article>
-            <article>
-              <strong>docs/BRAND_SYSTEM.md</strong>
-              <p>
-                Permanent visual, motion, component, and accessibility rules.
-              </p>
-            </article>
-          </div>
-        </section>
-      ) : null}
       <section className="module-readiness" aria-labelledby="readiness-title">
         <p className="card-eyebrow">Current readiness</p>
         <h2 id="readiness-title">Foundation established</h2>

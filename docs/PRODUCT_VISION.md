@@ -77,5 +77,5 @@ Legacy House should eventually explain what is true, what changed, what needs at
 - A user can trace an active product from brief and development path through its sourced decisions, approved records, production/quality history, launch, and measured outcomes.
 - Controlled history is reproducible: formula, lot, transaction, cost, evidence, decision, and status changes are attributable and not silently rewritten.
 - Users see unknowns and exceptions clearly and can distinguish actual, quoted, estimated, calculated, and forecast data.
-- Critical workflows work accessibly across mobile and desktop and are deployable reproducibly on Replit.
+- Critical workflows work accessibly across mobile and desktop and are deployable reproducibly on Vercel with isolated environments and fail-closed data access.
 - The system reduces duplicate records and manual reconciliation while improving readiness, risk visibility, and decision speed.

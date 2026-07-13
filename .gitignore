@@ -5,10 +5,10 @@
 node_modules/
 .pnpm-store/
 .next/
+.vercel/
 dist/
 coverage/
 playwright-report/
 test-results/
 *.tsbuildinfo
 *.log
-

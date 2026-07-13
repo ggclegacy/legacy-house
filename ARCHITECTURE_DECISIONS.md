@@ -164,7 +164,7 @@ This is a compact decision log. Decisions are immutable records: supersede them 
 
 ## ADR-021 — Replit uses the same root app and explicit release sequence
 
-- **Status:** Accepted
+- **Status:** Superseded by ADR-037
 - **Date:** 2026-07-13
 - **Decision:** Replit runs the single root application on `0.0.0.0` and the supplied `PORT`. Deployment installs/builds, then migrates, idempotently seeds authorized foundation records, and starts the production server.
 - **Reason:** One runtime path avoids a Replit-only duplicate app and makes database preparation visible.
@@ -225,3 +225,123 @@ This is a compact decision log. Decisions are immutable records: supersede them 
 - **Decision:** Experiments receive a transactionally assigned product-local `EXP-###` number and link to an exact formula version. Completion requires at least one observation and an explicit result/conclusion.
 - **Reason:** R&D evidence must remain tied to the tested composition and readable in founder workflows.
 - **Consequences:** Observation flags and optional sensory scores are working evidence, not safety, efficacy, stability, or certification claims. Production and quality approval remain later phases.
+
+## ADR-029 — Commercial money is currency-explicit fixed decimal
+
+- **Status:** Accepted
+- **Date:** 2026-07-13
+- **Decision:** Store monetary amounts in PostgreSQL numeric columns and exchange them as decimal strings with an explicit ISO three-letter currency. Apply no implicit exchange rate.
+- **Reason:** Supplier and manufacturer comparisons must not hide precision loss or currency assumptions.
+- **Consequences:** Cross-currency comparison is blocked until an explicit conversion context is entered; display formatting never changes authoritative precision.
+
+## ADR-030 — Commercial prices append history
+
+- **Status:** Accepted
+- **Date:** 2026-07-13
+- **Decision:** A new supplier-product or packaging price appends an effective-dated history row; historical prices are not overwritten.
+- **Reason:** Reproducible sourcing and costs require the price known at the time.
+- **Consequences:** Current master fields are a convenience projection. Cost snapshots embed their selected price context and do not query future prices.
+
+## ADR-031 — Preferred supplier choice is explicit and line-scoped
+
+- **Status:** Accepted
+- **Date:** 2026-07-13
+- **Decision:** Formula supplier selection references the exact formula line and supplier product. Setting a preferred option clears the prior preferred flag in the same transaction but never switches automatically.
+- **Reason:** Ingredient identity alone cannot safely represent version-specific sourcing intent.
+- **Consequences:** Alternate, testing, emergency, and historical selections remain preserved; internal production approval is a distinct field.
+
+## ADR-032 — Finished configuration has one commercial source
+
+- **Status:** Accepted
+- **Date:** 2026-07-13
+- **Decision:** A finished configuration references either an exact formula version or a manufacturer catalog product. White-label configurations do not require or manufacture an internal formula.
+- **Reason:** Custom and white-label products share packaging/pricing workflows but have different source truth.
+- **Consequences:** Boundary validation requires exactly one source for newly created configurations; configuration identity is archived rather than reused destructively.
+
+## ADR-033 — Cost snapshots are immutable evidence
+
+- **Status:** Accepted
+- **Date:** 2026-07-13
+- **Decision:** Preserve calculation outputs, assumptions, supplier selections, packaging selections, source identity, and timestamp in append-only cost snapshots.
+- **Reason:** A historical COGS claim must reproduce the context used, not today's mutable prices.
+- **Consequences:** Recalculation creates another snapshot. Scenarios remain editable and non-authoritative until snapshotted.
+
+## ADR-034 — Document bytes live behind object storage
+
+- **Status:** Accepted
+- **Date:** 2026-07-13
+- **Decision:** PostgreSQL stores document metadata and relational links, never raw file bytes. A provider-neutral `ObjectStorage` interface owns upload/download/delete; the default adapter fails closed.
+- **Reason:** No authoritative storage provider or credentials were supplied, and database blobs would violate the intended architecture.
+- **Consequences:** Metadata/link workflows are available, but real upload/download is blocked until a configured adapter is selected and verified. No fake preview or successful upload is shown.
+
+## ADR-035 — Commercial readiness is deterministic
+
+- **Status:** Accepted
+- **Date:** 2026-07-13
+- **Decision:** Readiness derives from entered formula/supplier or manufacturer, packaging, cost, price, and document records plus explicit user checklist items. Not Applicable requires a reason.
+- **Reason:** Readiness must explain missing operational facts without implying safety, certification, or legal approval.
+- **Consequences:** Missing facts remain blockers; allowed wording is developmental, sourcing, commercial, production, or documentation readiness.
+
+## ADR-036 — Commercial masters archive; evidence remains
+
+- **Status:** Accepted
+- **Date:** 2026-07-13
+- **Decision:** Suppliers, manufacturer/catalog records, packaging, configurations, quotes, documents, and scenarios use archive timestamps when relationships exist. Price rows and cost snapshots are append-only evidence.
+- **Reason:** Deletion or mutation would break historical sourcing and cost context.
+- **Consequences:** Active views may filter archived masters, while historical links remain resolvable. Destructive delete requires a later explicit retention decision.
+
+## ADR-037 — Vercel is the official host and database releases are explicit
+
+- **Status:** Accepted
+- **Date:** 2026-07-13
+- **Decision:** Deploy the single root Next.js application through normal Vercel framework detection. Build with `pnpm build`; never migrate or seed during builds or on every deployment. ADR-021 remains as history but is superseded.
+- **Reason:** Vercel's function model is the selected host, while schema/data changes are stateful release operations that must be reviewable and independently recoverable.
+- **Consequences:** `.replit` and the custom host/port wrapper are removed. `vercel.json` only declares the framework. A release operator runs guarded database commands separately; a successful build does not claim database release success.
+
+## ADR-038 — Hosted environments and data access fail closed
+
+- **Status:** Accepted
+- **Date:** 2026-07-13
+- **Decision:** Development, Preview, and Production use separate environment-scoped credentials and databases. Preview data access requires confirmed Deployment Protection and Preview writes require an additional explicit flag. Production data access requires the future Private Beta gate flag.
+- **Reason:** An unprotected Preview or prematurely public Production deployment must not expose or mutate business records by configuration accident.
+- **Consequences:** The application remains inspectable without a database, but hosted data routes return generic unavailable/forbidden responses until their gates are deliberately enabled. Dashboard protection remains a manual prerequisite and is not inferred from a variable.
+
+## ADR-039 — PostgreSQL connections are serverless-bounded
+
+- **Status:** Accepted
+- **Date:** 2026-07-13
+- **Decision:** Use an environment-specific pooled PostgreSQL URL when available, disable prepared statements, limit each function-local client to one connection, use finite connect/idle/lifetime limits, and close clients after each request handler.
+- **Reason:** Serverless concurrency can multiply connection pools and exhaust a conventional PostgreSQL server.
+- **Consequences:** `DATABASE_URL` stays server-only. Provider pooler limits and production concurrency still require hosted verification and monitoring.
+
+## ADR-040 — Vercel file storage is private and adapter-backed
+
+- **Status:** Accepted
+- **Date:** 2026-07-13
+- **Decision:** Keep document bytes outside the function filesystem and PostgreSQL. Storage implementations must return private objects and create only authorized, expiring download access through the `ObjectStorage` interface. The unavailable adapter remains the default.
+- **Reason:** Vercel Functions do not provide durable application file storage, and business documents must not receive permanent public URLs.
+- **Consequences:** Vercel Blob or an S3-compatible provider may be added later with server-only credentials, content controls, retention rules, and authentication. No provider is falsely reported as operational today.
+
+## ADR-041 — Future background work is durable and idempotent
+
+- **Status:** Accepted
+- **Date:** 2026-07-13
+- **Decision:** Long-running imports, commerce synchronization, forecasts, and document processing must use an appropriate Vercel-compatible queue/workflow/cron mechanism with idempotency keys, durable job state, bounded retries, and observable failures.
+- **Reason:** In-memory timers and request-lifetime work are not reliable across serverless invocations.
+- **Consequences:** No background worker is introduced during this migration. Each future integration must choose and document its delivery, retry, deduplication, and recovery contract.
+
+## ADR-042 — Command continuation claims require recorded evidence
+
+- **Status:** Accepted
+- **Date:** 2026-07-13
+- **Decision:** Select the Product Build Workspace continuation from active product records. Prefer the newest valid `updatedAt` when at least one recorded update exists; otherwise use deterministic pipeline-stage order and label the result “Most advanced active product.” Never infer or display a last-opened workspace or timestamp without a persisted source. Link supporting formula and finished-configuration facts only by exact product identity.
+- **Reason:** The Command surface must help the operator resume useful work while preserving the distinction between actual recency and a deterministic fallback.
+- **Consequences:** An active portfolio always has an explainable continuation candidate; an all-inactive portfolio has an honest empty state. True last-opened behavior requires a future explicit persistence decision and cannot be reconstructed from navigation or browser storage.
+
+## ADR-043 — Command portfolio stages are a read-only projection
+
+- **Status:** Accepted
+- **Date:** 2026-07-13
+- **Decision:** Project detailed product statuses into seven Command-only stages through one exhaustive typed mapping: Concept (`idea`, `product_brief`), Research (`research`), Formula / Source (`formulation`, `testing`, `refinement`), Sourcing (`supplier_sourcing`), Packaging (`packaging`), Costing (`costing`), and Launch Ready (`production_ready`, `launch_planning`, `launched`). `on_hold`, `archived`, and unknown future statuses have no inferred journey position.
+- **Reason:** The homepage needs a legible portfolio journey without erasing detailed lifecycle meaning or pretending a hold/archive state identifies where work stopped.
+- **Consequences:** Stage filtering and counts are presentation projections only and never write product status. Unmapped records remain available under All Products with an explicit incomplete-stage label. Any new detailed status requires a reviewed mapping decision and test update.

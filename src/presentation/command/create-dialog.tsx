@@ -7,6 +7,7 @@ import {
   type CreateAction,
 } from "@/src/command/create-registry";
 import type { DevelopmentSnapshot } from "@/src/domain/development/snapshot";
+import type { CommercialSnapshot } from "@/src/domain/commercial/snapshot";
 import { calculateBatch } from "@/src/domain/formulas/calculation";
 import { useWorkspace } from "@/src/presentation/providers/workspace-provider";
 
@@ -24,7 +25,11 @@ export function CreateDialog({
   const [selected, setSelected] = useState<CreateAction>(
     createActionRegistry[1],
   );
+  const [preferredDevelopmentPath, setPreferredDevelopmentPath] = useState<
+    "custom_formula" | "white_label" | "undecided"
+  >("undecided");
   const [snapshot, setSnapshot] = useState<DevelopmentSnapshot | null>(null);
+  const [commercial, setCommercial] = useState<CommercialSnapshot | null>(null);
   const [productLines, setProductLines] = useState<
     { id: string; name: string }[]
   >([]);
@@ -48,17 +53,29 @@ export function CreateDialog({
             productLines: { id: string; name: string }[];
           },
       ),
-    ]).then(([development, lines]) => {
+      fetch("/api/commercial").then(
+        async (response) => (await response.json()) as CommercialSnapshot,
+      ),
+    ]).then(([development, lines, commercialSnapshot]) => {
       setSnapshot(development);
       setProductLines(lines.productLines);
+      setCommercial(commercialSnapshot);
     });
   }, [databaseStatus, open]);
   useEffect(() => {
     const selectRequestedAction = (event: Event) => {
-      const kind = (event as CustomEvent<{ kind?: CreateAction["kind"] }>)
-        .detail?.kind;
+      const detail = (
+        event as CustomEvent<{
+          kind?: CreateAction["kind"];
+          developmentPath?: "custom_formula" | "white_label" | "undecided";
+        }>
+      ).detail;
+      const kind = detail?.kind;
       const requested = createActionRegistry.find((item) => item.kind === kind);
       if (requested) setSelected(requested);
+      if (detail?.developmentPath) {
+        setPreferredDevelopmentPath(detail.developmentPath);
+      }
     };
     window.addEventListener("legacy:create", selectRequestedAction);
     return () =>
@@ -69,8 +86,20 @@ export function CreateDialog({
     setSubmitting(true);
     setError(null);
     const payload = buildPayload(selected.kind, formData);
-    const endpoint =
-      selected.kind === "product-line"
+    const commercialKinds: CreateAction["kind"][] = [
+      "supplier",
+      "supplier-product",
+      "manufacturer",
+      "catalog-product",
+      "quote",
+      "packaging",
+      "finished-configuration",
+      "document",
+      "cost-scenario",
+    ];
+    const endpoint = commercialKinds.includes(selected.kind)
+      ? "/api/commercial/actions"
+      : selected.kind === "product-line"
         ? "/api/product-lines"
         : "/api/development/actions";
     const response = await fetch(endpoint, {
@@ -140,6 +169,8 @@ export function CreateDialog({
               kind={selected.kind}
               productLines={productLines}
               snapshot={snapshot}
+              commercial={commercial}
+              preferredDevelopmentPath={preferredDevelopmentPath}
             />
             <div className="dialog-actions">
               <button
@@ -173,13 +204,37 @@ function CreateFields({
   kind,
   productLines,
   snapshot,
+  commercial,
+  preferredDevelopmentPath,
 }: {
   kind: CreateAction["kind"];
   productLines: { id: string; name: string }[];
   snapshot: DevelopmentSnapshot | null;
+  commercial: CommercialSnapshot | null;
+  preferredDevelopmentPath: "custom_formula" | "white_label" | "undecided";
 }) {
   const products = snapshot?.products ?? [];
   const formulas = snapshot?.formulas ?? [];
+  if (
+    [
+      "supplier",
+      "supplier-product",
+      "manufacturer",
+      "catalog-product",
+      "quote",
+      "packaging",
+      "finished-configuration",
+      "document",
+      "cost-scenario",
+    ].includes(kind)
+  )
+    return (
+      <CommercialCreateFields
+        kind={kind}
+        development={snapshot}
+        commercial={commercial}
+      />
+    );
   if (kind === "product-line")
     return (
       <>
@@ -237,7 +292,11 @@ function CreateFields({
         </label>
         <label>
           <span>Development path</span>
-          <select name="developmentPath">
+          <select
+            key={preferredDevelopmentPath}
+            name="developmentPath"
+            defaultValue={preferredDevelopmentPath}
+          >
             <option value="undecided">Undecided</option>
             <option value="custom_formula">Custom Formula</option>
             <option value="white_label">White Label</option>
@@ -407,6 +466,343 @@ function CreateFields({
   );
 }
 
+function CommercialCreateFields({
+  kind,
+  development,
+  commercial,
+}: {
+  kind: CreateAction["kind"];
+  development: DevelopmentSnapshot | null;
+  commercial: CommercialSnapshot | null;
+}) {
+  const products = development?.products ?? [];
+  const ingredients = development?.ingredients ?? [];
+  const formulas = development?.formulas ?? [];
+  if (kind === "supplier")
+    return (
+      <>
+        <label>
+          <span>Name</span>
+          <input name="name" required />
+        </label>
+        <label>
+          <span>Slug</span>
+          <input name="slug" required pattern="[a-z0-9]+(?:-[a-z0-9]+)*" />
+        </label>
+        <label>
+          <span>Supplier type</span>
+          <select name="supplierType">
+            <option value="raw_material">Raw material</option>
+            <option value="packaging">Packaging</option>
+            <option value="white_label">White label</option>
+            <option value="general_vendor">General vendor</option>
+          </select>
+        </label>
+        <label>
+          <span>Notes</span>
+          <textarea name="notes" />
+        </label>
+      </>
+    );
+  if (kind === "supplier-product")
+    return (
+      <>
+        <label>
+          <span>Supplier</span>
+          <select name="supplierId" required>
+            {commercial?.suppliers.map((r) => (
+              <option key={r.id} value={r.id}>
+                {r.name}
+              </option>
+            ))}
+          </select>
+        </label>
+        <label>
+          <span>Master ingredient</span>
+          <select name="ingredientId" required>
+            {ingredients.map((r) => (
+              <option key={r.id} value={r.id}>
+                {r.commonName}
+              </option>
+            ))}
+          </select>
+        </label>
+        <label>
+          <span>Name</span>
+          <input name="name" required />
+        </label>
+        <label>
+          <span>Package size</span>
+          <input name="packageSize" inputMode="decimal" required />
+        </label>
+        <label>
+          <span>Unit</span>
+          <select name="packageSizeUnit">
+            <option value="milliliters">Milliliters</option>
+            <option value="us_fluid_ounces">US fluid ounces</option>
+            <option value="grams">Grams</option>
+            <option value="ounces_weight">Ounces weight</option>
+            <option value="each">Each</option>
+          </select>
+        </label>
+        <label>
+          <span>Package quantity</span>
+          <input
+            name="packageQuantity"
+            inputMode="decimal"
+            defaultValue="1"
+            required
+          />
+        </label>
+        <label>
+          <span>Package price (optional)</span>
+          <input name="packagePrice" inputMode="decimal" />
+        </label>
+        <label>
+          <span>Currency when priced</span>
+          <input name="currency" defaultValue="USD" maxLength={3} />
+        </label>
+        <label>
+          <span>Price source</span>
+          <input name="source" />
+        </label>
+      </>
+    );
+  if (kind === "manufacturer")
+    return (
+      <>
+        <label>
+          <span>Name</span>
+          <input name="name" required />
+        </label>
+        <label>
+          <span>Slug</span>
+          <input name="slug" required pattern="[a-z0-9]+(?:-[a-z0-9]+)*" />
+        </label>
+        <label>
+          <span>Type</span>
+          <select name="manufacturerType">
+            <option value="white_label">White label</option>
+            <option value="custom">Custom</option>
+            <option value="contract">Contract</option>
+            <option value="bulk_blender">Bulk blender</option>
+            <option value="supplement">Supplement</option>
+          </select>
+        </label>
+        <label>
+          <span>Notes</span>
+          <textarea name="notes" />
+        </label>
+      </>
+    );
+  if (kind === "catalog-product")
+    return (
+      <>
+        <label>
+          <span>Manufacturer</span>
+          <select name="manufacturerId" required>
+            {commercial?.manufacturers.map((r) => (
+              <option key={r.id} value={r.id}>
+                {r.name}
+              </option>
+            ))}
+          </select>
+        </label>
+        <label>
+          <span>Name</span>
+          <input name="name" required />
+        </label>
+        <label>
+          <span>Notes</span>
+          <textarea name="notes" />
+        </label>
+      </>
+    );
+  if (kind === "quote")
+    return (
+      <>
+        <label>
+          <span>Manufacturer</span>
+          <select name="manufacturerId" required>
+            {commercial?.manufacturers.map((r) => (
+              <option key={r.id} value={r.id}>
+                {r.name}
+              </option>
+            ))}
+          </select>
+        </label>
+        <label>
+          <span>Product</span>
+          <select name="productId" required>
+            {products.map((r) => (
+              <option key={r.id} value={r.id}>
+                {r.name}
+              </option>
+            ))}
+          </select>
+        </label>
+        <label>
+          <span>Quote number</span>
+          <input name="quoteNumber" required />
+        </label>
+        <label>
+          <span>Quote date</span>
+          <input name="quoteDate" type="date" required />
+        </label>
+        <label>
+          <span>Currency</span>
+          <input name="currency" defaultValue="USD" required maxLength={3} />
+        </label>
+      </>
+    );
+  if (kind === "packaging")
+    return (
+      <>
+        <label>
+          <span>Name</span>
+          <input name="name" required />
+        </label>
+        <label>
+          <span>Component type</span>
+          <select name="componentType">
+            <option value="bottle">Bottle</option>
+            <option value="jar">Jar</option>
+            <option value="dropper">Dropper</option>
+            <option value="cap">Cap</option>
+            <option value="label">Label</option>
+            <option value="box">Box</option>
+            <option value="tamper_seal">Tamper seal</option>
+            <option value="other">Other</option>
+          </select>
+        </label>
+        <label>
+          <span>SKU</span>
+          <input name="sku" />
+        </label>
+      </>
+    );
+  if (kind === "finished-configuration")
+    return (
+      <>
+        <label>
+          <span>Product</span>
+          <select name="productId" required>
+            {products.map((r) => (
+              <option key={r.id} value={r.id}>
+                {r.name}
+              </option>
+            ))}
+          </select>
+        </label>
+        <label>
+          <span>Name</span>
+          <input name="name" required />
+        </label>
+        <label>
+          <span>Formula version</span>
+          <select name="formulaVersionId">
+            <option value="">Use catalog product instead</option>
+            {formulas.map((r) => (
+              <option key={r.versionId} value={r.versionId}>
+                {r.familyName} · {r.version}
+              </option>
+            ))}
+          </select>
+        </label>
+        <label>
+          <span>Catalog product</span>
+          <select name="manufacturerCatalogProductId">
+            <option value="">Use formula version instead</option>
+            {commercial?.catalogProducts.map((r) => (
+              <option key={r.id} value={r.id}>
+                {r.name}
+              </option>
+            ))}
+          </select>
+        </label>
+        <label>
+          <span>Fill size</span>
+          <input name="fillSize" inputMode="decimal" required />
+        </label>
+        <label>
+          <span>Fill unit</span>
+          <select name="fillSizeUnit">
+            <option value="us_fluid_ounces">US fluid ounces</option>
+            <option value="milliliters">Milliliters</option>
+            <option value="grams">Grams</option>
+            <option value="each">Each</option>
+          </select>
+        </label>
+      </>
+    );
+  if (kind === "document")
+    return (
+      <>
+        <div className="error-summary" role="note">
+          <strong>Metadata only</strong>
+          <p>
+            Object storage is not configured in this workspace. Enter metadata
+            only for a file that already has a valid storage key.
+          </p>
+        </div>
+        <label>
+          <span>Title</span>
+          <input name="name" required />
+        </label>
+        <label>
+          <span>Document type</span>
+          <select name="documentType">
+            <option value="other">Other</option>
+            <option value="quote">Quote</option>
+            <option value="certificate_of_analysis">
+              Certificate of Analysis
+            </option>
+            <option value="safety_data_sheet">Safety Data Sheet</option>
+            <option value="supplement_facts">Supplement Facts</option>
+          </select>
+        </label>
+        <label>
+          <span>File name</span>
+          <input name="fileName" required />
+        </label>
+        <label>
+          <span>Storage key</span>
+          <input name="storageKey" required />
+        </label>
+        <label>
+          <span>MIME type</span>
+          <input name="mimeType" required />
+        </label>
+        <label>
+          <span>File size bytes</span>
+          <input name="fileSize" type="number" min="0" required />
+        </label>
+      </>
+    );
+  return (
+    <>
+      <label>
+        <span>Configuration</span>
+        <select name="finishedProductConfigurationId" required>
+          {commercial?.configurations.map((r) => (
+            <option key={r.id} value={r.id}>
+              {r.name}
+            </option>
+          ))}
+        </select>
+      </label>
+      <label>
+        <span>Name</span>
+        <input name="name" required />
+      </label>
+      <label>
+        <span>Description</span>
+        <textarea name="description" />
+      </label>
+    </>
+  );
+}
+
 function ExperimentCreateFields({
   products,
   formulas,
@@ -544,6 +940,89 @@ function buildPayload(
   form: FormData,
 ): Record<string, unknown> {
   const value = (name: string) => String(form.get(name) ?? "");
+  if (kind === "supplier")
+    return {
+      type: "create_supplier",
+      name: value("name"),
+      slug: value("slug"),
+      supplierType: value("supplierType"),
+      notes: value("notes") || undefined,
+    };
+  if (kind === "supplier-product")
+    return {
+      type: "create_supplier_product",
+      supplierId: value("supplierId"),
+      ingredientId: value("ingredientId"),
+      name: value("name"),
+      packageSize: value("packageSize"),
+      packageSizeUnit: value("packageSizeUnit"),
+      packageQuantity: value("packageQuantity"),
+      packagePrice: value("packagePrice") || undefined,
+      currency: value("packagePrice")
+        ? value("currency").toUpperCase()
+        : undefined,
+      source: value("source") || undefined,
+    };
+  if (kind === "manufacturer")
+    return {
+      type: "create_manufacturer",
+      name: value("name"),
+      slug: value("slug"),
+      manufacturerType: value("manufacturerType"),
+      notes: value("notes") || undefined,
+    };
+  if (kind === "catalog-product")
+    return {
+      type: "create_catalog_product",
+      manufacturerId: value("manufacturerId"),
+      name: value("name"),
+      notes: value("notes") || undefined,
+    };
+  if (kind === "quote")
+    return {
+      type: "create_quote",
+      manufacturerId: value("manufacturerId"),
+      productId: value("productId"),
+      quoteNumber: value("quoteNumber"),
+      quoteDate: value("quoteDate"),
+      currency: value("currency").toUpperCase(),
+    };
+  if (kind === "packaging")
+    return {
+      type: "create_packaging",
+      name: value("name"),
+      componentType: value("componentType"),
+      sku: value("sku") || undefined,
+    };
+  if (kind === "finished-configuration")
+    return {
+      type: "create_configuration",
+      productId: value("productId"),
+      formulaVersionId: value("formulaVersionId") || null,
+      manufacturerCatalogProductId:
+        value("manufacturerCatalogProductId") || null,
+      name: value("name"),
+      fillSize: value("fillSize"),
+      fillSizeUnit: value("fillSizeUnit"),
+    };
+  if (kind === "document")
+    return {
+      type: "create_document",
+      title: value("name"),
+      documentType: value("documentType"),
+      fileName: value("fileName"),
+      storageKey: value("storageKey"),
+      mimeType: value("mimeType"),
+      fileSize: Number(value("fileSize")),
+    };
+  if (kind === "cost-scenario")
+    return {
+      type: "create_cost_scenario",
+      finishedProductConfigurationId: value("finishedProductConfigurationId"),
+      name: value("name"),
+      description: value("description") || undefined,
+      scenarioDataJson: {},
+    };
   if (kind === "product-line")
     return {
       name: value("name"),

@@ -19,6 +19,29 @@ export const workspaceSettingsSchema = z.object({
   sidebarCollapsed: z.boolean(),
   defaultProductLineFilter: z.string().nullable(),
   dateFormat: z.enum(dateFormatOptions),
+  supplierPriceStaleDays: z.number().int().min(1).max(3650),
+  documentExpiringDays: z.number().int().min(1).max(3650),
+  defaultLaborHourlyRate: z
+    .string()
+    .regex(/^\d+(?:\.\d{1,4})?$/)
+    .nullable(),
+  defaultPaymentProcessingPercent: z
+    .string()
+    .regex(/^\d+(?:\.\d{1,4})?$/)
+    .nullable(),
+  defaultFixedProcessingFee: z
+    .string()
+    .regex(/^\d+(?:\.\d{1,4})?$/)
+    .nullable(),
+  defaultTargetRetailMargin: z
+    .string()
+    .regex(/^\d+(?:\.\d{1,4})?$/)
+    .nullable(),
+  defaultTargetWholesaleMargin: z
+    .string()
+    .regex(/^\d+(?:\.\d{1,4})?$/)
+    .nullable(),
+  costDisplayPrecision: z.number().int().min(0).max(6),
 });
 
 export type WorkspaceSettings = z.infer<typeof workspaceSettingsSchema>;
@@ -31,6 +54,14 @@ export const defaultWorkspaceSettings: Readonly<WorkspaceSettings> = {
   sidebarCollapsed: false,
   defaultProductLineFilter: null,
   dateFormat: "MM/dd/yyyy",
+  supplierPriceStaleDays: 90,
+  documentExpiringDays: 60,
+  defaultLaborHourlyRate: null,
+  defaultPaymentProcessingPercent: null,
+  defaultFixedProcessingFee: null,
+  defaultTargetRetailMargin: null,
+  defaultTargetWholesaleMargin: null,
+  costDisplayPrecision: 4,
 };
 
 export const workspaceSettingsKey = "workspace.defaults";

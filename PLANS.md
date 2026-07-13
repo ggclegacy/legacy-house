@@ -33,7 +33,7 @@ Use repository-defined commands once they exist. A normal completed phase must i
 - strict type-check;
 - unit and integration tests, plus end-to-end tests for critical workflows;
 - production build;
-- runtime smoke test, including Replit-compatible host/port behavior;
+- runtime smoke test in the standard Next.js/Vercel function model;
 - accessibility and responsive checks appropriate to changed screens;
 - a final diff and secret scan.
 
@@ -53,4 +53,4 @@ Stop and request direction when:
 
 ## Definition of done
 
-A phase is done only when its acceptance criteria are met; data invariants and authorization are enforced; migrations are safe; error/loading/empty states are complete; mobile, desktop, keyboard, focus, contrast, and reduced-motion behavior are verified where applicable; tests and build pass; Replit behavior is verified; documentation and decisions reflect the implementation; and `BUILD_STATUS.md` names the next phase without beginning it.
+A phase is done only when its acceptance criteria are met; data invariants and authorization are enforced; migrations are safe; error/loading/empty states are complete; mobile, desktop, keyboard, focus, contrast, and reduced-motion behavior are verified where applicable; tests and build pass; Vercel build/function behavior and environment isolation are verified; documentation and decisions reflect the implementation; and `BUILD_STATUS.md` names the next phase without beginning it.

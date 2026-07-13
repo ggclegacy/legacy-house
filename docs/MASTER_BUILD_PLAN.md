@@ -2,7 +2,7 @@
 
 ## Delivery model
 
-Build one phase at a time in dependency order. Phase files are implementation contracts; this document controls sequence and cross-phase boundaries. Phase completion requires its data models, screens, services, tests, acceptance criteria, documentation, migration safety, responsive/accessibility checks, production build, and Replit smoke test. Security, authorization, auditability, testing, accessibility, and provenance begin in Phase 1 and continue throughout; Phase 8 verifies and hardens them rather than introducing them late.
+Build one phase at a time in dependency order. Phase files are implementation contracts; this document controls sequence and cross-phase boundaries. Phase completion requires its data models, screens, services, tests, acceptance criteria, documentation, migration safety, responsive/accessibility checks, production build, and Vercel-compatible runtime smoke test. Security, authorization, auditability, testing, accessibility, and provenance begin in Phase 1 and continue throughout; Phase 8 verifies and hardens them rather than introducing them late.
 
 No phase may populate invented suppliers, manufacturers, formulas, ingredient densities, costs, inventory, sales, certifications, claims, test results, or analytics. Clearly labeled synthetic fixtures may be used only in isolated tests and must never resemble production truth.
 
@@ -91,7 +91,7 @@ Some discovery may happen ahead of sequence, but implementation cannot bypass up
 
 ## Phase 8 — Security, Hardening, and Deployment
 
-- **Outcome:** Production-readiness is evidenced across security, privacy, resilience, performance, observability, recovery, CI/CD, and Replit deployment.
+- **Outcome:** Production-readiness is evidenced across security, privacy, resilience, performance, observability, recovery, CI/CD, and Vercel deployment.
 - **Models:** only retention/security support needed after review; avoid duplicating identity/audit models.
 - **Screens:** operational diagnostics and authorized security/session controls only where justified.
 - **Services:** hardened auth/session, rate/abuse controls, headers, secret rotation procedures, backup/restore, monitoring, deployment checks.

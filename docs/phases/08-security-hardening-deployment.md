@@ -2,7 +2,7 @@
 
 ## Objective and dependencies
 
-Demonstrate production readiness across security, privacy, resilience, performance, observability, recovery, CI/CD, and Replit deployment. Security controls have existed throughout; this phase performs systematic threat review, closes gaps, and validates operations. Requires completed prior phases and an authorized deployment environment.
+Demonstrate production readiness across security, privacy, resilience, performance, observability, recovery, CI/CD, and Vercel deployment. Security controls have existed throughout; this phase performs systematic threat review, closes gaps, and validates operations. Requires completed prior phases and an authorized deployment environment.
 
 ## Workstreams
 
@@ -11,7 +11,7 @@ Demonstrate production readiness across security, privacy, resilience, performan
 - Secret inventory/rotation procedure, environment separation, data classification/minimization/retention/deletion, encrypted transport/storage assumptions, log redaction, and incident response ownership.
 - Structured logs, metrics, traces as justified, health checks, alert/runbooks, sync/migration observability, performance budgets and query/index review.
 - Automated backups, restore drill, migration forward/rollback strategy, failure/retry drills, dependency outage behavior, and recovery objectives approved by owner.
-- CI quality gates and controlled Replit deployment with `0.0.0.0`, `PORT`, managed secrets, PostgreSQL, migration release procedure, domain/TLS as applicable, and rollback instructions.
+- CI quality gates and controlled Vercel deployment with managed secrets, isolated PostgreSQL environments, explicit migration release procedure, protected functions/storage, domain/TLS as applicable, and rollback instructions.
 
 ## Data and screens
 
@@ -19,7 +19,7 @@ Add only justified session/security/retention metadata without duplicating ident
 
 ## Test plan
 
-Full authorization matrix and tenant/scope boundaries if introduced; OWASP-oriented abuse tests; dependency, secret, and static scans; upload/content limits; log-redaction tests; accessibility regression and browser/device matrix; load/query budget tests; backup restore into isolated environment; migration and deployment rollback rehearsal; external-integration failure drills; smoke tests against production-like Replit configuration.
+Full authorization matrix and tenant/scope boundaries if introduced; OWASP-oriented abuse tests; dependency, secret, and static scans; upload/content limits; log-redaction tests; accessibility regression and browser/device matrix; load/query budget tests; backup restore into isolated environment; migration and deployment rollback rehearsal; external-integration failure drills; smoke tests against production-like Vercel configuration.
 
 ## Acceptance criteria
 

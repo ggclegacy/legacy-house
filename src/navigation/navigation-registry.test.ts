@@ -14,6 +14,8 @@ describe("navigation registry", () => {
       "R&D Lab",
       "Suppliers",
       "Manufacturers",
+      "Packaging",
+      "Costing",
       "Inventory",
       "Production",
       "Quality",

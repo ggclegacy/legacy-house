@@ -27,7 +27,7 @@ State-transition permissions/history; formula total precision and immutable revi
 
 ## Acceptance criteria
 
-A user can trace product intent, development path, state history, ingredients, formula versions, experiments, evidence, and decisions. The supplied oil formula calculates exactly from stored facts without inventing base proportions. The nine Sanctum records, if loaded, remain Research/White Label with absent unknown facts. All validation/build/Replit checks pass and docs/status/ADRs reflect implementation.
+A user can trace product intent, development path, state history, ingredients, formula versions, experiments, evidence, and decisions. The supplied oil formula calculates exactly from stored facts without inventing base proportions. The nine Sanctum records, if loaded, remain Research/White Label with absent unknown facts. All validation/build/hosting checks pass and docs/status/ADRs reflect implementation.
 
 ## Non-goals and stop conditions
 
@@ -37,4 +37,4 @@ No suppliers, quotes/costs, purchasing, inventory, production execution, quality
 
 Phase 02 was explicitly authorized and implemented in the single root application. The domain/schema/repository, authorized idempotent seeds, product pipeline/workspace, Formula Vault/builder/calculator/version history, ingredient intelligence, R&D experiments/observations, Command, global search/create, responsive behavior, and automated coverage are present. Canonical definitions remain read-only when PostgreSQL is unavailable.
 
-Local clean-database migration and persistence tests pass. External PostgreSQL migration/seed and hosted Replit acceptance remain blocked because neither environment was supplied. See `BUILD_STATUS.md` for the exact current evidence and open debt. Phase 03 has not started.
+Local clean-database migration and persistence tests pass. The historical Replit target was superseded by Vercel after Phase 03. See `BUILD_STATUS.md` for current hosted-environment evidence and open debt.

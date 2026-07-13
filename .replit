@@ -1,0 +1,11 @@
+run = "pnpm dev"
+entrypoint = "package.json"
+modules = ["nodejs-24", "postgresql-16"]
+
+[deployment]
+build = ["sh", "-c", "pnpm install --frozen-lockfile && pnpm build"]
+run = ["sh", "-c", "pnpm db:migrate && pnpm db:seed && pnpm start"]
+
+[[ports]]
+localPort = 3000
+externalPort = 80

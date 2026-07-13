@@ -65,6 +65,16 @@ describe("development validation", () => {
     expect(
       developmentActionSchema.safeParse({ action: "unknown" }).success,
     ).toBe(false);
+    expect(
+      developmentActionSchema.safeParse({
+        action: "update_product_note",
+        noteId: "4ed399ca-b5ce-4cb8-8ce0-7cdfcc689b79",
+        noteType: "market_feedback",
+        title: "Edited note",
+        content: "Preserved and revised product memory.",
+        expectedUpdatedAt: "2026-07-13T12:00:00.000Z",
+      }).success,
+    ).toBe(true);
     const observation = {
       action: "add_observation",
       experimentId: "4ed399ca-b5ce-4cb8-8ce0-7cdfcc689b79",

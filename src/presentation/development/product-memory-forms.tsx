@@ -15,9 +15,11 @@ async function postAction(payload: Record<string, unknown>) {
 export function ProductMemoryForms({
   productId,
   persistence,
+  kind = "both",
 }: {
   productId: string;
   persistence: "database" | "unavailable";
+  kind?: "note" | "decision" | "both";
 }) {
   const [message, setMessage] = useState<string | null>(null);
   async function addNote(formData: FormData) {
@@ -59,63 +61,71 @@ export function ProductMemoryForms({
           {message}
         </p>
       ) : null}
-      <form action={addNote} className="memory-form">
-        <h3>Add product note</h3>
-        <label>
-          <span>Type</span>
-          <select name="noteType" defaultValue="general">
-            <option value="research">Research</option>
-            <option value="product_idea">Product Idea</option>
-            <option value="testing">Testing</option>
-            <option value="general">General</option>
-          </select>
-        </label>
-        <label>
-          <span>Title</span>
-          <input name="title" required />
-        </label>
-        <label>
-          <span>Content</span>
-          <textarea name="content" rows={4} required />
-        </label>
-        <button className="button" disabled={persistence !== "database"}>
-          Add note
-        </button>
-      </form>
-      <form action={addDecision} className="memory-form">
-        <h3>Record founder decision</h3>
-        <label>
-          <span>Title</span>
-          <input name="title" required />
-        </label>
-        <label>
-          <span>Decision</span>
-          <textarea name="decision" rows={3} required />
-        </label>
-        <label>
-          <span>Reason</span>
-          <textarea name="reason" rows={3} required />
-        </label>
-        <label>
-          <span>Evidence or future document reference</span>
-          <textarea name="evidence" rows={2} />
-        </label>
-        <label>
-          <span>Expected outcome</span>
-          <textarea name="expectedOutcome" rows={2} />
-        </label>
-        <label>
-          <span>Decision date</span>
-          <input type="date" name="decisionDate" required />
-        </label>
-        <label>
-          <span>Review date</span>
-          <input type="date" name="reviewDate" />
-        </label>
-        <button className="button" disabled={persistence !== "database"}>
-          Record decision
-        </button>
-      </form>
+      {kind !== "decision" ? (
+        <form action={addNote} className="memory-form">
+          <h3>Add product note</h3>
+          <label>
+            <span>Type</span>
+            <select name="noteType" defaultValue="general">
+              <option value="research">Research</option>
+              <option value="product_idea">Product Idea</option>
+              <option value="sourcing">Sourcing</option>
+              <option value="packaging">Packaging</option>
+              <option value="testing">Testing</option>
+              <option value="launch">Launch</option>
+              <option value="market_feedback">Market Feedback</option>
+              <option value="general">General</option>
+            </select>
+          </label>
+          <label>
+            <span>Title</span>
+            <input name="title" required />
+          </label>
+          <label>
+            <span>Content</span>
+            <textarea name="content" rows={4} required />
+          </label>
+          <button className="button" disabled={persistence !== "database"}>
+            Add note
+          </button>
+        </form>
+      ) : null}
+      {kind !== "note" ? (
+        <form action={addDecision} className="memory-form">
+          <h3>Record founder decision</h3>
+          <label>
+            <span>Title</span>
+            <input name="title" required />
+          </label>
+          <label>
+            <span>Decision</span>
+            <textarea name="decision" rows={3} required />
+          </label>
+          <label>
+            <span>Reason</span>
+            <textarea name="reason" rows={3} required />
+          </label>
+          <label>
+            <span>Evidence or future document reference</span>
+            <textarea name="evidence" rows={2} />
+          </label>
+          <label>
+            <span>Expected outcome</span>
+            <textarea name="expectedOutcome" rows={2} />
+          </label>
+          <label>
+            <span>Decision date</span>
+            <input type="date" name="decisionDate" required />
+          </label>
+          <label>
+            <span>Review date</span>
+            <input type="date" name="reviewDate" />
+          </label>
+          <button className="button" disabled={persistence !== "database"}>
+            Record decision
+          </button>
+        </form>
+      ) : null}
     </div>
   );
 }

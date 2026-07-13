@@ -58,6 +58,23 @@ export const developmentActionSchema = z.discriminatedUnion("action", [
     content: z.string().trim().min(2).max(10000),
   }),
   z.object({
+    action: z.literal("update_product_note"),
+    noteId: z.string().uuid(),
+    noteType: z.enum([
+      "research",
+      "product_idea",
+      "sourcing",
+      "packaging",
+      "testing",
+      "launch",
+      "market_feedback",
+      "general",
+    ]),
+    title: z.string().trim().min(2).max(160),
+    content: z.string().trim().min(2).max(10000),
+    expectedUpdatedAt: z.string().datetime(),
+  }),
+  z.object({
     action: z.literal("record_product_decision"),
     productId: z.string().uuid(),
     title: z.string().trim().min(2).max(160),

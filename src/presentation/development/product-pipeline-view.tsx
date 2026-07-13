@@ -34,7 +34,7 @@ export function ProductPipelineView({
   const [query, setQuery] = useState("");
   const [line, setLine] = useState("all");
   const [path, setPath] = useState("all");
-  const [status, setStatus] = useState("all");
+  const [stage, setStage] = useState("all");
   const [priority, setPriority] = useState("all");
   const [sort, setSort] = useState("recent");
   const [feedback, setFeedback] = useState<string | null>(null);
@@ -50,7 +50,8 @@ export function ProductPipelineView({
               .includes(query.toLocaleLowerCase()) &&
             (line === "all" || product.productLineSlug === line) &&
             (path === "all" || product.developmentPath === path) &&
-            (status === "all" || product.pipelineStatus === status) &&
+            (stage === "all" ||
+              pipelineGroupFor(product.pipelineStatus) === stage) &&
             (priority === "all" || product.priority === priority),
         )
         .sort((left, right) =>
@@ -58,7 +59,7 @@ export function ProductPipelineView({
             ? left.name.localeCompare(right.name)
             : (right.updatedAt ?? "").localeCompare(left.updatedAt ?? ""),
         ),
-    [line, path, priority, products, query, sort, status],
+    [line, path, priority, products, query, sort, stage],
   );
 
   async function changeStatus(product: DevelopmentProduct, next: string) {
@@ -77,6 +78,24 @@ export function ProductPipelineView({
       response.ok
         ? `${product.name} moved to ${labelFor(next)}. Refreshing…`
         : (body.error ?? "Status was not changed."),
+    );
+    if (response.ok) window.location.reload();
+  }
+
+  async function archiveProduct(product: DevelopmentProduct) {
+    const response = await fetch("/api/development/actions", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        action: "archive_product",
+        productId: product.id,
+      }),
+    });
+    const body = (await response.json()) as { error?: string };
+    setFeedback(
+      response.ok
+        ? `${product.name} archived. Refreshing…`
+        : (body.error ?? "Product was not archived."),
     );
     if (response.ok) window.location.reload();
   }
@@ -145,12 +164,12 @@ export function ProductPipelineView({
           ))}
         </select>
         <select
-          aria-label="Filter detailed status"
-          value={status}
-          onChange={(event) => setStatus(event.target.value)}
+          aria-label="Filter Command stage"
+          value={stage}
+          onChange={(event) => setStage(event.target.value)}
         >
-          <option value="all">All statuses</option>
-          {pipelineStatuses.map((value) => (
+          <option value="all">All Command stages</option>
+          {Object.keys(pipelineGroups).map((value) => (
             <option key={value} value={value}>
               {labelFor(value)}
             </option>
@@ -175,42 +194,64 @@ export function ProductPipelineView({
         </div>
       ) : null}
       {view === "board" ? (
-        <div className="pipeline-board">
-          {Object.keys(pipelineGroups).map((group) => {
-            const groupProducts = filtered.filter(
-              (product) => pipelineGroupFor(product.pipelineStatus) === group,
-            );
-            return (
-              <section
-                key={group}
-                className="pipeline-column"
-                aria-labelledby={`pipeline-${group}`}
-              >
-                <header>
-                  <h2 id={`pipeline-${group}`}>{labelFor(group)}</h2>
-                  <span>{groupProducts.length}</span>
-                </header>
-                {groupProducts.length ? (
-                  groupProducts.map((product) => (
-                    <ProductCard
-                      key={product.id}
-                      product={product}
-                      persistence={persistence}
-                      formula={formulas.find(
-                        (formula) =>
-                          formula.productId === product.id &&
-                          formula.activeVersionId === formula.versionId,
-                      )}
-                      changeStatus={changeStatus}
-                    />
-                  ))
-                ) : (
-                  <p className="column-empty">No products in this stage.</p>
+        <>
+          <div className="pipeline-board">
+            {Object.keys(pipelineGroups).map((group) => {
+              const groupProducts = filtered.filter(
+                (product) => pipelineGroupFor(product.pipelineStatus) === group,
+              );
+              return (
+                <section
+                  key={group}
+                  className="pipeline-column"
+                  aria-labelledby={`pipeline-${group}`}
+                >
+                  <header>
+                    <h2 id={`pipeline-${group}`}>{labelFor(group)}</h2>
+                    <span>{groupProducts.length}</span>
+                  </header>
+                  {groupProducts.length ? (
+                    groupProducts.map((product) => (
+                      <ProductCard
+                        key={product.id}
+                        product={product}
+                        persistence={persistence}
+                        formula={formulas.find(
+                          (formula) =>
+                            formula.productId === product.id &&
+                            formula.activeVersionId === formula.versionId,
+                        )}
+                        changeStatus={changeStatus}
+                        archiveProduct={archiveProduct}
+                      />
+                    ))
+                  ) : (
+                    <p className="column-empty">No products in this stage.</p>
+                  )}
+                </section>
+              );
+            })}
+          </div>
+          <div
+            className="pipeline-mobile-list"
+            aria-label="Focused product list"
+          >
+            {filtered.map((product) => (
+              <ProductCard
+                key={product.id}
+                product={product}
+                persistence={persistence}
+                formula={formulas.find(
+                  (formula) =>
+                    formula.productId === product.id &&
+                    formula.activeVersionId === formula.versionId,
                 )}
-              </section>
-            );
-          })}
-        </div>
+                changeStatus={changeStatus}
+                archiveProduct={archiveProduct}
+              />
+            ))}
+          </div>
+        </>
       ) : view === "product_line" ? (
         <div className="line-view">
           {lines.map(([slug, name]) => (
@@ -239,6 +280,7 @@ export function ProductPipelineView({
                           formula.activeVersionId === formula.versionId,
                       )}
                       changeStatus={changeStatus}
+                      archiveProduct={archiveProduct}
                     />
                   ))}
               </div>
@@ -303,12 +345,15 @@ function ProductCard({
   persistence,
   formula,
   changeStatus,
+  archiveProduct,
 }: {
   product: DevelopmentProduct;
   persistence: "database" | "unavailable";
   formula?: DevelopmentFormula;
   changeStatus: (product: DevelopmentProduct, next: string) => Promise<void>;
+  archiveProduct: (product: DevelopmentProduct) => Promise<void>;
 }) {
+  const [confirmArchive, setConfirmArchive] = useState(false);
   const blockers = [
     !product.targetCustomer,
     !product.problemToSolve,
@@ -373,6 +418,43 @@ function ProductCard({
       {persistence !== "database" ? (
         <small>Database required for status changes.</small>
       ) : null}
+      <div className="product-card-actions">
+        <Link className="text-link" href={asRoute(`/products/${product.slug}`)}>
+          Open product →
+        </Link>
+        {confirmArchive ? (
+          <div
+            className="archive-confirmation"
+            role="group"
+            aria-label={`Archive ${product.name}`}
+          >
+            <span>Preserve history and remove from the active pipeline?</span>
+            <button
+              type="button"
+              className="button-secondary"
+              onClick={() => setConfirmArchive(false)}
+            >
+              Cancel
+            </button>
+            <button
+              type="button"
+              className="button-secondary"
+              onClick={() => void archiveProduct(product)}
+            >
+              Confirm archive
+            </button>
+          </div>
+        ) : (
+          <button
+            type="button"
+            className="text-button"
+            disabled={persistence !== "database"}
+            onClick={() => setConfirmArchive(true)}
+          >
+            Archive product
+          </button>
+        )}
+      </div>
     </article>
   );
 }

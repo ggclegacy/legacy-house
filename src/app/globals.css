@@ -1910,6 +1910,23 @@ footer p {
   gap: 0.65rem;
   background: rgba(5, 5, 6, 0.96);
 }
+.product-development-header {
+  min-height: clamp(20rem, 48svh, 31rem);
+  display: grid;
+  align-content: end;
+}
+.product-development-actions {
+  margin-top: 1.4rem;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.65rem;
+}
+.product-development-actions > * {
+  min-height: 44px;
+}
+.product-development-entry {
+  scroll-margin-top: 6rem;
+}
 .view-toolbar.compact {
   position: static;
   grid-template-columns: minmax(16rem, 1fr) minmax(12rem, 0.35fr) auto;
@@ -1966,6 +1983,39 @@ footer p {
   overflow-x: auto;
   overscroll-behavior-inline: contain;
   padding-bottom: 1rem;
+}
+.pipeline-mobile-list {
+  display: none;
+}
+.product-card-actions {
+  margin-top: 1rem;
+  display: grid;
+  gap: 0.65rem;
+}
+.text-button {
+  width: fit-content;
+  min-height: 44px;
+  padding: 0;
+  border: 0;
+  color: var(--steel);
+  background: transparent;
+  cursor: pointer;
+  text-decoration: underline;
+  text-underline-offset: 0.3rem;
+}
+.text-button:disabled {
+  opacity: 0.48;
+  cursor: not-allowed;
+}
+.archive-confirmation {
+  padding: 0.75rem;
+  border-left: 2px solid var(--oxblood);
+  display: grid;
+  grid-template-columns: 1fr auto auto;
+  align-items: center;
+  gap: 0.5rem;
+  color: var(--steel);
+  background: rgba(122, 46, 50, 0.1);
 }
 .pipeline-column {
   min-height: 22rem;
@@ -2107,6 +2157,19 @@ footer p {
   flex-wrap: wrap;
   gap: 0.5rem;
 }
+.record-header-status {
+  max-width: 28rem;
+  justify-content: flex-end;
+}
+.record-header-actions {
+  flex-basis: 100%;
+  display: flex;
+  justify-content: flex-end;
+  gap: 0.6rem;
+}
+.product-controls-anchor {
+  scroll-margin-top: 6rem;
+}
 .record-status span,
 .record-header-status span,
 .line-flags span,
@@ -2153,6 +2216,56 @@ footer p {
   border-block: 1px solid var(--line);
   background: rgba(5, 5, 6, 0.96);
 }
+.product-build-navigation {
+  position: sticky;
+  top: 70px;
+  z-index: 4;
+  border-block: 1px solid var(--line);
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr);
+  align-items: stretch;
+  background: rgba(5, 5, 6, 0.96);
+}
+.product-build-context {
+  padding: 0.9rem 1rem;
+  border-right: 1px solid var(--line);
+  display: flex;
+  align-items: center;
+  color: var(--champagne);
+  font-size: 0.64rem;
+  font-weight: 720;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  white-space: nowrap;
+}
+.product-build-rail {
+  min-width: 0;
+  display: flex;
+  overflow-x: auto;
+  overscroll-behavior-inline: contain;
+  scrollbar-width: thin;
+}
+.product-build-rail a,
+.product-build-rail > span {
+  min-height: 48px;
+  padding: 0.9rem 1rem;
+  display: flex;
+  flex: 0 0 auto;
+  align-items: center;
+  color: var(--steel);
+  font-size: 0.68rem;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  white-space: nowrap;
+}
+.product-build-rail a[aria-current="location"] {
+  color: var(--bone);
+  box-shadow: inset 0 -2px var(--gold);
+  background: rgba(196, 145, 47, 0.08);
+}
+.product-build-rail > span[aria-disabled="true"] {
+  opacity: 0.52;
+}
 .record-tabs a {
   min-height: 48px;
   padding: 0.9rem 1rem;
@@ -2187,6 +2300,72 @@ footer p {
   display: grid;
   grid-template-columns: repeat(2, minmax(0, 1fr));
   gap: 1rem;
+}
+.brief-completion {
+  margin-bottom: 1rem;
+  padding: 0.9rem 1rem;
+  border-left: 2px solid var(--gold);
+  display: grid;
+  grid-template-columns: auto 1fr;
+  gap: 0.15rem 1rem;
+  background: rgba(36, 16, 56, 0.16);
+}
+.brief-completion span,
+.brief-completion small {
+  color: var(--steel);
+}
+.brief-completion small {
+  grid-column: 1 / -1;
+}
+.brief-instrument {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 0.85rem;
+}
+.brief-instrument fieldset {
+  min-width: 0;
+  margin: 0;
+  padding: 1.1rem;
+  border: 1px solid var(--line);
+  background: rgba(9, 9, 12, 0.68);
+}
+.brief-instrument legend {
+  padding-inline: 0.45rem;
+  color: var(--champagne);
+  font-size: 0.68rem;
+  font-weight: 720;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+}
+.brief-instrument label {
+  display: grid;
+  gap: 0.4rem;
+  color: var(--steel);
+  font-size: 0.75rem;
+}
+.brief-fieldset-wide {
+  grid-column: 1 / -1;
+}
+.brief-field-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 0.75rem;
+}
+.brief-target-grid {
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+}
+.brief-current-intent {
+  margin-bottom: 0.8rem;
+  display: grid;
+  gap: 0.3rem;
+}
+.brief-current-intent span,
+.brief-current-intent small {
+  color: var(--steel);
+  font-size: 0.7rem;
+}
+.brief-current-intent p {
+  margin: 0;
 }
 .brief-fields label:last-child {
   grid-column: 1 / -1;
@@ -2247,6 +2426,29 @@ footer p {
   display: grid;
   grid-template-columns: 8rem 1fr;
   gap: 1.5rem;
+}
+.product-development-timeline li {
+  grid-template-columns: minmax(9rem, 0.28fr) minmax(0, 1fr) minmax(
+      12rem,
+      0.35fr
+    );
+  align-items: start;
+}
+.product-development-timeline li > div {
+  min-width: 0;
+}
+.product-development-timeline p {
+  margin: 0.35rem 0 0;
+}
+.timeline-related-record {
+  display: grid;
+  justify-items: end;
+  gap: 0.35rem;
+  color: var(--steel);
+  text-align: right;
+}
+.timeline-related-record .text-link {
+  min-height: 32px;
 }
 .formula-builder {
   border: 1px solid var(--line);
@@ -3274,6 +3476,58 @@ footer p {
   color: var(--steel);
   font-size: 0.7rem;
 }
+.product-path-selector {
+  margin: 0 0 0.5rem;
+  padding: 0;
+  border: 0;
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 0.55rem;
+}
+.product-path-selector legend {
+  grid-column: 1 / -1;
+  margin-bottom: 0.25rem;
+  color: var(--bone);
+  font-size: 0.78rem;
+  font-weight: 700;
+}
+.product-path-selector label {
+  position: relative;
+  min-height: 7.5rem;
+  padding: 0.85rem;
+  border: 1px solid var(--line);
+  display: grid;
+  align-content: start;
+  color: var(--bone);
+  background: rgba(36, 16, 56, 0.12);
+  cursor: pointer;
+}
+.product-path-selector input {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  opacity: 0;
+  cursor: pointer;
+}
+.product-path-selector label:has(input:checked) {
+  border-color: var(--gold);
+  box-shadow: inset 3px 0 var(--champagne);
+  background: rgba(196, 145, 47, 0.09);
+}
+.product-path-selector label:has(input:focus-visible) {
+  outline: 2px solid var(--champagne);
+  outline-offset: 2px;
+}
+.product-path-selector span {
+  display: grid;
+  gap: 0.45rem;
+}
+.product-path-selector small {
+  color: var(--steel);
+  font-size: 0.7rem;
+  line-height: 1.45;
+}
 
 @media (max-width: 1100px) {
   .app-header {
@@ -3669,6 +3923,985 @@ html[data-reduced-motion="true"] *::after {
 @media (min-width: 1101px) {
   .sourcing-network-grid {
     grid-template-columns: minmax(0, 1.45fr) repeat(3, minmax(11rem, 0.62fr));
+  }
+}
+
+/* Command hero: one living product-intelligence core. The operational page,
+   shell, and all sections below this chamber keep their existing layout. */
+.command-page .command-hero {
+  width: min(100%, 1440px);
+  height: min(calc(100svh - 72px), 48rem);
+  min-height: 0;
+  padding: clamp(0.85rem, 1.8vw, 1.3rem) clamp(0.5rem, 2vw, 1.5rem) 0;
+  border-bottom: 1px solid rgba(202, 167, 101, 0.24);
+  overflow: hidden;
+  background:
+    radial-gradient(circle at 50% 49%, rgba(63, 33, 85, 0.58), transparent 27%),
+    radial-gradient(
+      ellipse at 50% 47%,
+      rgba(41, 27, 69, 0.42),
+      transparent 58%
+    ),
+    linear-gradient(180deg, #170c20 0%, #130b1f 62%, #0a060e 100%);
+  box-shadow:
+    inset 0 1px rgba(202, 167, 101, 0.11),
+    inset 0 -5rem 8rem rgba(4, 2, 7, 0.7);
+}
+.command-page .command-hero::before {
+  z-index: 0;
+  opacity: 1;
+  background:
+    linear-gradient(
+      90deg,
+      transparent 7%,
+      rgba(112, 75, 24, 0.13) 7.1%,
+      transparent 7.2% 92.8%,
+      rgba(112, 75, 24, 0.13) 92.9%,
+      transparent 93%
+    ),
+    repeating-linear-gradient(
+      90deg,
+      transparent 0 6.95rem,
+      rgba(202, 167, 101, 0.018) 7rem
+    ),
+    repeating-linear-gradient(
+      0deg,
+      transparent 0 6.95rem,
+      rgba(41, 27, 69, 0.08) 7rem
+    ),
+    radial-gradient(
+      ellipse at center,
+      transparent 34%,
+      rgba(5, 3, 8, 0.78) 100%
+    );
+}
+.command-page .command-hero::after {
+  z-index: 1;
+  opacity: 0.62;
+  background:
+    linear-gradient(135deg, rgba(193, 143, 49, 0.13), transparent 10%) top
+      left / 10rem 10rem no-repeat,
+    linear-gradient(225deg, rgba(193, 143, 49, 0.13), transparent 10%) top
+      right / 10rem 10rem no-repeat,
+    radial-gradient(
+      ellipse at 50% 100%,
+      rgba(41, 27, 69, 0.35),
+      transparent 55%
+    );
+}
+.command-page .command-hero-identity {
+  z-index: 8;
+  gap: 0.18rem;
+  padding-inline: 0.5rem;
+}
+.command-page .command-hero-identity h1 {
+  margin: 0;
+  color: var(--command-ivory);
+  font-size: clamp(0.82rem, 1.25vw, 1rem);
+  line-height: 1.25;
+  letter-spacing: 0.3em;
+}
+.command-page .command-hero-identity p {
+  max-width: calc(100vw - 1.5rem);
+  color: var(--command-muted);
+  font-size: clamp(0.5rem, 0.75vw, 0.6rem);
+  line-height: 1.35;
+  letter-spacing: 0.13em;
+  text-wrap: balance;
+}
+.command-page .command-stage {
+  z-index: 2;
+  inset: clamp(3.15rem, 5vw, 3.8rem) 0 0;
+  overflow: hidden;
+}
+.command-page .command-stage::before {
+  top: 50%;
+  width: min(88%, 62rem);
+  background: linear-gradient(
+    90deg,
+    transparent,
+    rgba(112, 75, 24, 0.18) 28%,
+    rgba(202, 167, 101, 0.2) 50%,
+    rgba(112, 75, 24, 0.18) 72%,
+    transparent
+  );
+}
+.command-page .command-stage::after {
+  bottom: -2%;
+  width: min(72%, 48rem);
+  height: 18%;
+  background: radial-gradient(ellipse, rgba(66, 35, 88, 0.3), transparent 70%);
+  filter: blur(18px);
+}
+.command-page .command-chamber {
+  z-index: 0;
+  inset: 0;
+}
+.command-lab-field,
+.command-lab-orbit,
+.command-lab-axis,
+.command-lab-signal {
+  position: absolute;
+  pointer-events: none;
+}
+.command-lab-field {
+  top: 50%;
+  left: 50%;
+  width: min(98cqh, 72cqw, 47rem);
+  aspect-ratio: 1;
+  border-radius: 50%;
+  background:
+    repeating-conic-gradient(
+      from 7deg,
+      transparent 0 14.6deg,
+      rgba(202, 167, 101, 0.13) 14.8deg 15deg
+    ),
+    radial-gradient(
+      circle,
+      transparent 0 42%,
+      rgba(41, 27, 69, 0.28) 42.2% 42.5%,
+      transparent 42.7% 57%,
+      rgba(112, 75, 24, 0.15) 57.2% 57.45%,
+      transparent 57.7%
+    );
+  opacity: 0.68;
+  transform: translate(-50%, -50%);
+  animation: command-lab-drift 44s linear infinite;
+}
+.command-lab-orbit {
+  top: 50%;
+  left: 50%;
+  aspect-ratio: 1;
+  border-radius: 50%;
+  transform: translate(-50%, -50%);
+}
+.command-lab-orbit-wide {
+  width: min(112cqh, 83cqw, 54rem);
+  border: 1px solid rgba(183, 135, 49, 0.11);
+  box-shadow: inset 0 0 5rem rgba(41, 27, 69, 0.1);
+}
+.command-lab-orbit-near {
+  width: min(79cqh, 59cqw, 39rem);
+  border: 1px solid rgba(202, 167, 101, 0.16);
+  box-shadow: 0 0 3rem rgba(41, 27, 69, 0.15);
+}
+.command-lab-axis-horizontal {
+  top: 50%;
+  left: 7%;
+  width: 86%;
+  height: 1px;
+  background: linear-gradient(
+    90deg,
+    transparent,
+    rgba(202, 167, 101, 0.12) 16%,
+    transparent 40% 60%,
+    rgba(202, 167, 101, 0.12) 84%,
+    transparent
+  );
+}
+.command-lab-axis-vertical {
+  top: 7%;
+  left: 50%;
+  width: 1px;
+  height: 86%;
+  background: linear-gradient(
+    transparent,
+    rgba(73, 44, 99, 0.62) 18%,
+    transparent 41% 59%,
+    rgba(73, 44, 99, 0.62) 82%,
+    transparent
+  );
+}
+.command-lab-signal {
+  top: 50%;
+  width: min(19cqw, 14rem);
+  height: 1px;
+  background: linear-gradient(
+    90deg,
+    transparent,
+    #704b18 35%,
+    #c18f31 50%,
+    #704b18 65%,
+    transparent
+  );
+  background-size: 220% 100%;
+  opacity: 0.45;
+  animation: command-lab-signal 7s ease-in-out infinite;
+}
+.command-lab-signal-left {
+  right: calc(50% + min(31cqh, 20cqw));
+}
+.command-lab-signal-right {
+  left: calc(50% + min(31cqh, 20cqw));
+  animation-direction: reverse;
+}
+
+.command-page .intelligence-core {
+  z-index: 4;
+  top: 50%;
+  left: 50%;
+  width: min(76cqh, 54cqw, 35rem);
+  aspect-ratio: 1;
+  transform: translate(-50%, -50%);
+  animation: none;
+}
+.command-core-halo {
+  position: absolute;
+  z-index: 0;
+  inset: 13%;
+  border-radius: 50%;
+  background: radial-gradient(
+    circle,
+    rgba(202, 167, 101, 0.34) 0%,
+    rgba(183, 135, 49, 0.18) 28%,
+    rgba(71, 37, 94, 0.32) 48%,
+    transparent 72%
+  );
+  filter: blur(16px);
+  animation: command-core-halo-pulse 6.8s ease-in-out infinite;
+}
+.command-core-rings {
+  position: absolute;
+  z-index: 1;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  overflow: visible;
+  filter: drop-shadow(0 0.75rem 1.3rem rgba(0, 0, 0, 0.5));
+}
+.command-core-energy-disc {
+  fill: url(#core-purple-energy);
+}
+.command-core-ring-base,
+.command-core-ring-ticks,
+.command-core-ring-fine,
+.command-core-ring-segments,
+.command-core-aperture,
+.command-core-arc,
+.command-core-calibration path {
+  fill: none;
+  vector-effect: non-scaling-stroke;
+}
+.command-core-ring-command,
+.command-core-ring-counter {
+  transform-box: view-box;
+  transform-origin: 50% 50%;
+}
+.command-core-ring-command {
+  animation: command-core-ring-clockwise 64s linear infinite;
+}
+.command-core-ring-counter {
+  animation: command-core-ring-counter 48s linear infinite;
+}
+.command-core-ring-base {
+  stroke: rgba(112, 75, 24, 0.58);
+  stroke-width: 1.4;
+}
+.command-core-ring-ticks {
+  stroke: rgba(202, 167, 101, 0.63);
+  stroke-width: 1.2;
+  stroke-dasharray: 0.35 4.65;
+}
+.command-core-ring-fine {
+  stroke: rgba(183, 135, 49, 0.52);
+  stroke-width: 1;
+  stroke-dasharray: 0.45 3.55;
+}
+.command-core-ring-segments {
+  stroke: url(#core-brushed-gold);
+  stroke-width: 5;
+  stroke-linecap: butt;
+  stroke-dasharray: 8 3 15 5 4 7;
+}
+.command-core-arc {
+  stroke: url(#core-brushed-gold);
+  stroke-width: 7;
+  stroke-linecap: square;
+}
+.command-core-aperture {
+  stroke: rgba(202, 167, 101, 0.3);
+  stroke-width: 1.2;
+  filter: drop-shadow(0 0 8px rgba(41, 27, 69, 0.75));
+}
+.command-core-calibration path {
+  stroke: #9e7025;
+  stroke-width: 2;
+}
+.command-page .core-reactor-frame {
+  position: absolute;
+  z-index: 2;
+  inset: 19%;
+  border: 1px solid rgba(202, 167, 101, 0.44);
+  border-radius: 50%;
+  background: radial-gradient(
+    circle,
+    rgba(41, 27, 69, 0.3),
+    rgba(14, 8, 19, 0.9) 71%
+  );
+  box-shadow:
+    0 1.5rem 3.5rem rgba(0, 0, 0, 0.6),
+    0 0 2.8rem rgba(183, 135, 49, 0.12),
+    inset 0 0 2.4rem rgba(41, 27, 69, 0.38),
+    inset 0 0 0 5px rgba(112, 75, 24, 0.1);
+}
+.command-core-notch {
+  position: absolute;
+  z-index: 3;
+  width: 2.5rem;
+  height: 0.38rem;
+  border: 1px solid #704b18;
+  background: linear-gradient(90deg, #704b18, #c18f31, #9e7025, #704b18);
+  box-shadow: inset 0 1px rgba(202, 167, 101, 0.45);
+}
+.command-core-notch-north,
+.command-core-notch-south {
+  left: 50%;
+  transform: translateX(-50%);
+}
+.command-core-notch-north {
+  top: -0.2rem;
+}
+.command-core-notch-south {
+  bottom: -0.2rem;
+}
+.command-core-notch-east,
+.command-core-notch-west {
+  top: 50%;
+  transform: translateY(-50%) rotate(90deg);
+}
+.command-core-notch-east {
+  right: -1.25rem;
+}
+.command-core-notch-west {
+  left: -1.25rem;
+}
+.command-page .core-emblem {
+  position: absolute;
+  z-index: 2;
+  inset: 3%;
+  overflow: visible;
+  background: transparent;
+}
+.command-page .core-energy {
+  position: absolute;
+  z-index: 0;
+  inset: 10%;
+  border-radius: 50%;
+  background: radial-gradient(
+    circle,
+    rgba(202, 167, 101, 0.24),
+    rgba(68, 34, 91, 0.3) 42%,
+    transparent 70%
+  );
+  filter: blur(10px);
+  animation: command-core-halo-pulse 6.8s ease-in-out infinite;
+}
+.command-page .core-emblem .command-core-emblem {
+  position: relative;
+  z-index: 2;
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  filter: drop-shadow(0 0.9rem 1.5rem rgba(0, 0, 0, 0.58));
+  animation: command-core-icon-breathe 6.8s ease-in-out infinite;
+}
+
+@keyframes command-core-icon-breathe {
+  0%,
+  100% {
+    transform: scale(0.992);
+  }
+  50% {
+    transform: scale(1.008);
+  }
+}
+@keyframes command-core-halo-pulse {
+  0%,
+  100% {
+    opacity: 0.6;
+    transform: scale(0.97);
+  }
+  50% {
+    opacity: 0.92;
+    transform: scale(1.04);
+  }
+}
+@keyframes command-core-ring-clockwise {
+  to {
+    transform: rotate(360deg);
+  }
+}
+@keyframes command-core-ring-counter {
+  to {
+    transform: rotate(-360deg);
+  }
+}
+@keyframes command-lab-drift {
+  from {
+    transform: translate(-50%, -50%) rotate(0deg);
+  }
+  to {
+    transform: translate(-50%, -50%) rotate(360deg);
+  }
+}
+@keyframes command-lab-signal {
+  0%,
+  100% {
+    background-position: 100% 0;
+    opacity: 0.25;
+  }
+  50% {
+    background-position: 0 0;
+    opacity: 0.58;
+  }
+}
+
+@media (max-width: 1100px) {
+  .command-page .command-hero {
+    height: min(calc(100svh - 128px), 44rem);
+  }
+  .command-page .intelligence-core {
+    width: min(78cqh, 66cqw, 31rem);
+  }
+}
+
+@media (max-width: 700px) {
+  .command-page .command-hero {
+    width: 100%;
+    height: min(calc(100svh - 128px), 39rem);
+    padding: 0.62rem 0.15rem 0;
+  }
+  .command-page .command-hero-identity {
+    gap: 0.08rem;
+  }
+  .command-page .command-hero-identity h1 {
+    font-size: clamp(0.74rem, 3.2vw, 0.88rem);
+    letter-spacing: 0.24em;
+  }
+  .command-page .command-hero-identity p {
+    font-size: clamp(0.44rem, 1.85vw, 0.53rem);
+    letter-spacing: 0.075em;
+  }
+  .command-page .command-stage {
+    inset: 2.8rem 0 0;
+  }
+  .command-page .intelligence-core {
+    width: min(78cqh, 82cqw, 25rem);
+  }
+  .command-lab-field {
+    width: min(96cqh, 112cqw);
+  }
+  .command-lab-orbit-wide {
+    width: min(112cqh, 132cqw);
+  }
+  .command-lab-orbit-near {
+    width: min(84cqh, 98cqw);
+  }
+  .command-lab-signal {
+    display: none;
+  }
+  .command-core-notch {
+    width: 1.75rem;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .command-lab-field,
+  .command-lab-signal,
+  .command-core-ring-command,
+  .command-core-ring-counter,
+  .command-core-halo,
+  .command-page .core-energy,
+  .command-page .core-emblem .command-core-emblem {
+    animation: none;
+  }
+  .command-core-halo,
+  .command-page .core-energy {
+    opacity: 0.78;
+    transform: none;
+  }
+}
+html[data-reduced-motion="true"] .command-lab-field,
+html[data-reduced-motion="true"] .command-lab-signal,
+html[data-reduced-motion="true"] .command-core-ring-command,
+html[data-reduced-motion="true"] .command-core-ring-counter,
+html[data-reduced-motion="true"] .command-core-halo,
+html[data-reduced-motion="true"] .command-page .core-energy,
+html[data-reduced-motion="true"]
+  .command-page
+  .core-emblem
+  .command-core-emblem {
+  animation: none;
+}
+html[data-reduced-motion="true"] .command-core-halo,
+html[data-reduced-motion="true"] .command-page .core-energy {
+  opacity: 0.78;
+  transform: none;
+}
+
+/* Product Development dossier system. Scoped to the module entry, product
+   creation flow, and product workspace so unrelated modules retain their UI. */
+.product-development-page,
+.product-workspace {
+  --development-void: #130b1f;
+  --development-plum: #170c20;
+  --development-purple: #291b45;
+  --development-gold-shadow: #704b18;
+  --development-gold-deep: #9e7025;
+  --development-gold: #b78731;
+  --development-gold-bright: #c18f31;
+  --development-champagne: #caa765;
+  --development-ivory: #f2eee8;
+  --development-muted: #a39ca9;
+}
+.product-development-page {
+  padding-top: clamp(2rem, 4vw, 4rem);
+  background:
+    radial-gradient(
+      circle at 78% 8%,
+      rgba(41, 27, 69, 0.48),
+      transparent 28rem
+    ),
+    linear-gradient(180deg, #170c20, #130b1f 36rem, #09060d);
+}
+.product-development-header {
+  position: relative;
+  isolation: isolate;
+  border-bottom: 1px solid rgba(202, 167, 101, 0.22);
+  overflow: hidden;
+  background:
+    linear-gradient(90deg, rgba(41, 27, 69, 0.42), transparent 46%),
+    repeating-linear-gradient(
+      90deg,
+      transparent 0 6.95rem,
+      rgba(202, 167, 101, 0.025) 7rem
+    );
+}
+.product-development-page .product-development-header {
+  min-height: clamp(18rem, 40svh, 26rem);
+}
+.product-development-header h1 {
+  font-size: clamp(3.5rem, 7vw, 6.5rem);
+}
+.product-development-header::after {
+  position: absolute;
+  z-index: -1;
+  right: -8rem;
+  bottom: -18rem;
+  width: 40rem;
+  aspect-ratio: 1;
+  border: 1px solid rgba(183, 135, 49, 0.16);
+  border-radius: 50%;
+  content: "";
+  box-shadow:
+    inset 0 0 0 4rem rgba(41, 27, 69, 0.08),
+    inset 0 0 0 8rem rgba(112, 75, 24, 0.04);
+}
+.product-development-header h1,
+.product-workspace .record-header h1 {
+  color: var(--development-ivory);
+  text-shadow: 0 0.8rem 2.4rem rgba(0, 0, 0, 0.48);
+}
+.product-development-entry {
+  position: relative;
+  padding-block: clamp(2.5rem, 6vw, 5rem);
+}
+.product-development-entry::before {
+  position: absolute;
+  inset: 0 calc(50% - 50vw);
+  z-index: 0;
+  content: "";
+  pointer-events: none;
+  background: radial-gradient(
+    circle at 50% 8%,
+    rgba(41, 27, 69, 0.28),
+    transparent 30rem
+  );
+}
+.product-development-entry > * {
+  position: relative;
+  z-index: 1;
+}
+.product-development-page .view-toolbar {
+  border-color: rgba(202, 167, 101, 0.2);
+  background:
+    linear-gradient(180deg, rgba(23, 12, 32, 0.98), rgba(11, 7, 15, 0.98)),
+    #130b1f;
+  box-shadow:
+    0 1rem 2rem rgba(0, 0, 0, 0.26),
+    inset 0 1px rgba(202, 167, 101, 0.08);
+}
+.product-development-page .segmented-control button[aria-pressed="true"] {
+  color: #130b1f;
+  background: linear-gradient(135deg, #704b18, #c18f31 48%, #9e7025);
+  box-shadow: inset 0 1px rgba(202, 167, 101, 0.55);
+}
+.product-development-page .pipeline-board {
+  gap: 0.7rem;
+}
+.product-development-page .pipeline-column {
+  position: relative;
+  border: 1px solid rgba(112, 75, 24, 0.4);
+  border-top: 3px solid var(--development-gold);
+  background:
+    linear-gradient(180deg, rgba(41, 27, 69, 0.25), transparent 8rem),
+    rgba(13, 8, 18, 0.9);
+  box-shadow:
+    0 1.2rem 2.8rem rgba(0, 0, 0, 0.24),
+    inset 0 1px rgba(202, 167, 101, 0.08);
+}
+.product-development-page .pipeline-column > header {
+  min-height: 4.5rem;
+  border-bottom-color: rgba(202, 167, 101, 0.14);
+  background: linear-gradient(90deg, rgba(112, 75, 24, 0.12), transparent);
+}
+.product-development-page .product-card,
+.product-development-page .responsive-table,
+.product-development-page .line-view > section {
+  border-color: rgba(202, 167, 101, 0.18);
+  background:
+    radial-gradient(circle at 100% 0, rgba(41, 27, 69, 0.35), transparent 9rem),
+    linear-gradient(145deg, rgba(23, 12, 32, 0.96), rgba(8, 5, 12, 0.98));
+  box-shadow:
+    0 0.8rem 1.8rem rgba(0, 0, 0, 0.22),
+    inset 0 1px rgba(202, 167, 101, 0.06);
+  transition:
+    border-color 180ms ease,
+    transform 180ms ease;
+}
+.product-development-page .product-card:hover,
+.product-development-page .product-card:focus-within {
+  border-color: rgba(193, 143, 49, 0.48);
+  transform: translateY(-2px);
+}
+.product-development-page .product-card h3 a {
+  color: var(--development-ivory);
+}
+.product-development-page .button,
+.product-workspace .button,
+.product-create-flow .button {
+  border-color: #704b18;
+  color: #130b1f;
+  background: linear-gradient(
+    135deg,
+    #704b18,
+    #b78731 45%,
+    #c18f31 54%,
+    #9e7025 72%,
+    #704b18
+  );
+  box-shadow:
+    inset 0 1px rgba(202, 167, 101, 0.6),
+    0 0.65rem 1.5rem rgba(0, 0, 0, 0.24);
+}
+.product-development-page .button:hover,
+.product-development-page .button:focus-visible,
+.product-workspace .button:hover,
+.product-workspace .button:focus-visible,
+.product-create-flow .button:hover,
+.product-create-flow .button:focus-visible {
+  background: linear-gradient(
+    135deg,
+    #9e7025,
+    #caa765 46%,
+    #b78731 72%,
+    #704b18
+  );
+}
+.product-development-page .product-card dl > div {
+  border-bottom-color: rgba(202, 167, 101, 0.1);
+}
+
+.product-create-flow {
+  position: relative;
+  background:
+    radial-gradient(
+      circle at 90% 5%,
+      rgba(41, 27, 69, 0.45),
+      transparent 18rem
+    ),
+    linear-gradient(180deg, #170c20, #0c0711);
+}
+.product-create-flow .form-intro {
+  padding: 0.85rem 1rem;
+  border-left: 2px solid #b78731;
+  color: #a39ca9;
+  background: rgba(41, 27, 69, 0.2);
+}
+.product-create-flow > label {
+  color: #caa765;
+}
+.product-create-flow input,
+.product-create-flow textarea,
+.product-create-flow select {
+  border-color: rgba(202, 167, 101, 0.22);
+  color: #f2eee8;
+  background: rgba(9, 5, 13, 0.9);
+}
+.product-create-flow .product-path-selector label {
+  border-color: rgba(112, 75, 24, 0.5);
+  background:
+    linear-gradient(145deg, rgba(41, 27, 69, 0.32), transparent 70%), #100916;
+}
+.product-create-flow .product-path-selector label:has(input:checked) {
+  border-color: #c18f31;
+  box-shadow:
+    inset 3px 0 #caa765,
+    0 0.8rem 1.8rem rgba(0, 0, 0, 0.28);
+  background: linear-gradient(
+    145deg,
+    rgba(112, 75, 24, 0.3),
+    rgba(41, 27, 69, 0.34)
+  );
+}
+
+.product-workspace {
+  background:
+    radial-gradient(
+      circle at 72% 4%,
+      rgba(41, 27, 69, 0.44),
+      transparent 28rem
+    ),
+    linear-gradient(180deg, #170c20 0, #130b1f 42rem, #09060d 100%);
+}
+.product-workspace .record-header {
+  position: relative;
+  min-height: 25rem;
+  border-bottom: 1px solid rgba(202, 167, 101, 0.18);
+  background:
+    repeating-linear-gradient(
+      90deg,
+      transparent 0 7.95rem,
+      rgba(202, 167, 101, 0.02) 8rem
+    ),
+    linear-gradient(90deg, rgba(41, 27, 69, 0.32), transparent 58%);
+}
+.product-workspace .record-header-status > span {
+  border-color: rgba(202, 167, 101, 0.3);
+  color: var(--development-champagne);
+  background: rgba(19, 11, 31, 0.7);
+}
+.product-workspace .product-controls,
+.product-workspace .workspace-section {
+  border-color: rgba(202, 167, 101, 0.14);
+}
+.product-workspace .product-build-navigation {
+  border-color: rgba(202, 167, 101, 0.22);
+  background: rgba(10, 6, 14, 0.96);
+  box-shadow: 0 0.8rem 2rem rgba(0, 0, 0, 0.28);
+}
+.product-workspace .product-build-context {
+  border-color: rgba(202, 167, 101, 0.2);
+  color: var(--development-champagne);
+  background: linear-gradient(
+    135deg,
+    rgba(112, 75, 24, 0.2),
+    rgba(41, 27, 69, 0.22)
+  );
+}
+.product-workspace .product-build-rail a[aria-current="location"] {
+  color: var(--development-ivory);
+  box-shadow: inset 0 -2px var(--development-gold-bright);
+  background: linear-gradient(
+    180deg,
+    rgba(41, 27, 69, 0.48),
+    rgba(112, 75, 24, 0.08)
+  );
+}
+.product-workspace .workspace-section {
+  padding-block: clamp(2.5rem, 5vw, 4.5rem);
+}
+.product-workspace .overview-grid,
+.product-workspace .brief-instrument,
+.product-workspace .memory-list,
+.product-workspace .decision-list,
+.product-workspace .activity-timeline {
+  position: relative;
+}
+.product-workspace .fact-list,
+.product-workspace .attention-panel,
+.product-workspace .brief-instrument fieldset,
+.product-workspace .memory-list > article,
+.product-workspace .decision-list > article,
+.product-workspace .activity-timeline li,
+.product-workspace .memory-form {
+  border-color: rgba(202, 167, 101, 0.18);
+  background:
+    radial-gradient(
+      circle at 100% 0,
+      rgba(41, 27, 69, 0.28),
+      transparent 10rem
+    ),
+    rgba(13, 8, 18, 0.86);
+  box-shadow: inset 0 1px rgba(202, 167, 101, 0.055);
+}
+.product-workspace .fact-list {
+  padding: 1rem 1.25rem;
+  border: 1px solid rgba(202, 167, 101, 0.18);
+}
+.product-workspace .fact-list > div {
+  border-color: rgba(202, 167, 101, 0.1);
+}
+.product-workspace .attention-panel {
+  border-left-color: var(--development-gold-bright);
+  background:
+    linear-gradient(135deg, rgba(112, 75, 24, 0.15), transparent 48%),
+    rgba(41, 27, 69, 0.14);
+}
+.product-workspace .brief-completion {
+  border-left-color: var(--development-gold);
+  background: linear-gradient(
+    90deg,
+    rgba(112, 75, 24, 0.15),
+    rgba(41, 27, 69, 0.18)
+  );
+}
+.product-workspace .brief-instrument fieldset {
+  border-top: 2px solid rgba(183, 135, 49, 0.42);
+}
+.product-workspace .brief-instrument legend,
+.product-workspace .card-eyebrow {
+  color: var(--development-champagne);
+}
+.product-workspace .brief-editor input,
+.product-workspace .brief-editor textarea,
+.product-workspace .memory-form input,
+.product-workspace .memory-form textarea,
+.product-workspace .memory-form select,
+.product-workspace .decision-list input,
+.product-workspace .decision-list textarea,
+.product-workspace .decision-list select {
+  border-color: rgba(202, 167, 101, 0.2);
+  color: var(--development-ivory);
+  background: rgba(8, 5, 12, 0.88);
+}
+.product-workspace .memory-list > article,
+.product-workspace .decision-list > article {
+  border-left: 2px solid var(--development-gold-deep);
+}
+.product-workspace .product-development-timeline li {
+  border: 1px solid rgba(202, 167, 101, 0.16);
+  border-left: 2px solid var(--development-purple);
+}
+.product-workspace .product-development-timeline time,
+.product-workspace .timeline-related-record {
+  color: var(--development-muted);
+}
+.product-workspace .phase-boundary {
+  border-left-color: var(--development-gold-shadow);
+  background: linear-gradient(90deg, rgba(41, 27, 69, 0.18), transparent);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .product-development-page .product-card {
+    transition: none;
+  }
+  .product-development-page .product-card:hover,
+  .product-development-page .product-card:focus-within {
+    transform: none;
+  }
+}
+html[data-reduced-motion="true"] .product-development-page .product-card {
+  transition: none;
+}
+html[data-reduced-motion="true"] .product-development-page .product-card:hover,
+html[data-reduced-motion="true"]
+  .product-development-page
+  .product-card:focus-within {
+  transform: none;
+}
+
+.product-development-page :is(a, button, input, select, textarea):focus-visible,
+.product-workspace
+  :is(a, button, input, select, textarea, summary):focus-visible,
+.product-create-flow :is(button, input, select, textarea):focus-visible {
+  outline: 2px solid #caa765;
+  outline-offset: 3px;
+}
+.product-workspace .fact-list dd,
+.product-workspace .timeline-related-record,
+.product-development-page .product-card h3 {
+  overflow-wrap: anywhere;
+}
+.product-build-rail > * {
+  scroll-snap-align: start;
+}
+.product-build-rail {
+  scroll-snap-type: x proximity;
+}
+
+@media (max-width: 700px) {
+  .product-development-page .destination-header,
+  .product-workspace .record-header {
+    min-height: 0;
+    padding-block: 2.5rem;
+  }
+  .product-development-page .destination-header h1,
+  .product-workspace .record-header h1 {
+    font-size: clamp(2.5rem, 13.5vw, 4rem);
+    overflow-wrap: anywhere;
+  }
+  .product-development-actions {
+    align-items: stretch;
+    flex-direction: column;
+  }
+  .product-development-actions > * {
+    width: 100%;
+    justify-content: center;
+  }
+  .product-development-page .view-toolbar {
+    position: static;
+    padding: 0.75rem;
+  }
+  .product-development-page .segmented-control {
+    scroll-snap-type: x proximity;
+  }
+  .product-development-page .segmented-control button {
+    min-width: max-content;
+    scroll-snap-align: start;
+  }
+  .product-development-page .pipeline-mobile-list .product-card {
+    margin: 0;
+  }
+  .product-workspace .record-header-status {
+    max-width: 100%;
+  }
+  .product-workspace .record-header-actions {
+    width: 100%;
+  }
+  .product-workspace .record-header-actions > * {
+    flex: 1 1 0;
+    justify-content: center;
+  }
+  .product-workspace .product-build-rail a,
+  .product-workspace .product-build-rail > span {
+    min-height: 52px;
+  }
+  .product-workspace .workspace-section {
+    padding-block: 2.5rem;
+  }
+  .product-workspace .fact-list > div {
+    align-items: flex-start;
+    flex-direction: column;
+    gap: 0.25rem;
+  }
+  .product-workspace .fact-list dd {
+    text-align: left;
+  }
+  .product-workspace .brief-completion {
+    grid-template-columns: 1fr;
+  }
+  .product-workspace .brief-completion small {
+    grid-column: auto;
+  }
+  .product-workspace .memory-form,
+  .product-workspace .brief-instrument fieldset,
+  .product-workspace .decision-list > article,
+  .product-workspace .memory-list > article {
+    padding: 1rem;
+  }
+  .product-create-flow {
+    padding: 1rem;
   }
 }
 
@@ -4165,6 +5398,9 @@ html[data-reduced-motion="true"] *::after {
   .version-list,
   .overview-grid,
   .brief-fields,
+  .brief-instrument,
+  .brief-field-grid,
+  .brief-target-grid,
   .memory-forms,
   .experiment-forms,
   .calculator-controls,
@@ -4173,6 +5409,15 @@ html[data-reduced-motion="true"] *::after {
   .command-panels,
   .create-workspace {
     grid-template-columns: 1fr;
+  }
+  .brief-fieldset-wide {
+    grid-column: auto;
+  }
+  .product-path-selector {
+    grid-template-columns: 1fr;
+  }
+  .product-path-selector label {
+    min-height: 5.75rem;
   }
   .segmented-control {
     overflow-x: auto;
@@ -4184,6 +5429,19 @@ html[data-reduced-motion="true"] *::after {
     display: block;
     overflow: visible;
   }
+  .pipeline-board {
+    display: none;
+  }
+  .pipeline-mobile-list {
+    display: grid;
+    gap: 0.75rem;
+  }
+  .archive-confirmation {
+    grid-template-columns: 1fr 1fr;
+  }
+  .archive-confirmation span {
+    grid-column: 1 / -1;
+  }
   .pipeline-column {
     min-height: 0;
     margin-bottom: 1rem;
@@ -4191,11 +5449,22 @@ html[data-reduced-motion="true"] *::after {
   .record-header {
     padding-block: 3rem;
   }
+  .record-header-status,
+  .record-header-actions {
+    justify-content: flex-start;
+  }
   .record-header h1 {
     font-size: clamp(3rem, 15vw, 5rem);
   }
   .record-tabs {
     top: 64px;
+  }
+  .product-build-navigation {
+    top: 64px;
+    grid-template-columns: 1fr;
+  }
+  .product-build-context {
+    display: none;
   }
   .formula-rows > article {
     grid-template-columns: 2rem minmax(0, 1fr);
@@ -4209,6 +5478,10 @@ html[data-reduced-motion="true"] *::after {
   .activity-timeline li,
   .production-step-list li {
     grid-template-columns: 1fr;
+  }
+  .timeline-related-record {
+    justify-items: start;
+    text-align: left;
   }
   .create-action-list {
     max-height: 13rem;

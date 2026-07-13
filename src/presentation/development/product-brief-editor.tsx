@@ -92,73 +92,125 @@ export function ProductBriefEditor({
     } else setMessage(body.error ?? "Product brief was not saved.");
   }
 
-  const fields = [
-    ["targetCustomer", "Target customer"],
-    ["problemToSolve", "Problem being solved"],
-    ["desiredBenefits", "Desired benefits"],
-    ["desiredFormat", "Desired format"],
-    ["desiredTexture", "Desired texture"],
-    ["desiredAbsorption", "Desired absorption"],
-    ["desiredColor", "Desired color"],
-    ["desiredAroma", "Desired aroma"],
-    ["targetPackaging", "Target packaging"],
-    ["ingredientsToExplore", "Ingredients to explore"],
-    ["ingredientsToAvoid", "Ingredients to avoid"],
-    ["competitiveReferences", "Competitive references"],
-    ["notes", "Brief notes"],
-  ] as const;
-  const priceFields = [
-    ["targetRetailPrice", "Target retail price"],
-    ["targetWholesalePrice", "Target wholesale price"],
-    ["maximumTargetCogs", "Maximum target COGS"],
-  ] as const;
+  const enteredCount = Object.values(draft).filter(
+    (value) => value.trim().length > 0,
+  ).length;
+  const briefFieldCount = Object.keys(initial).length;
+  function updateField(key: keyof BriefDraft, value: string) {
+    setDraft((current) => ({ ...current, [key]: value }));
+  }
+  function textField(key: keyof BriefDraft, label: string, rows = 3) {
+    return (
+      <label key={key}>
+        <span>{label}</span>
+        <textarea
+          rows={rows}
+          value={draft[key]}
+          onChange={(event) => updateField(key, event.target.value)}
+        />
+      </label>
+    );
+  }
   return (
     <form className="brief-editor" onSubmit={save}>
-      <div className="brief-fields">
-        {fields.map(([key, label]) => (
-          <label key={key}>
-            <span>{label}</span>
-            <textarea
-              rows={key === "notes" ? 5 : 3}
-              value={draft[key]}
-              onChange={(event) =>
-                setDraft((current) => ({
-                  ...current,
-                  [key]: event.target.value,
-                }))
-              }
-            />
-          </label>
-        ))}
-        {priceFields.map(([key, label]) => (
-          <label key={key}>
-            <span>{label}</span>
+      <div className="brief-completion" role="status">
+        <span>Brief completion</span>
+        <strong>
+          {enteredCount} of {briefFieldCount} fields entered
+        </strong>
+        <small>
+          Counted from entered values only; no readiness is inferred.
+        </small>
+      </div>
+      <div className="brief-instrument">
+        <fieldset>
+          <legend>Product Intent</legend>
+          <div className="brief-current-intent">
+            <span>Current product description</span>
+            <p>{product.description ?? "Not entered"}</p>
+            <small>
+              Edit product identity separately; saving this brief does not
+              silently change it.
+            </small>
+          </div>
+          <label>
+            <span>Target launch date</span>
             <input
-              inputMode="decimal"
-              value={draft[key]}
+              type="date"
+              value={draft.targetLaunchDate}
               onChange={(event) =>
-                setDraft((current) => ({
-                  ...current,
-                  [key]: event.target.value,
-                }))
+                updateField("targetLaunchDate", event.target.value)
               }
-              placeholder="Not entered"
             />
           </label>
-        ))}
-        <label>
-          <span>Target launch date</span>
-          <input
-            type="date"
-            value={draft.targetLaunchDate}
-            onChange={(event) =>
-              setDraft((current) => ({
-                ...current,
-                targetLaunchDate: event.target.value,
-              }))
-            }
-          />
-        </label>
+        </fieldset>
+        <fieldset>
+          <legend>Target Customer</legend>
+          {textField("targetCustomer", "Target customer")}
+        </fieldset>
+        <fieldset>
+          <legend>Problem to Solve</legend>
+          {textField("problemToSolve", "Problem to solve")}
+        </fieldset>
+        <fieldset>
+          <legend>Desired Benefits</legend>
+          {textField("desiredBenefits", "Desired benefits")}
+        </fieldset>
+        <fieldset>
+          <legend>Product Format</legend>
+          {textField("desiredFormat", "Desired format")}
+        </fieldset>
+        <fieldset className="brief-fieldset-wide">
+          <legend>Texture / Absorption / Color / Aroma</legend>
+          <div className="brief-field-grid">
+            {textField("desiredTexture", "Desired texture")}
+            {textField("desiredAbsorption", "Desired absorption")}
+            {textField("desiredColor", "Desired color")}
+            {textField("desiredAroma", "Desired aroma")}
+          </div>
+        </fieldset>
+        <fieldset>
+          <legend>Packaging Target</legend>
+          {textField("targetPackaging", "Target packaging")}
+        </fieldset>
+        <fieldset className="brief-fieldset-wide">
+          <legend>Retail / Wholesale / Maximum COGS Targets</legend>
+          <div className="brief-field-grid brief-target-grid">
+            {(
+              [
+                ["targetRetailPrice", "Target retail price"],
+                ["targetWholesalePrice", "Target wholesale price"],
+                ["maximumTargetCogs", "Maximum target COGS"],
+              ] as const
+            ).map(([key, label]) => (
+              <label key={key}>
+                <span>{label}</span>
+                <input
+                  inputMode="decimal"
+                  value={draft[key]}
+                  onChange={(event) => updateField(key, event.target.value)}
+                  placeholder="Not entered"
+                />
+              </label>
+            ))}
+          </div>
+        </fieldset>
+        <fieldset>
+          <legend>Ingredients to Explore</legend>
+          {textField("ingredientsToExplore", "Ingredients to explore", 4)}
+        </fieldset>
+        <fieldset>
+          <legend>Ingredients to Avoid</legend>
+          {textField("ingredientsToAvoid", "Ingredients to avoid", 4)}
+        </fieldset>
+        <fieldset>
+          <legend>Competitive References</legend>
+          {textField("competitiveReferences", "Competitive references", 4)}
+        </fieldset>
+        <fieldset>
+          <legend>Notes</legend>
+          {textField("notes", "Brief notes", 5)}
+        </fieldset>
       </div>
       {message ? (
         <p className="inline-feedback" role="status">

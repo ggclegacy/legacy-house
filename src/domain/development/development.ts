@@ -199,6 +199,8 @@ export const labels = {
   production_ready: "Production Ready",
   launch_planning: "Launch Planning",
   on_hold: "On Hold",
+  formula_source: "Formula / Source",
+  launch_ready: "Launch Ready",
   under_review: "Under Review",
   volume_percentage: "Volume Percentage",
   weight_percentage: "Weight Percentage",

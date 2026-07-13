@@ -9,6 +9,7 @@ import { IngredientLibraryView } from "@/src/presentation/development/ingredient
 import { PersistenceBanner } from "@/src/presentation/development/persistence-banner";
 import { ProductPipelineView } from "@/src/presentation/development/product-pipeline-view";
 import { RndLabView } from "@/src/presentation/development/rnd-lab-view";
+import { QuickCreateButton } from "@/src/presentation/command/quick-create-button";
 import { loadDevelopmentSnapshot } from "@/src/services/development/load-development";
 import { CommercialHub } from "@/src/presentation/commercial/commercial-hub";
 import { loadCommercialSnapshot } from "@/src/services/commercial/load-commercial";
@@ -35,19 +36,55 @@ export default async function ModuleDestinationPage({
   ) {
     const snapshot = await loadDevelopmentSnapshot();
     return (
-      <div className="destination-page development-page">
-        <header className="destination-header">
-          <p className="eyebrow">Create · Phase 02</p>
-          <h1>{destination.label}</h1>
-          <p>{destination.summary}</p>
+      <div
+        className={`destination-page development-page ${destination.id === "product-pipeline" ? "product-development-page" : ""}`}
+      >
+        <header
+          className={`destination-header ${destination.id === "product-pipeline" ? "product-development-header" : ""}`}
+        >
+          <p className="eyebrow">
+            {destination.id === "product-pipeline"
+              ? "Create · Product Development"
+              : "Create · Phase 02"}
+          </p>
+          <h1>
+            {destination.id === "product-pipeline"
+              ? "Product Development"
+              : destination.label}
+          </h1>
+          <p>
+            {destination.id === "product-pipeline"
+              ? "Move real products from founder intent through research, formula or source, sourcing, packaging, costing, and launch-ready development."
+              : destination.summary}
+          </p>
+          {destination.id === "product-pipeline" ? (
+            <div className="product-development-actions">
+              <QuickCreateButton kind="product" className="button">
+                Create Product
+              </QuickCreateButton>
+              <a className="button-secondary" href="#product-pipeline">
+                Open Product Pipeline
+              </a>
+            </div>
+          ) : null}
         </header>
         <PersistenceBanner persistence={snapshot.persistence} />
         {destination.id === "product-pipeline" ? (
-          <ProductPipelineView
-            products={snapshot.products}
-            formulas={snapshot.formulas}
-            persistence={snapshot.persistence}
-          />
+          <section id="product-pipeline" className="product-development-entry">
+            <div className="section-heading compact-heading">
+              <p className="eyebrow">Product pipeline</p>
+              <h2>Development portfolio</h2>
+              <p>
+                Filter real product records, switch between the engineered
+                pipeline and product list, then open the next product to build.
+              </p>
+            </div>
+            <ProductPipelineView
+              products={snapshot.products}
+              formulas={snapshot.formulas}
+              persistence={snapshot.persistence}
+            />
+          </section>
         ) : null}
         {destination.id === "formula-vault" ? (
           <FormulaVaultView formulas={snapshot.formulas} />

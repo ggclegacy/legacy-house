@@ -141,6 +141,7 @@ export interface DevelopmentSnapshot {
     title: string;
     content: string;
     createdAt: string;
+    updatedAt: string;
   }[];
   decisions: readonly {
     id: string;

@@ -8,6 +8,11 @@ import {
 } from "@/src/command/create-registry";
 import type { DevelopmentSnapshot } from "@/src/domain/development/snapshot";
 import type { CommercialSnapshot } from "@/src/domain/commercial/snapshot";
+import {
+  labelFor,
+  productPriorities,
+  productTypes,
+} from "@/src/domain/development/development";
 import { calculateBatch } from "@/src/domain/formulas/calculation";
 import { useWorkspace } from "@/src/presentation/providers/workspace-provider";
 
@@ -107,14 +112,23 @@ export function CreateDialog({
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(payload),
     });
-    const body = (await response.json()) as { error?: string };
+    const body = (await response.json()) as {
+      error?: string;
+      result?: { slug?: string };
+    };
     setSubmitting(false);
     if (!response.ok) {
       setError(body.error ?? "The record could not be created.");
       return;
     }
-    onCreated(String(formData.get("name") ?? selected.label));
+    const createdName = String(formData.get("name") ?? selected.label);
+    onCreated(createdName);
     onClose();
+    if (selected.kind === "product" && body.result?.slug) {
+      window.location.assign(
+        `/products/${encodeURIComponent(body.result.slug)}#product-brief`,
+      );
+    }
   }
 
   return (
@@ -157,7 +171,10 @@ export function CreateDialog({
               </button>
             ))}
           </nav>
-          <form action={submit} className="form-stack">
+          <form
+            action={submit}
+            className={`form-stack ${selected.kind === "product" ? "product-create-flow" : ""}`}
+          >
             <p className="form-intro">{selected.description}</p>
             {error ? (
               <div className="error-summary" role="alert">
@@ -263,6 +280,42 @@ function CreateFields({
   if (kind === "product")
     return (
       <>
+        <fieldset className="product-path-selector">
+          <legend>Choose a development path</legend>
+          {[
+            {
+              value: "custom_formula",
+              label: "Custom Formula Product",
+              description:
+                "Begin with the product brief, then develop formula evidence.",
+            },
+            {
+              value: "white_label",
+              label: "White-Label Product",
+              description:
+                "Begin with the brief, then research manufacturers and catalogs.",
+            },
+            {
+              value: "undecided",
+              label: "Product Concept",
+              description:
+                "Capture intent now and decide the source or formula path later.",
+            },
+          ].map((path) => (
+            <label key={path.value}>
+              <input
+                type="radio"
+                name="developmentPath"
+                value={path.value}
+                defaultChecked={preferredDevelopmentPath === path.value}
+              />
+              <span>
+                <strong>{path.label}</strong>
+                <small>{path.description}</small>
+              </span>
+            </label>
+          ))}
+        </fieldset>
         <label>
           <span>Product line</span>
           <select name="productLineId" required>
@@ -278,36 +331,40 @@ function CreateFields({
           <input name="name" required />
         </label>
         <label>
-          <span>Slug</span>
-          <input name="slug" required pattern="[a-z0-9]+(?:-[a-z0-9]+)*" />
-        </label>
-        <label>
           <span>Product type</span>
           <select name="productType">
-            <option value="other">Other</option>
-            <option value="hair_beard_care">Hair and Beard Care</option>
-            <option value="supplement">Supplement</option>
-            <option value="wellness">Wellness</option>
+            {productTypes.map((type) => (
+              <option key={type} value={type}>
+                {labelFor(type)}
+              </option>
+            ))}
           </select>
         </label>
         <label>
-          <span>Development path</span>
-          <select
-            key={preferredDevelopmentPath}
-            name="developmentPath"
-            defaultValue={preferredDevelopmentPath}
-          >
-            <option value="undecided">Undecided</option>
-            <option value="custom_formula">Custom Formula</option>
-            <option value="white_label">White Label</option>
-            <option value="private_label">Private Label</option>
-            <option value="manufacturer_custom">Manufacturer Custom</option>
-            <option value="curated_resale">Curated Resale</option>
+          <span>Priority</span>
+          <select name="priority" defaultValue="standard">
+            {productPriorities.map((priority) => (
+              <option key={priority} value={priority}>
+                {labelFor(priority)}
+              </option>
+            ))}
           </select>
         </label>
         <label>
-          <span>Description</span>
-          <textarea name="description" />
+          <span>Short description</span>
+          <textarea name="description" required minLength={2} />
+        </label>
+        <label>
+          <span>Target customer</span>
+          <textarea name="targetCustomer" required minLength={2} />
+        </label>
+        <label>
+          <span>Problem to solve</span>
+          <textarea name="problemToSolve" required minLength={2} />
+        </label>
+        <label>
+          <span>Desired benefits</span>
+          <textarea name="desiredBenefits" required minLength={2} />
         </label>
       </>
     );
@@ -935,6 +992,40 @@ function ExperimentCreateFields({
   );
 }
 
+function slugifyProductName(name: string) {
+  return name
+    .trim()
+    .toLocaleLowerCase()
+    .normalize("NFKD")
+    .replace(/[\u0300-\u036f]/g, "")
+    .replace(/[^a-z0-9]+/g, "-")
+    .replace(/^-+|-+$/g, "");
+}
+
+export function buildProductCreationPayload(form: FormData) {
+  const value = (name: string) => String(form.get(name) ?? "");
+  const developmentPath = value("developmentPath");
+  return {
+    action: "create_product" as const,
+    data: {
+      productLineId: value("productLineId"),
+      name: value("name"),
+      slug: slugifyProductName(value("name")),
+      description: value("description") || null,
+      productType: value("productType"),
+      developmentPath,
+      pipelineStatus:
+        developmentPath === "undecided"
+          ? ("idea" as const)
+          : ("product_brief" as const),
+      priority: value("priority") || "standard",
+      targetCustomer: value("targetCustomer") || null,
+      problemToSolve: value("problemToSolve") || null,
+      desiredBenefits: value("desiredBenefits") || null,
+    },
+  };
+}
+
 function buildPayload(
   kind: CreateAction["kind"],
   form: FormData,
@@ -1030,20 +1121,7 @@ function buildPayload(
       description: value("description"),
       accentTheme: value("accentTheme"),
     };
-  if (kind === "product")
-    return {
-      action: "create_product",
-      data: {
-        productLineId: value("productLineId"),
-        name: value("name"),
-        slug: value("slug"),
-        description: value("description") || null,
-        productType: value("productType"),
-        developmentPath: value("developmentPath"),
-        pipelineStatus: "idea",
-        priority: "standard",
-      },
-    };
+  if (kind === "product") return buildProductCreationPayload(form);
   if (kind === "ingredient")
     return {
       action: "create_ingredient",

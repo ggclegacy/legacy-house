@@ -110,6 +110,25 @@ The third Command section is now a compact Development Portfolio. It maps detail
 - Deterministic readiness, commercial Command metrics, global search/create groups, commercial settings, and product/formula/ingredient commercial expansions.
 - No suppliers, manufacturers, products, quotes, packaging, prices, documents, certifications, or analytics were fabricated.
 
+## Single-core Command hero refinement
+
+- Replaced only the Command hero's four pillar nodes and conduits with one centered command core using the existing root `icon.png` unchanged (2000×2000; SHA-256 `7f77c47d8dac98b30fe913dd084ce9045c8a1ccba0557ce578423abf3785454d`). The shell, routes, Product Build Workspace, data, and lower Command sections were not changed.
+- Added lightweight SVG precision rings, segmented brushed-gold arcs, purple internal depth, a synchronized icon/halo breath, restrained chamber traces, and complete static reduced-motion styling.
+- Validation passed: `pnpm lint`, `pnpm format:check`, `pnpm typecheck`, 97/97 unit/integration tests, and `pnpm build` with 24 generated pages. The focused Playwright suite passed its hero reduced-motion and six-viewport geometry checks; two cold-start desktop timeouts passed 2/2 when rerun serially.
+- Vercel was not invoked for this local-only change; no commit or push was performed.
+
+- Product Development sequence Prompt 01 complete — established the existing pipeline route as the compact module entry with working Create Product and pipeline/list access over real records.
+- Product Development sequence Prompt 02 complete — refined product creation into three explicit paths with the required shared fields, generated slug, validated payload, and Product Brief continuation.
+- Product Development sequence Prompt 03 complete — aligned the pipeline to seven Command stages with complete filters, accessible status/archive controls, and a focused mobile product list.
+- Product Development sequence Prompt 04 complete — completed the Product Detail header and compact evidence-backed overview with real formula/source/configuration context and a grounded continuation.
+- Product Development sequence Prompt 05 complete — organized the safe-draft Product Brief as a structured definition instrument with real-field completion and explicit PostgreSQL save.
+- Product Development sequence Prompt 06 complete — replaced broad phase tabs with a compact, current-aware Product Build rail using only real contextual routes and an honest Launch Readiness unavailable state.
+- Product Development sequence Prompt 07 complete — completed all product-note categories with filter/sort/open/edit, activity-recorded note revisions, and non-destructive founder decision review.
+- Product Development sequence Prompt 08 complete — replaced raw activity with a real-event Development Timeline that groups exact repeats, resolves related records, and links only to existing destinations.
+- Product Development sequence Prompt 09 complete — applied the locked obsidian-plum, imperial-purple, and dimensional-gold dossier system across Product Development only.
+- Product Development sequence Prompt 10 complete — verified and polished 320px through desktop reflow, focused mobile pipeline use, compact build navigation, touch/focus states, and reduced motion without page overflow.
+- Product Development sequence final validation passed — format and lint clean; 109/109 tests across 42 files; 11/11 applicable Product Development browser scenarios with one intentional matrix skip; clean production build generated 24 pages.
+
 ## Validation evidence
 
 | Check                              | Result                                                                                                                                                                         |

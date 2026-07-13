@@ -2,6 +2,7 @@ import Link from "next/link";
 import { notFound } from "next/navigation";
 
 import { labelFor } from "@/src/domain/development/development";
+import { pipelineGroupFor } from "@/src/domain/development/pipeline";
 import { formulaTotal } from "@/src/domain/formulas/calculation";
 import { asRoute } from "@/src/navigation/as-route";
 import { PersistenceBanner } from "@/src/presentation/development/persistence-banner";
@@ -9,24 +10,11 @@ import { ProductBriefEditor } from "@/src/presentation/development/product-brief
 import { DecisionJournal } from "@/src/presentation/development/decision-journal";
 import { ProductControls } from "@/src/presentation/development/product-controls";
 import { ProductMemoryForms } from "@/src/presentation/development/product-memory-forms";
+import { ProductNotes } from "@/src/presentation/development/product-notes";
+import { ProductDevelopmentTimeline } from "@/src/presentation/development/product-development-timeline";
+import { ProductBuildNavigation } from "@/src/presentation/development/product-build-navigation";
 import { loadDevelopmentSnapshot } from "@/src/services/development/load-development";
 import { loadCommercialSnapshot } from "@/src/services/commercial/load-commercial";
-
-const tabs = [
-  "Overview",
-  "Product Brief",
-  "Development",
-  "Formulas",
-  "Ingredients",
-  "Sourcing",
-  "Inventory",
-  "Production",
-  "Quality",
-  "Launch",
-  "Market",
-  "Documents",
-  "Decisions",
-] as const;
 
 export default async function ProductPage({
   params,
@@ -64,6 +52,34 @@ export default async function ProductPage({
       formulas.some((formula) => formula.versionId === event.entityId) ||
       productExperiments.some((experiment) => experiment.id === event.entityId),
   );
+  const activeFormula = formulas.find(
+    (formula) => formula.activeVersionId === formula.versionId,
+  );
+  const selectedCandidate = commercial.candidates.find(
+    (candidate) =>
+      candidate.productId === product.id && candidate.status === "selected",
+  );
+  const selectedManufacturer = selectedCandidate
+    ? commercial.manufacturers.find(
+        (manufacturer) => manufacturer.id === selectedCandidate.manufacturerId,
+      )
+    : undefined;
+  const selectedCatalogProduct = selectedCandidate?.manufacturerCatalogProductId
+    ? commercial.catalogProducts.find(
+        (catalogProduct) =>
+          catalogProduct.id === selectedCandidate.manufacturerCatalogProductId,
+      )
+    : undefined;
+  const activeConfiguration = commercial.configurations.find(
+    (configuration) =>
+      configuration.productId === product.id && configuration.active,
+  );
+  const recentNote = [...notes].sort((left, right) =>
+    right.createdAt.localeCompare(left.createdAt),
+  )[0];
+  const recentDecision = [...decisions].sort((left, right) =>
+    right.decisionDate.localeCompare(left.decisionDate),
+  )[0];
   const missing = [
     !product.targetCustomer && "Target customer",
     !product.problemToSolve && "Problem to solve",
@@ -72,6 +88,24 @@ export default async function ProductPage({
       formulas.length === 0 &&
       "Custom formula",
   ].filter(Boolean) as string[];
+  const nextAction = missing.length
+    ? `Enter ${missing[0]} in the Product Brief.`
+    : product.developmentPath === "custom_formula" && !activeFormula
+      ? "Create the first formula family."
+      : product.developmentPath !== "custom_formula" && !selectedCandidate
+        ? "Research and select a manufacturer or catalog source."
+        : !activeConfiguration
+          ? "Define an active finished configuration."
+          : "Review recorded evidence before advancing the detailed status.";
+  const continueHref = missing.length
+    ? "#product-brief"
+    : product.developmentPath === "custom_formula" && !activeFormula
+      ? "#formulas"
+      : product.developmentPath !== "custom_formula" && !selectedCandidate
+        ? "#sourcing"
+        : !activeConfiguration
+          ? "#sourcing"
+          : "#development";
   return (
     <div className="destination-page product-workspace">
       <header className="record-header">
@@ -86,57 +120,50 @@ export default async function ProductPage({
           <span>{labelFor(product.pipelineStatus)}</span>
           <span>{labelFor(product.developmentPath)}</span>
           <span>{labelFor(product.priority)} priority</span>
+          {product.targetLaunchDate ? (
+            <span>Target {product.targetLaunchDate}</span>
+          ) : null}
+          <div className="record-header-actions">
+            <a className="button-secondary" href="#product-controls">
+              Edit Product
+            </a>
+            <a className="button" href={continueHref}>
+              Continue Build
+            </a>
+          </div>
         </div>
       </header>
       <PersistenceBanner persistence={snapshot.persistence} />
-      <ProductControls
-        product={product}
-        productLines={[
-          ...new Map(
-            snapshot.products.map((item) => [
-              item.productLineId,
-              item.productLineName,
-            ]),
-          ).entries(),
-        ].map(([id, name]) => ({ id, name }))}
-        persistence={snapshot.persistence}
+      <div id="product-controls" className="product-controls-anchor">
+        <ProductControls
+          product={product}
+          productLines={[
+            ...new Map(
+              snapshot.products.map((item) => [
+                item.productLineId,
+                item.productLineName,
+              ]),
+            ).entries(),
+          ].map(([id, name]) => ({ id, name }))}
+          persistence={snapshot.persistence}
+        />
+      </div>
+      <ProductBuildNavigation
+        productSlug={product.slug}
+        developmentPath={product.developmentPath}
       />
-      <nav className="record-tabs" aria-label="Product workspace tabs">
-        {tabs.map((tab) => {
-          const implemented = [
-            "Overview",
-            "Product Brief",
-            "Development",
-            "Formulas",
-            "Ingredients",
-            "Sourcing",
-            "Documents",
-            "Decisions",
-          ].includes(tab);
-          return (
-            <a
-              key={tab}
-              href={
-                implemented
-                  ? `#${tab.toLocaleLowerCase().replaceAll(" ", "-")}`
-                  : "#future-phases"
-              }
-              aria-disabled={!implemented}
-            >
-              {tab}
-              {!implemented ? " · Later" : ""}
-            </a>
-          );
-        })}
-      </nav>
 
       <section id="overview" className="workspace-section">
         <div className="section-heading compact-heading">
           <p className="eyebrow">Overview</p>
-          <h2>Product intent and readiness</h2>
+          <h2>Product intent and current build context</h2>
         </div>
         <div className="overview-grid">
           <dl className="fact-list">
+            <div>
+              <dt>Description</dt>
+              <dd>{product.description ?? "Not entered"}</dd>
+            </div>
             <div>
               <dt>Product line</dt>
               <dd>{product.productLineName}</dd>
@@ -154,8 +181,8 @@ export default async function ProductPage({
               <dd>{labelFor(product.developmentPath)}</dd>
             </div>
             <div>
-              <dt>Current stage</dt>
-              <dd>{labelFor(product.pipelineStatus)}</dd>
+              <dt>Current build stage</dt>
+              <dd>{labelFor(pipelineGroupFor(product.pipelineStatus))}</dd>
             </div>
             <div>
               <dt>Target customer</dt>
@@ -170,36 +197,28 @@ export default async function ProductPage({
               <dd>{product.desiredBenefits ?? "Not entered"}</dd>
             </div>
             <div>
-              <dt>Target retail</dt>
-              <dd>{product.targetRetailPrice ?? "Not entered"}</dd>
-            </div>
-            <div>
-              <dt>Maximum target COGS</dt>
-              <dd>{product.maximumTargetCogs ?? "Not entered"}</dd>
-            </div>
-            <div>
-              <dt>Target packaging</dt>
-              <dd>{product.targetPackaging ?? "Not entered"}</dd>
-            </div>
-            <div>
-              <dt>Target launch</dt>
-              <dd>{product.targetLaunchDate ?? "Not entered"}</dd>
-            </div>
-            <div>
               <dt>Active formula</dt>
+              <dd>{activeFormula?.familyName ?? "Not linked"}</dd>
+            </div>
+            <div>
+              <dt>Selected white-label source</dt>
               <dd>
-                {formulas.find(
-                  (formula) => formula.activeVersionId === formula.versionId,
-                )?.familyName ?? "Not linked"}
+                {selectedManufacturer
+                  ? `${selectedManufacturer.name}${selectedCatalogProduct ? ` · ${selectedCatalogProduct.name}` : ""}`
+                  : "Not selected"}
               </dd>
             </div>
             <div>
+              <dt>Active finished configuration</dt>
+              <dd>{activeConfiguration?.name ?? "Not configured"}</dd>
+            </div>
+            <div>
               <dt>Recent note</dt>
-              <dd>{notes[0]?.title ?? "None recorded"}</dd>
+              <dd>{recentNote?.title ?? "None recorded"}</dd>
             </div>
             <div>
               <dt>Recent decision</dt>
-              <dd>{decisions[0]?.title ?? "None recorded"}</dd>
+              <dd>{recentDecision?.title ?? "None recorded"}</dd>
             </div>
           </dl>
           <aside className="attention-panel">
@@ -217,12 +236,7 @@ export default async function ProductPage({
               </ul>
             ) : null}
             <p>
-              Next manual action:{" "}
-              {missing.length
-                ? `Enter ${missing[0]}.`
-                : formulas.length
-                  ? "Review the active formula and recorded decisions."
-                  : "Create an appropriate formula only if the development path requires it."}
+              <strong>Next grounded manual action:</strong> {nextAction}
             </p>
           </aside>
         </div>
@@ -251,31 +265,19 @@ export default async function ProductPage({
           <p className="eyebrow">Development</p>
           <h2>Actual timeline and notes</h2>
         </div>
-        {activity.length ? (
-          <ol className="activity-timeline">
-            {activity.map((event) => (
-              <li key={event.id}>
-                <time>{new Date(event.createdAt).toLocaleDateString()}</time>
-                <strong>{event.title}</strong>
-                <p>{event.description}</p>
-              </li>
-            ))}
-          </ol>
-        ) : (
-          <div className="record-empty">
-            <strong>No persisted development activity.</strong>
-            <p>Seed definitions do not manufacture activity history.</p>
-          </div>
-        )}
-        <div className="memory-list">
-          {notes.map((note) => (
-            <article key={note.id}>
-              <p className="card-eyebrow">{labelFor(note.noteType)}</p>
-              <h3>{note.title}</h3>
-              <p>{note.content}</p>
-            </article>
-          ))}
-        </div>
+        <ProductDevelopmentTimeline
+          events={activity}
+          productName={product.name}
+          productSlug={product.slug}
+          formulas={formulas}
+          experiments={productExperiments}
+        />
+        <ProductNotes notes={notes} persistence={snapshot.persistence} />
+        <ProductMemoryForms
+          productId={product.id}
+          persistence={snapshot.persistence}
+          kind="note"
+        />
       </section>
 
       <section id="formulas" className="workspace-section">
@@ -360,6 +362,7 @@ export default async function ProductPage({
         <ProductMemoryForms
           productId={product.id}
           persistence={snapshot.persistence}
+          kind="decision"
         />
       </section>
 

@@ -17,17 +17,8 @@ test("renders the Command experience and permanent navigation", async ({
   await expect(page.locator('.sidebar-brand img[src="/emblem"]')).toHaveCount(
     1,
   );
-  const pillarRoutes = {
-    Create: "/modules/product-pipeline",
-    Build: "/modules/suppliers",
-    Control: "/modules/inventory",
-    Scale: "/modules/launches",
-  } as const;
-  for (const [pillar, href] of Object.entries(pillarRoutes)) {
-    const link = hero.getByRole("link", { name: new RegExp(`^${pillar}:`) });
-    await expect(link).toBeVisible();
-    await expect(link).toHaveAttribute("href", href);
-  }
+  await expect(hero.locator(".command-pillar")).toHaveCount(0);
+  await expect(hero.locator(".core-connections")).toHaveCount(0);
   await expect(page.getByText("The house behind every product.")).toHaveCount(
     0,
   );
@@ -180,14 +171,11 @@ test("preserves static hero meaning under operating-system reduced motion", asyn
   await page.emulateMedia({ reducedMotion: "reduce" });
   await page.goto("/");
   await expect(
-    page.getByLabel(
-      /Legacy House intelligence core connects Create, Build, Control, and Scale/,
-    ),
+    page.getByLabel(/Legacy House product intelligence command core/),
   ).toBeVisible();
-  await expect(page.locator(".core-connections")).toBeVisible();
-  await expect(page.locator(".core-ring-outer")).toHaveCSS(
-    "animation-iteration-count",
-    "1",
+  await expect(page.locator(".command-core-ring-command")).toHaveCSS(
+    "animation-name",
+    "none",
   );
 });
 
@@ -215,26 +203,11 @@ test("keeps the hero bounded and separated across required viewport widths", asy
       const emblemRect = hero
         .querySelector(".core-emblem img")!
         .getBoundingClientRect();
-      const nodeRects = Array.from(
-        hero.querySelectorAll<HTMLElement>(".command-pillar"),
-      ).map((node) => node.getBoundingClientRect());
-      const overlaps = nodeRects.some((node, index) =>
-        nodeRects
-          .slice(index + 1)
-          .some(
-            (other) =>
-              node.left < other.right &&
-              node.right > other.left &&
-              node.top < other.bottom &&
-              node.bottom > other.top,
-          ),
-      );
       return {
         heroLeft: heroRect.left,
         heroRight: heroRect.right,
         heroBottom: heroRect.bottom,
         emblemWidth: emblemRect.width,
-        overlaps,
         documentWidth: document.documentElement.scrollWidth,
       };
     });
@@ -245,7 +218,6 @@ test("keeps the hero bounded and separated across required viewport widths", asy
       `Hero geometry at ${viewport.width}x${viewport.height}: ${JSON.stringify(geometry)}`,
     ).toBeLessThanOrEqual(viewport.height + 1);
     expect(geometry.emblemWidth).toBeGreaterThanOrEqual(145);
-    expect(geometry.overlaps).toBe(false);
     expect(geometry.documentWidth).toBeLessThanOrEqual(viewport.width);
   }
 });

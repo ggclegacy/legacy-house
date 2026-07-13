@@ -231,6 +231,7 @@ export function createDrizzleDevelopmentRepository(database: Database) {
         notes: noteRows.map((note) => ({
           ...note,
           createdAt: note.createdAt.toISOString(),
+          updatedAt: note.updatedAt.toISOString(),
         })),
         decisions: decisionRows,
         activity: activityRows.map((event) => ({
@@ -430,6 +431,35 @@ export function createDrizzleDevelopmentRepository(database: Database) {
               `Product note added: ${created.title}`,
             );
             return created;
+          }
+          case "update_product_note": {
+            const [updated] = await tx
+              .update(productNotes)
+              .set({
+                noteType: action.noteType,
+                title: action.title,
+                content: action.content,
+                updatedAt: new Date(),
+              })
+              .where(
+                and(
+                  eq(productNotes.id, action.noteId),
+                  eq(
+                    productNotes.updatedAt,
+                    new Date(action.expectedUpdatedAt),
+                  ),
+                ),
+              )
+              .returning();
+            if (!updated)
+              throw new Error("Stale product note. Refresh before editing.");
+            await activity(
+              "product",
+              updated.productId,
+              "note_edited",
+              `Product note edited: ${updated.title}`,
+            );
+            return updated;
           }
           case "record_product_decision": {
             const { action: _action, ...values } = action;

@@ -4,8 +4,9 @@ import { generateAttentionItems, pipelineGroupFor } from "./pipeline";
 
 describe("pipeline intelligence", () => {
   it("maps detailed state without replacing it", () => {
-    expect(pipelineGroupFor("product_brief")).toBe("research");
-    expect(pipelineGroupFor("production_ready")).toBe("commercialization");
+    expect(pipelineGroupFor("product_brief")).toBe("concept");
+    expect(pipelineGroupFor("testing")).toBe("formula_source");
+    expect(pipelineGroupFor("production_ready")).toBe("launch_ready");
     expect(pipelineGroupFor("on_hold")).toBe("inactive");
   });
 

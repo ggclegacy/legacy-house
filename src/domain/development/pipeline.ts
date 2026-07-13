@@ -1,11 +1,11 @@
 export const pipelineGroups = {
-  ideas: ["idea"],
-  research: ["research", "product_brief"],
-  development: ["formulation", "supplier_sourcing", "refinement"],
-  testing: ["testing"],
-  commercialization: ["packaging", "costing", "production_ready"],
-  launch: ["launch_planning"],
-  live_products: ["launched"],
+  concept: ["idea", "product_brief"],
+  research: ["research"],
+  formula_source: ["formulation", "testing", "refinement"],
+  sourcing: ["supplier_sourcing"],
+  packaging: ["packaging"],
+  costing: ["costing"],
+  launch_ready: ["production_ready", "launch_planning", "launched"],
 } as const;
 
 export function pipelineGroupFor(

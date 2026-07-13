@@ -66,11 +66,11 @@ The system is a modular monolith. `src/app` owns routes and transport, `src/pres
 
 Authentication-provider selection is intentionally deferred. The foundation stores provider-neutral external subjects and enforces a deny-by-default authorization policy seam; no protected product workflow exists yet.
 
-The official `logo.png` remains in the project root and is the hero/app emblem. It must not be replaced, redrawn, overwritten, or competed with by another mark.
+The official `logo.png` remains unchanged in the project root and is the application-shell emblem. The Command hero uses a separately scoped reactor illustration as environmental product-intelligence artwork under ADR-044; it does not replace the official mark or the `/emblem` route.
 
 ## Implemented modules
 
-- Responsive branded shell and command-core hero for CREATE, BUILD, CONTROL, and SCALE
+- Responsive branded shell and chamber-style Command core for CREATE, BUILD, CONTROL, and SCALE
 - Complete desktop/mobile navigation and structural routes for every planned module
 - Grouped global search and a registry-driven create dialog with truthful availability
 - Settings for currency, units, precision, date format, product-line context, reduced motion, and sidebar behavior

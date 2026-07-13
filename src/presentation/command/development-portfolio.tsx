@@ -112,56 +112,6 @@ function ProductCapsule({
   );
 }
 
-function ProductFocusPanel({ product }: { product: PortfolioProduct }) {
-  const stage = developmentPortfolioStages.find(
-    (item) => item.id === product.stageId,
-  );
-  return (
-    <article
-      key={product.id}
-      className="portfolio-focus-panel"
-      data-accent={product.accent}
-      aria-live="polite"
-    >
-      <div className="focus-identity">
-        <p className="card-eyebrow">Product focus</p>
-        <h3>{product.name}</h3>
-        <span>{product.productLineName}</span>
-      </div>
-      <dl>
-        <div>
-          <dt>Development path</dt>
-          <dd>{labelFor(product.developmentPath)}</dd>
-        </div>
-        <div>
-          <dt>Command stage</dt>
-          <dd>{stage?.label ?? "Stage information incomplete"}</dd>
-        </div>
-        <div className="focus-summary">
-          <dt>Development summary</dt>
-          <dd>{product.supportingDetail}</dd>
-        </div>
-      </dl>
-      <div className="focus-actions">
-        <Link
-          className="portfolio-primary-action"
-          href={asRoute(product.openHref)}
-        >
-          Open product
-        </Link>
-        {product.continueHref ? (
-          <Link
-            className="portfolio-secondary-action"
-            href={asRoute(product.continueHref)}
-          >
-            Continue build
-          </Link>
-        ) : null}
-      </div>
-    </article>
-  );
-}
-
 export function DevelopmentPortfolio({
   model,
 }: {
@@ -315,7 +265,33 @@ export function DevelopmentPortfolio({
                 </div>
               </div>
               {selectedProduct ? (
-                <ProductFocusPanel product={selectedProduct} />
+                <div
+                  className="portfolio-selected-actions"
+                  data-accent={selectedProduct.accent}
+                  aria-live="polite"
+                >
+                  <div>
+                    <span>{selectedProduct.productLineName}</span>
+                    <strong>{selectedProduct.name}</strong>
+                    <small>{selectedProduct.supportingDetail}</small>
+                  </div>
+                  <nav aria-label={`Actions for ${selectedProduct.name}`}>
+                    <Link
+                      className="portfolio-primary-action"
+                      href={asRoute(selectedProduct.openHref)}
+                    >
+                      Open product
+                    </Link>
+                    {selectedProduct.continueHref ? (
+                      <Link
+                        className="portfolio-secondary-action"
+                        href={asRoute(selectedProduct.continueHref)}
+                      >
+                        Continue build
+                      </Link>
+                    ) : null}
+                  </nav>
+                </div>
               ) : null}
             </>
           ) : (

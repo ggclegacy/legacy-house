@@ -51,15 +51,21 @@ export function PillarNode({ id, label, descriptor, href }: PillarNodeProps) {
       href={asRoute(href)}
       aria-label={`${label}: ${descriptor}`}
     >
-      <span className="pillar-label">{label}</span>
       <span className="pillar-orb" aria-hidden="true">
+        <span className="pillar-orb-bracket pillar-orb-bracket-one" />
+        <span className="pillar-orb-bracket pillar-orb-bracket-two" />
         <span className="pillar-orb-rail" />
-        <span className="pillar-orb-energy" />
-        <span className="pillar-orb-icon">
-          <PillarIcon pillar={id} />
+        <span className="pillar-orb-aperture">
+          <span className="pillar-orb-energy" />
+          <span className="pillar-orb-icon">
+            <PillarIcon pillar={id} />
+          </span>
         </span>
       </span>
-      <span className="pillar-descriptor">{descriptor}</span>
+      <span className="pillar-copy">
+        <span className="pillar-label">{label}</span>
+        <span className="pillar-descriptor">{descriptor}</span>
+      </span>
     </Link>
   );
 }

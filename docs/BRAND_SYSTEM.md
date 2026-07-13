@@ -4,9 +4,28 @@
 
 The interface is masculine, premium, advanced, disciplined, refined, powerful, and operationally intelligent. It should feel purpose-built for a luxury men's brand—not like a themed admin template.
 
-Root `logo.png` is the official hero icon, application emblem, and loading mark. Preserve the original bytes and aspect ratio. Never replace, redraw, overwrite, recolor, distort, crop essential artwork, or introduce a competing logo. Use descriptive alternative text when it conveys identity; use empty alt text only for a duplicate decorative instance. Derived responsive delivery formats may be evaluated in Phase 1 only if the source remains untouched and the output is visually faithful.
+Root `logo.png` is the official application emblem, shell identity, and loading mark. Preserve the original bytes and aspect ratio. Never replace, redraw, overwrite, recolor, distort, crop essential artwork, or introduce a competing logo. Use descriptive alternative text when it conveys identity; use empty alt text only for a duplicate decorative instance.
 
-## Color tokens
+The Command home screen uses the unchanged root emblem as its dominant intelligence core. Layered CSS and SVG chamber elements may surround it, but must not alter, obscure, replace, or compete with the source artwork.
+
+## Groomed Gent Co. material source
+
+The current Groomed Gent Co. website is the visual source of truth for new Legacy House surfaces. Command establishes the reference implementation; unrelated existing pages move to it only through separately scoped work.
+
+| Material role              | Reference value |
+| -------------------------- | --------------- |
+| Near-black plum foundation | `#130B1F`       |
+| Plum-black depth           | `#170C20`       |
+| Imperial purple            | `#291B45`       |
+| Metallic gold shadow       | `#704B18`       |
+| Metallic gold deep         | `#9E7025`       |
+| Metallic gold body         | `#B78731`       |
+| Metallic gold highlight    | `#C18F31`       |
+| Champagne edge highlight   | `#CAA765`       |
+
+Purple should appear internally luminous rather than flat. Gold requires dark edges, warm body color, and restrained bright highlights. Warm ivory carries primary text; secondary text uses warm gray with a slight lavender undertone. Avoid flat mustard, beige gold, gray-purple mud, and plain black emptiness.
+
+## Foundation semantic tokens
 
 | Role                 | Token            | Value     |
 | -------------------- | ---------------- | --------- |
@@ -42,7 +61,7 @@ Choose a restrained, legible type system in Phase 1: a distinctive display face 
 
 ## Home hero
 
-The central `logo.png` acts as the intelligence core. CREATE, BUILD, CONTROL, and SCALE appear as clearly labeled icons in a refined orbital/circular composition. Restrained pulses travel from the center and pillars activate sequentially to communicate one core powering four operating systems. The static state must remain meaningful, and `prefers-reduced-motion` must remove nonessential movement. Avoid game HUDs, cheesy science fiction, random glowing rings, and unlabeled icon menus.
+The root `logo.png` emblem acts as the intelligence core. CREATE, BUILD, CONTROL, and SCALE appear as clearly labeled, linked subsystem nodes in a refined chamber composition. Engineered conduits carry restrained signals from the center and pillars activate sequentially to communicate one core powering four operating systems. The static state must remain meaningful, and `prefers-reduced-motion` must remove nonessential movement. Avoid game HUDs, cheesy science fiction, random glowing rings, and unlabeled icon menus.
 
 ## Motion
 
@@ -69,6 +88,8 @@ No generic SaaS styling, bright-white dashboards, blue primary accents, gaming o
 
 ## Phase 1 implementation record
 
-The implemented token values in `src/app/globals.css` are authoritative aliases of this document. The shell uses a persistent desktop sidebar, compact command bar, mobile drawer, and mobile command dock. The root asset is served directly through `/emblem`; the source is neither copied nor transformed. `LegacyHouseMark` is the only reusable application-mark primitive.
+The implemented foundation token values in `src/app/globals.css` remain the semantic aliases used by existing Phase 01–03 pages. The Command page owns scoped material aliases for the newer Groomed Gent Co. reference palette so this correction does not silently redesign unrelated pages. The shell uses a persistent desktop sidebar, compact command bar, mobile drawer, and mobile command dock. The root asset is served directly through `/emblem`; the source is neither copied nor transformed. `LegacyHouseMark` remains the only reusable application-mark primitive.
+
+The Command hero renders the same root asset through `LegacyHouseMark`; its chamber depth, precision rings, conduits, and pillar housings are lightweight presentation layers rather than replacement artwork.
 
 The Command page preserves the four-pillar relationship as labeled HTML even when motion is disabled. System-level reduced-motion preferences and the workspace preference both remove nonessential animation. Product-line accents identify context only; semantic success, warning, and error colors remain independent.

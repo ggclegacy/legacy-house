@@ -7,13 +7,50 @@
 - **Last updated:** 2026-07-13 (America/Chicago)
 - **Next recommended phase:** Phase 4 — Inventory, Purchasing, Production, and Traceability. Do not begin automatically.
 
+## Command page build sequence
+
+- Prompt 01 complete — Command Core preserves the official emblem, four routed pillars, responsive chamber geometry, sequential energy, and reduced-motion behavior; production build passed.
+- Prompt 02 complete — Product Build Workspace preserves the real continuation dossier, controlled creation gateways, active Product Dock, and routed stage rail; five targeted tests and the production build passed.
+- Prompt 03 complete — Development Portfolio keeps real filters and seven mapped stages, replaces the duplicate focus panel with a compact selected-product action rail, and adds mobile scroll snapping; seven targeted tests and the production build passed.
+- Prompt 04 complete — Research & Formula Lab exposes the canonical active formula, honest experiment state, linked ingredient research, and four real tool routes; its targeted action test and production build passed.
+- Prompt 05 complete — Sourcing & Packaging Network ties the current product to real Phase 03 records and explicit supplier, manufacturer, quote, and packaging gaps; its targeted action test and production build passed.
+- Prompt 06 complete — Costing & Margin Studio exposes the current configuration, honest missing COGS, price, margin, and scenario states, plus the existing scenario-create action; its targeted action test and production build passed.
+- Prompt 07 complete — Product Memory separates dated meaningful memory from undated canonical history and exposes real note, decision, document, and history actions; its targeted action test and production build passed.
+- Prompt 08 complete — Launch Readiness derives six non-percentage evidence markers for the most advanced real product and reports one complete and five incomplete canonical stages; its targeted action test and production build passed.
+- Prompt 09 complete — Final integration removes obsolete foundation filler, unifies section rhythm, adds contained mobile instrument rails, preserves focus/reduced-motion behavior, and keeps Launch Readiness as the final operational chamber.
+
 Phase 03 was explicitly authorized and remains the current completed implementation scope. The focused hosting migration now makes Vercel the official target without beginning Phase 04: normal root Next.js detection, deployment-safe scripts, environment-isolated/fail-closed data policy, serverless-bounded PostgreSQL access, private storage contracts, guarded database releases, and deployment runbooks are established. A reachable external PostgreSQL service, private object-storage adapter, protected Vercel project, and future Private Beta application gate were not supplied, so hosted data and storage acceptance remain blocked.
+
+The latest focused Command hero correction is implemented locally and awaiting review. The opening now uses the unchanged official emblem as its dominant core inside a layered plum-black command chamber with precision rings, sculpted subsystem orbs, and sequenced housed conduits. The header, mobile command dock, Product Build Workspace, deeper Command sections, data behavior, registered routes, schema, hosting, and Phase 04 remain unchanged by this pass.
 
 The Command opening hero was surgically rebuilt on 2026-07-13 without changing the operational Command sections below it. The compact identity, official emblem, layered precision rings, four linked pillar nodes, sequential energy path, restrained breathing motion, responsive radial layout, accessible routes, and static reduced-motion state are locally validated. No Phase 04, database, hosting, navigation-shell, or unrelated-page work was included.
 
 The Command section directly beneath that hero was then surgically rebuilt as the Product Build Workspace. It derives continuation context, linked formula/configuration evidence, a bounded product dock, and stage routes from real loaded records. It exposes exactly three new-product entry paths through the existing controlled creation dialog and honestly reports creation unavailability when PostgreSQL is unreachable. That pass preserved the hero and every later Command section; the separately authorized Development Portfolio pass below subsequently replaced only the next Commercial Readiness strip.
 
 The third Command section is now a compact Development Portfolio. It maps detailed product statuses into seven read-only Command-stage groups without changing authoritative pipeline states, filters by actual product-line relationships, shows at most six real product capsules, and reveals a selected Product Focus panel with only record-backed evidence and routes. The hero, Product Build Workspace, Product Pipeline, product pages, schema, and every section after the former Commercial Readiness strip remain unchanged.
+
+## Latest Command hero refinement delivered
+
+- Restored the unchanged root `logo.png` through the existing `/emblem` and `LegacyHouseMark` path as the centered, dominant intelligence core; no new or modified artwork is rendered.
+- Kept only `LEGACY HOUSE` and `GROOMED GENT CO. PRODUCT INTELLIGENCE OS` in the compact identity treatment and removed the extra Command identifier.
+- Refined only the hero chamber, precision rings, four pillar orbs, and angular conduits with the approved obsidian-plum, imperial-purple, warm-ivory, muted lavender-gray, and brushed-gold values.
+- Preserved Create, Build, Control, and Scale destinations and their accessible link names. Added restrained hover, tap, focus, counter-rotation, emblem breathing, and Create → Build → Control → Scale activation states.
+- Reduced-motion preferences preserve the complete illuminated composition while collapsing continuous and repeated animation to one static pass.
+- Verified the hero at 320×568, 375×667, 430×820, 768×900, 1366×768, and 1920×1080 with no page overflow or pillar-label overlap. The hero stays within the viewport at every tested size.
+- Validation passed: `pnpm format:check`, `pnpm lint`, `pnpm typecheck`, `pnpm test` (92 tests), focused Playwright Command/viewport checks (3 passed, 1 expected project skip), focused reduced-motion checks (2 passed), and `pnpm build` (24 pages). The first sandboxed build attempt was blocked by Turbopack's internal port bind; the permitted rerun passed.
+- No migration, database, route, dependency, header, bottom-navigation, Product Build Workspace, lower Command section, hosting, or Phase 04 change was included.
+
+## Command home-screen correction delivered
+
+- Replaced the root-emblem-in-rings hero treatment with the separately optimized 960×960 Command reactor artwork at `public/assets/legacy-house-command-core-v2.png`; root `logo.png` remains the official app-shell emblem and is unchanged.
+- Rebuilt the hero environment with scoped Groomed Gent Co. material aliases, plum-black atmosphere, precision chamber arcs, controlled radial axes, metallic reactor locks, layered falloff, and no global redesign of unrelated pages.
+- Replaced plain curved/dotted paths with angular housed conduits containing shadow channels, metallic rails, inner purple energy, mechanical couplers, traveling signal segments, and terminal activation.
+- Rebuilt all four pillar links as clipped multi-layer subsystem apertures with mechanical brackets, rotating segmented rails, internal energy chambers, stronger icons, sequence indices, and preserved registered destinations.
+- Slowed and restrained continuous motion around the core lens, reactor breath, rings, signals, terminals, and pillar activation. Operating-system and workspace reduced-motion settings leave the complete static relationship visible and remove traveling dash behavior.
+- Rebuilt the Product Build Workspace material layer without changing its service model: the real continuation candidate now sits in a chamfered featured shell; Custom Formula, White-Label, and Product Concept use distinct sculpted gateways; dock and stage links share the same purple/gold depth language.
+- Preserved the real Legacy Reserve continuation, formula/configuration evidence, database-gated create actions, active product dock, product-line facts, and registered routes. No product, activity, supplier, manufacturer, costing, readiness, or analytics record was added.
+- Verified hero and workspace geometry at 320×568, 375×667, 430×820, 768×900, 1366×768, and 1920×1080 with no node overlap or page overflow. The smallest workspace remains below the existing 1200px compactness budget.
+- No migration, seed, database, hosting, authentication, navigation-shell, deeper homepage-section, unrelated-page, or Phase 04 implementation was included.
 
 ## Development Portfolio delivered
 
@@ -75,22 +112,22 @@ The third Command section is now a compact Development Portfolio. It maps detail
 
 ## Validation evidence
 
-| Check                              | Result                                                                                                                                                                     |
-| ---------------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| Git                                | `main` tracking `origin/main`; Phase 03 changes local only; no push                                                                                                        |
-| Official logo                      | Pass — unchanged 2000×2000 PNG; SHA-256 `8b3d03bf01b9078ed1318ac2e1c44b66b5896b123d3bb0f447d7b207f9026920`                                                                 |
-| Generated migration                | Pass — `drizzle/0003_happy_marrow.sql`; 38 total tables                                                                                                                    |
-| Migration integrity                | Pass — `pnpm db:check` and clean PGlite application of all migrations                                                                                                      |
-| External PostgreSQL migration/seed | Blocked — `DATABASE_URL` absent; commands were not falsely reported as run                                                                                                 |
-| Unit/integration                   | Pass — 92 tests across 31 files                                                                                                                                            |
-| Coverage                           | Pass — 99.07% statements, 94.9% branches, 98.92% functions, 99.35% lines                                                                                                   |
-| Format/lint/type-check             | Pass — `pnpm format:check`, `pnpm lint`, `pnpm typecheck`                                                                                                                  |
-| Production build                   | Pass — 24 generated static pages; commercial APIs and dynamic detail routes included                                                                                       |
-| Browser tests                      | Pass — 41 desktop/mobile scenarios; three intentional duplicate viewport-matrix skips                                                                                      |
-| Responsive/accessibility           | Pass locally — six-width hero/workspace/portfolio matrices, no page overflow, real routes, keyboard filters/selection, static reduced-motion state, contained mobile rails |
-| Vercel repository readiness        | Pass — root Next.js detection, pure build, isolated policy, guarded release commands, runbooks                                                                             |
-| Vercel CLI/build                   | Not run — CLI is not installed; normal `pnpm build` passed                                                                                                                 |
-| Hosted Vercel Preview              | Blocked — project, Deployment Protection, scoped Preview database, and credentials not supplied                                                                            |
+| Check                              | Result                                                                                                                                                                         |
+| ---------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
+| Git                                | `main` tracking `origin/main`; Command correction local only; no push                                                                                                          |
+| Official logo                      | Pass — unchanged 2000×2000 PNG; SHA-256 `8b3d03bf01b9078ed1318ac2e1c44b66b5896b123d3bb0f447d7b207f9026920`                                                                     |
+| Generated migration                | Pass — `drizzle/0003_happy_marrow.sql`; 38 total tables                                                                                                                        |
+| Migration integrity                | Pass — `pnpm db:check` and clean PGlite application of all migrations                                                                                                          |
+| External PostgreSQL migration/seed | Blocked — `DATABASE_URL` absent; commands were not falsely reported as run                                                                                                     |
+| Unit/integration                   | Pass — 97 tests across 36 files                                                                                                                                                |
+| Coverage                           | Pass — 99.07% statements, 94.9% branches, 98.92% functions, 99.35% lines                                                                                                       |
+| Format/lint/type-check             | Pass — `pnpm format:check`, `pnpm lint`, `pnpm typecheck`                                                                                                                      |
+| Production build                   | Pass — 24 generated static pages; the first restricted attempt hit Turbopack's sandbox port limit, and the permitted rerun completed                                           |
+| Browser tests                      | Pass — 43 desktop/mobile scenarios; three intentional duplicate viewport-matrix skips                                                                                          |
+| Responsive/accessibility           | Pass locally — six-width hero/workspace/portfolio matrices, full Command integration, no page overflow, real routes, visible focus, reduced motion, and contained mobile rails |
+| Vercel repository readiness        | Pass — root Next.js detection, pure build, isolated policy, guarded release commands, runbooks                                                                                 |
+| Vercel CLI/build                   | Not run — CLI is not installed; normal `pnpm build` passed                                                                                                                     |
+| Hosted Vercel Preview              | Blocked — project, Deployment Protection, scoped Preview database, and credentials not supplied                                                                                |
 
 ## Current blockers and technical risks
 

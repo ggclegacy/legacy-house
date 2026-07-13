@@ -345,3 +345,19 @@ This is a compact decision log. Decisions are immutable records: supersede them 
 - **Decision:** Project detailed product statuses into seven Command-only stages through one exhaustive typed mapping: Concept (`idea`, `product_brief`), Research (`research`), Formula / Source (`formulation`, `testing`, `refinement`), Sourcing (`supplier_sourcing`), Packaging (`packaging`), Costing (`costing`), and Launch Ready (`production_ready`, `launch_planning`, `launched`). `on_hold`, `archived`, and unknown future statuses have no inferred journey position.
 - **Reason:** The homepage needs a legible portfolio journey without erasing detailed lifecycle meaning or pretending a hold/archive state identifies where work stopped.
 - **Consequences:** Stage filtering and counts are presentation projections only and never write product status. Unmapped records remain available under All Products with an explicit incomplete-stage label. Any new detailed status requires a reviewed mapping decision and test update.
+
+## ADR-044 — Command reactor artwork is environmental, not a second app emblem
+
+- **Status:** Accepted
+- **Date:** 2026-07-13
+- **Decision:** Keep root `logo.png` unchanged as the official application, shell, navigation, and loading emblem. Permit the Command home hero to use the separately stored `legacy-house-command-core-v2.png` reactor artwork as scoped environmental product-intelligence imagery. This supersedes only the requirement in ADR-003 and ADR-016 that the root emblem itself occupy the Command hero core; every other source-preservation and single-application consequence remains active.
+- **Reason:** The authorized Command correction requires a more refined product-lab nucleus while preserving the supplied brand identity and preventing a generated presentation asset from becoming a competing general-purpose logo.
+- **Consequences:** The generated reactor asset is not served through `/emblem`, is not used in the app shell, and cannot replace `LegacyHouseMark`. Its usage remains isolated to the Command core. Root `logo.png` retains its original bytes and official brand role.
+
+## ADR-045 — The official emblem anchors the Command core
+
+- **Status:** Accepted; supersedes ADR-044
+- **Date:** 2026-07-13
+- **Decision:** Use the unchanged root `logo.png`, served through `/emblem` and rendered by `LegacyHouseMark`, as the dominant Command hero core. Build the chamber, rings, conduits, and pillar housings with repository SVG and CSS around that image.
+- **Reason:** The approved Command hero correction explicitly requires the existing Legacy House emblem and prohibits generating, replacing, redrawing, or modifying it.
+- **Consequences:** Command-specific reactor artwork is not rendered. The shell, hero, navigation, and loading states share one official identity asset; environmental depth remains presentational and scoped to the hero.

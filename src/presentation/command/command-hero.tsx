@@ -15,6 +15,12 @@ export function CommandHero() {
         className="command-stage"
         aria-label="Legacy House intelligence core connects Create, Build, Control, and Scale"
       >
+        <div className="command-chamber" aria-hidden="true">
+          <span className="chamber-arc chamber-arc-one" />
+          <span className="chamber-arc chamber-arc-two" />
+          <span className="chamber-axis chamber-axis-horizontal" />
+          <span className="chamber-axis chamber-axis-vertical" />
+        </div>
         <CoreConnectionPaths />
         <CommandCore />
         {commandPillars.map((pillar) => (

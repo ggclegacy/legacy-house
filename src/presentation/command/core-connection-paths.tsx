@@ -3,27 +3,43 @@ import type { CommandPillarId } from "./command-hero-config";
 const paths: ReadonlyArray<{
   id: CommandPillarId;
   d: string;
-  terminal: readonly [number, number];
+  terminals: readonly (readonly [number, number])[];
 }> = [
   {
     id: "create",
-    d: "M 500 500 C 430 465 390 295 180 180",
-    terminal: [180, 180],
+    d: "M 428 438 L 374 438 L 332 382 L 268 382 L 218 308 L 174 226",
+    terminals: [
+      [374, 438],
+      [268, 382],
+      [174, 226],
+    ],
   },
   {
     id: "build",
-    d: "M 500 500 C 570 465 610 295 820 180",
-    terminal: [820, 180],
+    d: "M 572 438 L 626 438 L 668 382 L 732 382 L 782 308 L 826 226",
+    terminals: [
+      [626, 438],
+      [732, 382],
+      [826, 226],
+    ],
   },
   {
     id: "control",
-    d: "M 500 500 C 430 535 390 705 180 820",
-    terminal: [180, 820],
+    d: "M 428 562 L 374 562 L 332 618 L 268 618 L 218 692 L 174 774",
+    terminals: [
+      [374, 562],
+      [268, 618],
+      [174, 774],
+    ],
   },
   {
     id: "scale",
-    d: "M 500 500 C 570 535 610 705 820 820",
-    terminal: [820, 820],
+    d: "M 572 562 L 626 562 L 668 618 L 732 618 L 782 692 L 826 774",
+    terminals: [
+      [626, 562],
+      [732, 618],
+      [826, 774],
+    ],
   },
 ];
 
@@ -43,9 +59,20 @@ export function CoreConnectionPaths() {
           x2="1"
           y2="1"
         >
-          <stop offset="0" stopColor="#5a2a82" stopOpacity="0.5" />
-          <stop offset="0.5" stopColor="#c4912f" stopOpacity="0.9" />
-          <stop offset="1" stopColor="#e2be72" stopOpacity="0.45" />
+          <stop offset="0" stopColor="#704b18" stopOpacity="0.75" />
+          <stop offset="0.5" stopColor="#b78731" stopOpacity="0.95" />
+          <stop offset="1" stopColor="#caa765" stopOpacity="0.58" />
+        </linearGradient>
+        <linearGradient
+          id="command-connection-energy"
+          x1="0"
+          y1="0"
+          x2="1"
+          y2="1"
+        >
+          <stop offset="0" stopColor="#291b45" />
+          <stop offset="0.48" stopColor="#6f3ca1" />
+          <stop offset="1" stopColor="#c18f31" />
         </linearGradient>
         <filter
           id="command-signal-glow"
@@ -64,14 +91,25 @@ export function CoreConnectionPaths() {
       {paths.map((path) => (
         <g className={`connection connection-${path.id}`} key={path.id}>
           <path className="connection-shadow" d={path.d} pathLength="100" />
+          <path className="connection-housing" d={path.d} pathLength="100" />
           <path className="connection-rail" d={path.d} pathLength="100" />
+          <path className="connection-energy" d={path.d} pathLength="100" />
           <path className="connection-signal" d={path.d} pathLength="100" />
-          <circle
-            className="connection-terminal"
-            cx={path.terminal[0]}
-            cy={path.terminal[1]}
-            r="5"
-          />
+          {path.terminals.map(([x, y], index) => (
+            <g className="connection-coupler" key={`${x}-${y}`}>
+              <rect x={x - 8} y={y - 8} width="16" height="16" rx="2" />
+              <circle
+                className={
+                  index === path.terminals.length - 1
+                    ? "connection-terminal"
+                    : ""
+                }
+                cx={x}
+                cy={y}
+                r={index === path.terminals.length - 1 ? 4 : 2.5}
+              />
+            </g>
+          ))}
         </g>
       ))}
     </svg>

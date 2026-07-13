@@ -14,6 +14,9 @@ test("renders the Command experience and permanent navigation", async ({
   await expect(
     hero.getByRole("img", { name: "Legacy House emblem" }),
   ).toBeVisible();
+  await expect(page.locator('.sidebar-brand img[src="/emblem"]')).toHaveCount(
+    1,
+  );
   const pillarRoutes = {
     Create: "/modules/product-pipeline",
     Build: "/modules/suppliers",
@@ -44,7 +47,9 @@ test("renders the Command experience and permanent navigation", async ({
       page.getByRole("complementary", { name: "Mobile navigation drawer" }),
     ).toBeVisible();
     await expect(
-      page.getByRole("link", { name: /Formula Vault/ }),
+      page
+        .getByRole("complementary", { name: "Mobile navigation drawer" })
+        .getByRole("link", { name: /Formula Vault/ }),
     ).toBeVisible();
   }
 
@@ -53,6 +58,44 @@ test("renders the Command experience and permanent navigation", async ({
       () => document.documentElement.scrollWidth > window.innerWidth,
     ),
   ).toBe(false);
+});
+
+test("integrates the complete evidence-backed Command sequence", async ({
+  page,
+}) => {
+  await page.goto("/");
+  for (const heading of [
+    "Product Build Workspace",
+    "Development Portfolio",
+    "Research & Formula Lab",
+    "Sourcing & Packaging Network",
+    "Costing & Margin Studio",
+    "Product Memory",
+    "Launch Readiness",
+  ]) {
+    await expect(
+      page.getByRole("heading", { name: heading, exact: true }),
+    ).toBeVisible();
+  }
+  await expect(page.locator(".foundation-dashboard")).toHaveCount(0);
+  await expect(page.locator(".foundation-note")).toHaveCount(0);
+  await expect(page.getByText("COGS not calculated")).toBeVisible();
+  await expect(
+    page.getByRole("heading", {
+      name: "No manufacturer selected",
+      exact: true,
+    }),
+  ).toBeVisible();
+  await expect(page.getByText("1 completed · 5 incomplete")).toBeVisible();
+  await expect(
+    page.getByRole("link", { name: "Calculate Legacy Reserve Batch" }),
+  ).toHaveAttribute(
+    "href",
+    "/formulas/938e7ae9-7f2c-45c6-bdad-abd2f0ad75a8#batch-calculator",
+  );
+  await expect(
+    page.getByRole("link", { name: "View Launch Products" }),
+  ).toHaveAttribute("href", "/modules/product-pipeline");
 });
 
 test("opens grouped global search from its accessible trigger", async ({
@@ -235,6 +278,18 @@ test("keeps the Product Build Workspace compact and bounded at required widths",
           .getBoundingClientRect();
         const nextSectionBox =
           workspace.nextElementSibling!.getBoundingClientRect();
+        const headingBox = workspace
+          .querySelector(".product-build-heading")!
+          .getBoundingClientRect();
+        const primaryBox = workspace
+          .querySelector(".product-build-primary")!
+          .getBoundingClientRect();
+        const dockBox = workspace
+          .querySelector(".product-dock-block")!
+          .getBoundingClientRect();
+        const railBox = workspace
+          .querySelector(".build-stage-rail")!
+          .getBoundingClientRect();
         return {
           left: box.left,
           right: box.right,
@@ -242,6 +297,14 @@ test("keeps the Product Build Workspace compact and bounded at required widths",
           followsHero: box.top >= heroBox.bottom - 1,
           precedesNextSection: nextSectionBox.top >= box.bottom - 1,
           documentWidth: document.documentElement.scrollWidth,
+          sections: {
+            heading: headingBox.height,
+            primary: primaryBox.height,
+            dock: dockBox.height,
+            rail: railBox.height,
+            paddingTop: getComputedStyle(workspace).paddingTop,
+            paddingBottom: getComputedStyle(workspace).paddingBottom,
+          },
         };
       });
 
@@ -249,7 +312,7 @@ test("keeps the Product Build Workspace compact and bounded at required widths",
     expect(geometry.right).toBeLessThanOrEqual(viewport.width + 1);
     expect(
       geometry.height,
-      `Workspace height at ${viewport.width}x${viewport.height}`,
+      `Workspace height at ${viewport.width}x${viewport.height}: ${JSON.stringify(geometry.sections)}`,
     ).toBeLessThan(1200);
     expect(geometry.followsHero).toBe(true);
     expect(geometry.precedesNextSection).toBe(true);
@@ -406,9 +469,9 @@ test("preserves Development Portfolio selection under reduced motion", async ({
   await expect(
     portfolio.getByRole("button", { name: /Research, 9 products/ }),
   ).toHaveAttribute("aria-pressed", "true");
-  await expect(portfolio.locator(".portfolio-focus-panel")).toBeVisible();
+  await expect(portfolio.locator(".portfolio-selected-actions")).toBeVisible();
   const duration = await portfolio
-    .locator(".portfolio-focus-panel")
+    .locator(".portfolio-selected-actions")
     .evaluate((element) => getComputedStyle(element).animationDuration);
   expect(Number.parseFloat(duration)).toBeLessThanOrEqual(0.001);
 });

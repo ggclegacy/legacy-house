@@ -7220,6 +7220,318 @@ html[data-reduced-motion="true"] .pillar-orb-energy {
   transform: none;
 }
 
+/* Command hero elevation — a restrained product-laboratory chamber built
+   around the unchanged icon.png. No selectors below escape the opening hero. */
+.command-page .command-hero {
+  height: min(calc(100svh - 72px), 46rem);
+  padding-top: clamp(0.7rem, 1.5vw, 1rem);
+  border-bottom: 0;
+  background:
+    radial-gradient(
+      ellipse at 50% 52%,
+      rgba(58, 31, 79, 0.54),
+      transparent 38%
+    ),
+    radial-gradient(
+      ellipse at 50% 105%,
+      rgba(112, 75, 24, 0.19),
+      transparent 38%
+    ),
+    linear-gradient(180deg, #170c20 0%, #130b1f 68%, #0c0712 100%);
+  box-shadow:
+    inset 0 1px rgba(202, 167, 101, 0.13),
+    inset 0 -5rem 7rem rgba(41, 27, 69, 0.2);
+}
+.command-page .command-hero::before {
+  opacity: 1;
+  background:
+    linear-gradient(
+      90deg,
+      transparent 8%,
+      rgba(202, 167, 101, 0.08) 8.08%,
+      transparent 8.16% 91.84%,
+      rgba(202, 167, 101, 0.08) 91.92%,
+      transparent 92%
+    ),
+    radial-gradient(
+      ellipse at center,
+      transparent 36%,
+      rgba(7, 4, 11, 0.68) 100%
+    );
+}
+.command-page .command-hero::after {
+  bottom: 0;
+  height: 5rem;
+  opacity: 1;
+  background: linear-gradient(
+    180deg,
+    transparent,
+    rgba(41, 27, 69, 0.22) 52%,
+    rgba(112, 75, 24, 0.12) 92%,
+    rgba(202, 167, 101, 0.2) 98%,
+    transparent 100%
+  );
+}
+.command-page .command-hero-identity {
+  gap: 0.12rem;
+  text-shadow:
+    0 1px rgba(0, 0, 0, 0.85),
+    0 0 1.1rem rgba(202, 167, 101, 0.08);
+}
+.command-page .command-hero-identity h1 {
+  color: #eee7dc;
+  font-size: clamp(0.82rem, 1.18vw, 0.98rem);
+  letter-spacing: 0.34em;
+}
+.command-page .command-hero-identity p {
+  color: #aaa1b0;
+  font-size: clamp(0.48rem, 0.7vw, 0.58rem);
+  letter-spacing: 0.14em;
+}
+.command-page .command-stage {
+  inset: clamp(2.85rem, 4.5vw, 3.35rem) 0 0;
+}
+.command-page .command-stage::before {
+  width: min(78%, 54rem);
+  opacity: 0.52;
+}
+.command-page .command-stage::after {
+  bottom: -1%;
+  width: min(58%, 40rem);
+  height: 13%;
+  background: radial-gradient(
+    ellipse,
+    rgba(112, 75, 24, 0.16),
+    rgba(41, 27, 69, 0.12) 45%,
+    transparent 72%
+  );
+  filter: blur(10px);
+}
+.command-lab-drawing {
+  position: absolute;
+  inset: 2% 0 0;
+  width: 100%;
+  height: 96%;
+  overflow: visible;
+}
+.command-lab-drawing path,
+.command-lab-drawing circle {
+  fill: none;
+  vector-effect: non-scaling-stroke;
+}
+.command-lab-measurements {
+  stroke: rgba(202, 167, 101, 0.16);
+  stroke-width: 0.8;
+}
+.command-lab-molecule,
+.command-lab-formula {
+  stroke: rgba(121, 86, 142, 0.17);
+  stroke-width: 0.85;
+}
+.command-lab-molecule circle {
+  fill: rgba(202, 167, 101, 0.23);
+  stroke: none;
+}
+.command-lab-radial {
+  stroke: rgba(202, 167, 101, 0.1);
+  stroke-width: 0.8;
+}
+.command-lab-reference {
+  position: absolute;
+  top: 50%;
+  color: rgba(202, 167, 101, 0.28);
+  font-size: 0.48rem;
+  letter-spacing: 0.18em;
+  writing-mode: vertical-rl;
+}
+.command-lab-reference-left {
+  left: 8%;
+}
+.command-lab-reference-right {
+  right: 8%;
+  transform: rotate(180deg);
+}
+
+.command-page .intelligence-core {
+  width: min(84cqh, 62cqw, 38rem);
+}
+.command-core-halo {
+  inset: 12%;
+  background: radial-gradient(
+    circle,
+    rgba(112, 75, 24, 0.62) 0 18%,
+    rgba(183, 135, 49, 0.4) 29%,
+    rgba(193, 143, 49, 0.25) 43%,
+    rgba(202, 167, 101, 0.14) 55%,
+    rgba(70, 37, 94, 0.15) 66%,
+    transparent 76%
+  );
+  filter: none;
+  box-shadow:
+    inset 0 0 2.2rem rgba(78, 49, 17, 0.38),
+    0 0 2.6rem rgba(73, 39, 96, 0.16);
+  animation: command-luxury-halo-breathe 5.2s cubic-bezier(0.42, 0, 0.3, 1)
+    infinite;
+}
+.command-core-rings {
+  filter: drop-shadow(0 1.1rem 1.5rem rgba(0, 0, 0, 0.55));
+}
+.command-core-ring-command {
+  animation-duration: 180s;
+}
+.command-core-ring-counter {
+  animation-duration: 240s;
+}
+.command-core-ring-base {
+  stroke: rgba(158, 112, 37, 0.72);
+  stroke-width: 1.6;
+}
+.command-core-ring-ticks {
+  stroke: rgba(202, 167, 101, 0.52);
+  stroke-width: 1;
+  stroke-dasharray: 0.28 8.72;
+}
+.command-core-ring-fine {
+  stroke: rgba(193, 143, 49, 0.44);
+  stroke-dasharray: 0.4 7.6;
+}
+.command-core-ring-segments {
+  stroke-width: 5.5;
+  stroke-dasharray: 13 8 4 12 19 9;
+}
+.command-core-arc {
+  stroke-width: 6;
+  filter: drop-shadow(0 1px rgba(202, 167, 101, 0.18));
+}
+.command-core-aperture {
+  stroke: rgba(91, 51, 116, 0.56);
+  filter: none;
+}
+.command-core-calibration path {
+  stroke: rgba(183, 135, 49, 0.68);
+  stroke-width: 1.5;
+}
+.command-core-channels path {
+  fill: none;
+  stroke: url(#core-purple-channel);
+  stroke-width: 2;
+  vector-effect: non-scaling-stroke;
+}
+.command-page .core-reactor-frame {
+  inset: 12%;
+  border-color: rgba(202, 167, 101, 0.5);
+  background: radial-gradient(
+    circle,
+    rgba(58, 30, 79, 0.3),
+    rgba(13, 7, 18, 0.88) 76%
+  );
+  box-shadow:
+    0 1.7rem 3.5rem rgba(0, 0, 0, 0.58),
+    inset 0 0 0 1px rgba(112, 75, 24, 0.28),
+    inset 0 0 2.2rem rgba(41, 27, 69, 0.28);
+}
+.command-core-notch {
+  width: 2rem;
+  height: 0.28rem;
+}
+.command-page .core-emblem {
+  inset: 0;
+}
+.command-page .core-energy {
+  inset: 17%;
+  background: radial-gradient(
+    circle,
+    rgba(126, 67, 156, 0.36),
+    rgba(68, 34, 91, 0.2) 45%,
+    transparent 72%
+  );
+  filter: none;
+  box-shadow: 0 0 2rem rgba(75, 37, 101, 0.22);
+  animation: command-purple-energy-breathe 5.2s cubic-bezier(0.42, 0, 0.3, 1)
+    infinite;
+}
+.command-page .core-emblem .command-core-emblem {
+  filter: drop-shadow(0 1rem 1.4rem rgba(0, 0, 0, 0.56));
+  animation: command-icon-breathe 5.2s cubic-bezier(0.42, 0, 0.3, 1) infinite;
+}
+@keyframes command-icon-breathe {
+  0%,
+  100% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.025);
+  }
+}
+@keyframes command-luxury-halo-breathe {
+  0%,
+  100% {
+    opacity: 0.72;
+    transform: scale(0.985);
+  }
+  50% {
+    opacity: 1;
+    transform: scale(1.035);
+  }
+}
+@keyframes command-purple-energy-breathe {
+  0%,
+  100% {
+    opacity: 0.62;
+    transform: scale(0.98);
+  }
+  50% {
+    opacity: 0.9;
+    transform: scale(1.04);
+  }
+}
+@media (max-width: 1100px) {
+  .command-page .command-hero {
+    height: min(calc(100svh - 128px), 43rem);
+  }
+  .command-page .intelligence-core {
+    width: min(86cqh, 74cqw, 34rem);
+  }
+}
+@media (max-width: 700px) {
+  .command-page .command-hero {
+    height: min(calc(100svh - 128px), 40rem);
+    padding-top: 0.55rem;
+  }
+  .command-page .command-stage {
+    inset: 2.55rem 0 0;
+  }
+  .command-page .intelligence-core {
+    width: min(86cqh, 94cqw, 27rem);
+  }
+  .command-lab-molecule,
+  .command-lab-formula,
+  .command-lab-reference {
+    opacity: 0.55;
+  }
+  .command-lab-reference-left {
+    left: 3%;
+  }
+  .command-lab-reference-right {
+    right: 3%;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .command-core-halo,
+  .command-page .core-energy,
+  .command-page .core-emblem .command-core-emblem {
+    animation: none;
+  }
+}
+html[data-reduced-motion="true"] .command-core-halo,
+html[data-reduced-motion="true"] .command-page .core-energy,
+html[data-reduced-motion="true"]
+  .command-page
+  .core-emblem
+  .command-core-emblem {
+  animation: none;
+}
+
 /* Prompt 08: evidence-backed readiness uses discrete stage markers, not a
    fabricated percentage, flat progress bar, or Phase 06 launch claim. */
 .launch-readiness-chamber {

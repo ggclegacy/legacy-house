@@ -4,7 +4,7 @@
 
 - **Current phase:** Phase 3 — Sourcing, Manufacturers, White Label, Packaging, and Costing
 - **Status:** Phase 03 and Vercel migration pass local validation; hosted acceptance blocked
-- **Last updated:** 2026-07-13 (America/Chicago)
+- **Last updated:** 2026-07-14 (America/Chicago)
 - **Next recommended phase:** Phase 4 — Inventory, Purchasing, Production, and Traceability. Do not begin automatically.
 
 ## Command page build sequence
@@ -24,6 +24,20 @@ Phase 03 was explicitly authorized and remains the current completed implementat
 The latest focused Command hero correction is implemented locally and awaiting review. The opening now uses the unchanged official emblem as its dominant core inside a layered plum-black command chamber with precision rings, sculpted subsystem orbs, and sequenced housed conduits. The header, mobile command dock, Product Build Workspace, deeper Command sections, data behavior, registered routes, schema, hosting, and Phase 04 remain unchanged by this pass.
 
 The Command opening hero was surgically rebuilt on 2026-07-13 without changing the operational Command sections below it. The compact identity, official emblem, layered precision rings, four linked pillar nodes, sequential energy path, restrained breathing motion, responsive radial layout, accessible routes, and static reduced-motion state are locally validated. No Phase 04, database, hosting, navigation-shell, or unrelated-page work was included.
+
+The Command hero was elevated again on 2026-07-14 around the unchanged root `icon.png`, now the permanent hero identity. This presentation-only pass enlarges the sharp core artwork, replaces diffuse glow and broad technical grids with a layered contained gold/purple halo, two slow precision-ring assemblies, restrained product-laboratory drafting references, and a soft atmospheric handoff into Product Build Workspace. The header, navigation, Product Build Workspace, all lower homepage sections, routes, records, database, and Phase 04 remain unchanged.
+
+## Latest Command hero elevation delivered
+
+- Preserved `icon.png` byte-for-byte (2000×2000; SHA-256 `7f77c47d8dac98b30fe913dd084ce9045c8a1ccba0557ce578423abf3785454d`) and increased its rendered mechanism area by moving the reactor frame from a 19% inset to 12% with the image filling that frame.
+- Rebuilt only the opening chamber with the locked obsidian-plum, imperial-purple, brushed-gold, champagne, warm-ivory, and lavender-gray material system.
+- Replaced broad grids, orbit noise, and signal lines with faint molecular geometry, formula references, measurement ticks, and a single radial engineering reference drawn in lightweight SVG.
+- Reduced the mechanism to one premium outer ring and one secondary precision ring with segmented gold arcs, calibration interruptions, sparse markings, and internal purple channels. Rotation now takes 180 and 240 seconds.
+- Added a synchronized 5.2-second `1 → 1.025` icon breath, a non-blurred four-stage gold halo behind the image, and restrained purple energy intensification. Reduced-motion settings remove all continuous hero animation without removing meaning.
+- Reworked the hero-to-workspace edge as a layered gold and purple atmospheric continuation rather than a plain border; Product Build Workspace itself was not changed.
+- Added ADR-046 to record `icon.png` as the permanent Command hero identity while leaving the existing header and shell emblem outside this pass.
+- Validation passed: `pnpm format:check`; `pnpm lint`; `pnpm typecheck`; focused Vitest (2/2); focused Playwright reduced-motion and six-viewport geometry checks (2/2); and `pnpm build` (24 pages). The first sandboxed build and browser-server starts were blocked by local port permissions; approved reruns passed. A parallel dev-server browser attempt and its first serial retry also hit transient local navigation suspension/timeouts; the final focused rerun passed both checks.
+- No migration, seed, database, dependency, header, navigation, route, Product Build Workspace, lower homepage section, hosting, Vercel, or Phase 04 change was included.
 
 The Command section directly beneath that hero was then surgically rebuilt as the Product Build Workspace. It derives continuation context, linked formula/configuration evidence, a bounded product dock, and stage routes from real loaded records. It exposes exactly three new-product entry paths through the existing controlled creation dialog and honestly reports creation unavailability when PostgreSQL is unreachable. That pass preserved the hero and every later Command section; the separately authorized Development Portfolio pass below subsequently replaced only the next Commercial Readiness strip.
 

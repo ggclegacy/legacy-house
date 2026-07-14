@@ -361,3 +361,11 @@ This is a compact decision log. Decisions are immutable records: supersede them 
 - **Decision:** Use the unchanged root `logo.png`, served through `/emblem` and rendered by `LegacyHouseMark`, as the dominant Command hero core. Build the chamber, rings, conduits, and pillar housings with repository SVG and CSS around that image.
 - **Reason:** The approved Command hero correction explicitly requires the existing Legacy House emblem and prohibits generating, replacing, redrawing, or modifying it.
 - **Consequences:** Command-specific reactor artwork is not rendered. The shell, hero, navigation, and loading states share one official identity asset; environmental depth remains presentational and scoped to the hero.
+
+## ADR-046 — icon.png is the permanent Command hero identity
+
+- **Status:** Accepted; supersedes ADR-045 only for the Command hero
+- **Date:** 2026-07-14
+- **Decision:** Render the unchanged root `icon.png` as the permanent identity at the center of the Command hero. Continue to preserve `logo.png` as the existing shell and application emblem outside this specifically scoped hero.
+- **Reason:** The founder explicitly designated the supplied project icon as the permanent Legacy House identity for the opening Command experience while prohibiting regeneration or replacement.
+- **Consequences:** The hero may build lightweight CSS and SVG atmosphere, halo, and precision mechanics behind the sharp source image. It must not edit, blur, recolor, regenerate, or duplicate `icon.png`; header and shell identity remain outside this decision.

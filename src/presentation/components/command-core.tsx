@@ -24,6 +24,11 @@ export function CommandCore() {
             <stop offset="0.5" stopColor="#291b45" stopOpacity="0.3" />
             <stop offset="1" stopColor="#170c20" stopOpacity="0" />
           </radialGradient>
+          <linearGradient id="core-purple-channel" x1="0" y1="0" x2="1" y2="0">
+            <stop offset="0" stopColor="#291b45" stopOpacity="0" />
+            <stop offset="0.5" stopColor="#7a479b" stopOpacity="0.76" />
+            <stop offset="1" stopColor="#291b45" stopOpacity="0" />
+          </linearGradient>
         </defs>
         <circle
           className="command-core-energy-disc"
@@ -77,6 +82,10 @@ export function CommandCore() {
             r="218"
             pathLength="100"
           />
+        </g>
+        <g className="command-core-channels">
+          <path d="M114 300h72M414 300h72" />
+          <path d="M300 114v72M300 414v72" />
         </g>
         <circle className="command-core-aperture" cx="300" cy="300" r="190" />
         <g className="command-core-calibration">

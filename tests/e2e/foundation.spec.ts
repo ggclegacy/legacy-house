@@ -30,8 +30,21 @@ test("renders the Command experience and permanent navigation", async ({
     ).toBeVisible();
     await expect(page.getByRole("link", { name: /Settings/ })).toBeVisible();
   } else {
+    const mobileCommands = page.getByRole("navigation", {
+      name: "Mobile commands",
+    });
+    await expect(mobileCommands).toBeVisible();
     await expect(
-      page.getByRole("navigation", { name: "Mobile commands" }),
+      mobileCommands.getByRole("link", { name: /Products/ }),
+    ).toHaveAttribute("href", "/modules/product-pipeline");
+    await expect(
+      mobileCommands.getByRole("link", { name: /Production/ }),
+    ).toHaveAttribute("href", "/modules/production");
+    await expect(
+      mobileCommands.getByRole("button", { name: /Search/ }),
+    ).toBeVisible();
+    await expect(
+      mobileCommands.getByRole("button", { name: /Create/ }),
     ).toBeVisible();
     await page.getByRole("button", { name: "Open navigation" }).click();
     await expect(

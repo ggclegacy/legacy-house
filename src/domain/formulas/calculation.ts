@@ -24,6 +24,7 @@ export interface BatchCalculationInput {
   bottleSize: string;
   bottleSizeUnit: "us_fluid_ounces" | "milliliters" | "grams";
   overagePercent: string;
+  outputPrecision?: number;
   ingredients: readonly FormulaCalculationLine[];
 }
 
@@ -75,12 +76,24 @@ export function calculateBatch(
     throw new Error("A volume formula cannot use grams as its fill unit.");
   if (input.basis === "weight_percentage" && input.bottleSizeUnit !== "grams")
     throw new Error("A weight formula requires grams as its fill unit.");
+  const outputPrecision = input.outputPrecision ?? 12;
+  if (
+    !Number.isInteger(outputPrecision) ||
+    outputPrecision < 0 ||
+    outputPrecision > 12
+  )
+    throw new Error("Output precision must be a whole number from 0 to 12.");
+
+  const total = formulaTotal(input.ingredients.map((line) => line.percentage));
+  if (total.state !== "ready")
+    throw new Error(
+      `Formula total must equal exactly 100% before batch calculation. Current total: ${total.total}%.`,
+    );
 
   const count = decimal(input.bottleCount);
   const requiredFill = multiply(bottleSize, count);
   const overage = divide(multiply(requiredFill, overageRate), oneHundred);
   const totalBatch = add(requiredFill, overage);
-  const total = formulaTotal(input.ingredients.map((line) => line.percentage));
   const mlPerFlOz = decimal(millilitersPerUsFluidOunce);
   const totalFluidOunces =
     input.bottleSizeUnit === "us_fluid_ounces"
@@ -99,13 +112,17 @@ export function calculateBatch(
   return {
     validFormula: total.state === "ready",
     formulaTotal: total.total,
-    requiredFill: decimalString(requiredFill),
-    overage: decimalString(overage),
-    totalBatch: decimalString(totalBatch),
+    requiredFill: decimalString(requiredFill, outputPrecision),
+    overage: decimalString(overage, outputPrecision),
+    totalBatch: decimalString(totalBatch, outputPrecision),
     batchUnit: input.bottleSizeUnit,
-    totalFluidOunces: totalFluidOunces ? decimalString(totalFluidOunces) : null,
-    totalMilliliters: totalMilliliters ? decimalString(totalMilliliters) : null,
-    totalGrams: totalGrams ? decimalString(totalGrams) : null,
+    totalFluidOunces: totalFluidOunces
+      ? decimalString(totalFluidOunces, outputPrecision)
+      : null,
+    totalMilliliters: totalMilliliters
+      ? decimalString(totalMilliliters, outputPrecision)
+      : null,
+    totalGrams: totalGrams ? decimalString(totalGrams, outputPrecision) : null,
     ingredients: input.ingredients.map((line) => {
       const ratio = divide(decimal(line.percentage), oneHundred);
       const fluidOunces = totalFluidOunces
@@ -121,9 +138,13 @@ export function calculateBatch(
           : null;
       return {
         ...line,
-        fluidOunces: fluidOunces ? decimalString(fluidOunces) : null,
-        milliliters: milliliters ? decimalString(milliliters) : null,
-        grams: grams ? decimalString(grams) : null,
+        fluidOunces: fluidOunces
+          ? decimalString(fluidOunces, outputPrecision)
+          : null,
+        milliliters: milliliters
+          ? decimalString(milliliters, outputPrecision)
+          : null,
+        grams: grams ? decimalString(grams, outputPrecision) : null,
         densityRequired:
           input.basis === "volume_percentage" && !line.densityGramsPerMl,
       };

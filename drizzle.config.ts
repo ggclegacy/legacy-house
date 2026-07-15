@@ -11,6 +11,7 @@ export default defineConfig({
   schema: [
     "./src/infrastructure/database/schema.ts",
     "./src/infrastructure/database/commercial-schema.ts",
+    "./src/infrastructure/database/production-schema.ts",
   ],
   out: "./drizzle",
   dbCredentials: { url: schemaInspectionUrl },

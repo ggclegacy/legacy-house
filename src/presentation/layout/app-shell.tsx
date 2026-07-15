@@ -245,12 +245,30 @@ export function AppShell({ children }: { children: React.ReactNode }) {
         {children}
       </main>
       <nav className="mobile-command-dock" aria-label="Mobile commands">
-        <button type="button" onClick={() => setSearchOpen(true)}>
-          <span aria-hidden="true">⌕</span>Search
-        </button>
         <Link href="/" aria-current={pathname === "/" ? "page" : undefined}>
           <span aria-hidden="true">⌂</span>Command
         </Link>
+        <Link
+          href="/modules/product-pipeline"
+          aria-current={
+            pathname.startsWith("/modules/product-pipeline")
+              ? "page"
+              : undefined
+          }
+        >
+          <span aria-hidden="true">◇</span>Products
+        </Link>
+        <Link
+          href="/modules/production"
+          aria-current={
+            pathname.startsWith("/modules/production") ? "page" : undefined
+          }
+        >
+          <span aria-hidden="true">◉</span>Production
+        </Link>
+        <button type="button" onClick={() => setSearchOpen(true)}>
+          <span aria-hidden="true">⌕</span>Search
+        </button>
         <button type="button" onClick={() => setCreateOpen(true)}>
           <span aria-hidden="true">＋</span>Create
         </button>

@@ -2,12 +2,32 @@
 
 ## Current state
 
-- **Current phase:** Phase 3 — Sourcing, Manufacturers, White Label, Packaging, and Costing
-- **Status:** Phase 03 and Vercel migration pass local validation; hosted acceptance blocked
+- **Current phase:** Phase 4 — bounded Production batch-planning slice
+- **Status:** Production prompts 01–09 are locally complete; inventory, purchasing, traceability, external database, and hosted acceptance remain outside this slice or blocked
 - **Last updated:** 2026-07-15 (America/Chicago)
-- **Next recommended phase:** Phase 4 — Inventory, Purchasing, Production, and Traceability. Do not begin automatically.
+- **Next recommended action:** Review the bounded Production workflow. Do not begin inventory, purchasing, lots, consumption, finished goods, or another phase automatically.
+
+## Production module build sequence
+
+- Production Prompt 01 complete — the working formula-detail calculator, incomplete Production boundary, canonical seed/fallback formula, decimal-safe calculations, and absent canonical production steps were audited; no duplicate make-batch route required removal.
+- Production Prompt 02 complete — the mobile dock now exposes Command, Products, Production, Search, and Create directly, with Production routed to `/modules/production` and existing dialog behavior preserved.
+- Production Prompt 03 complete — `/modules/production` now opens a focused real-data home with the active Reserve formula, defaults, honest missing-formula state, and working Build Batch, Open Formula, and Formula Vault routes.
+- Production Prompt 04 complete — `/production/batch-builder` provides instant decimal-safe presets/custom inputs, fl oz and mL outputs, optional density-based grams, selectable precision, and a hard 100% formula-total gate.
+- Production Prompt 05 complete — canonical Reserve percentages, 10/20/30/40/50 bottle totals, exact 20-bottle fl oz/mL outputs, and density-required gram states are locked by decimal-safe tests.
+- Production Prompt 06 complete — focused Batch Mode preserves in-session phase/step/note state, copies and prints the worksheet, and saves an immutable calculation-only Batch Plan without inventory, lots, consumption, reservations, outputs, or production history.
+- Production Prompt 07 complete — Batch Mode now uses stored exact-version steps when present or the authorized ten-heading editable draft, with reorder, instruction/note editing, required/check-off state, and worksheet printing without invented technical values.
+- Production Prompt 08 complete — Production Home, Batch Builder, and Batch Mode now use the locked obsidian, purple-glass, ivory, and restrained gold-edge system with premium measurement cards, one focused phase, and persistent execution actions.
+- Production Prompt 09 complete — 320/375/390/430px geometry and the one-handed custom-count workflow pass with readable density-safe measurements, unobstructed controls, check-off steps, Copy, Print, stock-neutral Save, and working Production navigation.
+- Production final validation — `pnpm format:check`, `pnpm lint`, `pnpm typecheck`, 120/120 unit/integration tests, `pnpm db:check`, both focused Production browser scenarios, and `pnpm build` (27/27 generated pages) passed. External PostgreSQL save/migration and Vercel were not run because credentials/project access were not supplied; the local API fails honestly without `DATABASE_URL`.
 
 ## Command page build sequence
+
+- Homepage rebuild Prompt 01 complete — section order preserved; below-hero spacing, heading scale, module density, and action hierarchy are compact and scan-first without changing routes or data.
+- Homepage rebuild Prompt 02 complete — all below-hero modules now share rounded featured, standard, compact, and action-card glass treatments with consistent focus and pressed states.
+- Homepage rebuild Prompt 03 complete — below-hero color, depth, and typography now use the locked luminous plum, dimensional gold, warm ivory, and muted lavender hierarchy.
+- Homepage rebuild Prompt 04 complete — each existing homepage workspace now uses one calm featured record, compact supporting modules, clean action rails, and honest states within the shared card system.
+- Homepage rebuild Prompt 05 complete — 320–430px layouts use bounded snap rails, compact type and readiness cards, 44px controls, reduced-motion-safe interactions, and bottom-dock clearance without page overflow.
+- Homepage rebuild validation — all five production builds passed (24 pages); format, lint, type-check, 109 unit tests, schema check, homepage action checks, and six-viewport workspace/portfolio geometry passed. One pre-existing route smoke assertion remains mismatched: `/modules/product-pipeline` renders the working `Product Development` H1 while the test expects `Product Pipeline`.
 
 - Prompt 01 complete — Command Core preserves the official emblem, four routed pillars, responsive chamber geometry, sequential energy, and reduced-motion behavior; production build passed.
 - Prompt 02 complete — Product Build Workspace preserves the real continuation dossier, controlled creation gateways, active Product Dock, and routed stage rail; five targeted tests and the production build passed.
@@ -187,7 +207,7 @@ The third Command section is now a compact Development Portfolio. It maps detail
 - [ ] Phase 1 — Foundation and Design System (local implementation complete; external PostgreSQL/protected hosted acceptance blocked)
 - [ ] Phase 2 — Product Pipeline, Formulas, Ingredients, and R&D (local implementation complete; external PostgreSQL/protected hosted acceptance blocked)
 - [ ] Phase 3 — Sourcing, Manufacturers, White Label, Packaging, and Costing (local implementation complete; external PostgreSQL/private storage/protected Preview acceptance blocked)
-- [ ] Phase 4 — Inventory, Purchasing, Production, and Traceability (recommended next; not started)
+- [ ] Phase 4 — Inventory, Purchasing, Production, and Traceability (bounded Production planning slice complete; inventory, purchasing, lots, consumption, finished goods, and traceability not started)
 - [ ] Phase 5 — Quality, Stability, Labels, and Complaints
 - [ ] Phase 6 — Launches, Shopify, and Market Performance
 - [ ] Phase 7 — Operational Intelligence and Forecasting

@@ -3772,12 +3772,14 @@ html[data-reduced-motion="true"] *::after {
     padding-bottom: env(safe-area-inset-bottom);
     border-top: 1px solid var(--line);
     display: grid;
-    grid-template-columns: repeat(3, 1fr);
+    grid-template-columns: repeat(5, minmax(0, 1fr));
     background: rgba(5, 5, 6, 0.96);
     backdrop-filter: blur(16px);
   }
   .mobile-command-dock a,
   .mobile-command-dock button {
+    min-width: 0;
+    min-height: 44px;
     border: 0;
     display: flex;
     flex-direction: column;
@@ -3786,15 +3788,15 @@ html[data-reduced-motion="true"] *::after {
     gap: 0.08rem;
     color: var(--steel);
     background: transparent;
-    font-size: 0.55rem;
-    letter-spacing: 0.07em;
+    font-size: clamp(0.43rem, 2vw, 0.55rem);
+    letter-spacing: 0.035em;
     text-decoration: none;
     text-transform: uppercase;
   }
   .mobile-command-dock a span,
   .mobile-command-dock button span {
     color: var(--champagne);
-    font-size: 1rem;
+    font-size: 0.92rem;
   }
   .mobile-command-dock a[aria-current="page"] {
     color: var(--bone);
@@ -3917,12 +3919,6 @@ html[data-reduced-motion="true"] *::after {
   .command-page .foundation-dashboard,
   .command-page footer {
     width: min(calc(100% - 2rem), var(--max-width));
-  }
-}
-
-@media (min-width: 1101px) {
-  .sourcing-network-grid {
-    grid-template-columns: minmax(0, 1.45fr) repeat(3, minmax(11rem, 0.62fr));
   }
 }
 
@@ -4804,6 +4800,357 @@ html[data-reduced-motion="true"] .command-page .core-energy {
 html[data-reduced-motion="true"] .product-development-page .product-card {
   transition: none;
 }
+
+/* Production Prompt 03: focused real-formula entry surface. */
+.production-home {
+  width: min(calc(100% - 3rem), 72rem);
+  margin-inline: auto;
+  padding-block: clamp(2.5rem, 6vw, 5rem);
+}
+.production-module-header {
+  max-width: 42rem;
+  margin-bottom: 1.25rem;
+}
+.production-module-header h1 {
+  margin-block: 0.2rem;
+  font-size: clamp(2.25rem, 5vw, 4.5rem);
+}
+.production-module-header > p:last-child,
+.production-active-formula > div > p:last-child,
+.production-setup-state > p {
+  color: var(--steel);
+}
+.production-active-formula,
+.production-setup-state {
+  padding: clamp(1.35rem, 3vw, 2.25rem);
+  border: 1px solid rgba(226, 190, 114, 0.24);
+  border-radius: 1.25rem;
+  background:
+    radial-gradient(
+      circle at 82% 18%,
+      rgba(90, 42, 130, 0.22),
+      transparent 34%
+    ),
+    linear-gradient(145deg, rgba(36, 16, 56, 0.88), rgba(13, 8, 18, 0.94));
+  box-shadow:
+    inset 0 1px rgba(255, 244, 218, 0.08),
+    0 1.2rem 3rem rgba(0, 0, 0, 0.28);
+}
+.production-active-formula h2,
+.production-setup-state h2 {
+  margin-block: 0.25rem;
+}
+.production-active-formula dl {
+  margin-block: 1.5rem;
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 0.75rem;
+}
+.production-active-formula dl > div {
+  padding: 0.85rem;
+  border-radius: 0.85rem;
+  background: rgba(12, 7, 17, 0.58);
+}
+.production-active-formula dt {
+  color: var(--steel);
+  font-size: 0.66rem;
+  text-transform: uppercase;
+}
+.production-active-formula dd {
+  margin: 0.3rem 0 0;
+}
+.production-active-formula nav {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 0.65rem;
+}
+.production-active-formula nav > * {
+  min-height: 44px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+.production-vault-link {
+  padding-inline: 0.75rem;
+  color: var(--champagne);
+}
+@media (max-width: 700px) {
+  .production-home {
+    width: min(calc(100% - 1.5rem), 72rem);
+    padding-block: 1.75rem;
+  }
+  .production-active-formula dl {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+  .production-active-formula nav > * {
+    flex: 1 1 8rem;
+  }
+}
+
+/* Production Prompt 04: dedicated exact builder layout. */
+.production-builder-page {
+  width: min(calc(100% - 3rem), 78rem);
+  margin-inline: auto;
+  padding-block: clamp(2rem, 5vw, 4rem);
+}
+.production-builder-header {
+  max-width: 46rem;
+  margin-bottom: 1.25rem;
+}
+.production-builder-header h1 {
+  margin-block: 0.2rem;
+  font-size: clamp(2rem, 4.5vw, 4rem);
+}
+.production-builder-header > p:last-child,
+.production-builder-context p {
+  color: var(--steel);
+}
+.production-builder-context {
+  margin-bottom: 0.75rem;
+  padding: 1rem 1.15rem;
+  border: 1px solid var(--line);
+  display: flex;
+  align-items: end;
+  justify-content: space-between;
+  gap: 1rem;
+}
+.production-builder-context h2 {
+  margin-block: 0.2rem;
+}
+.production-builder-context > a {
+  min-height: 44px;
+  display: inline-flex;
+  align-items: center;
+  color: var(--champagne);
+}
+.batch-summary small {
+  color: var(--steel);
+  font-size: 0.65rem;
+}
+@media (max-width: 700px) {
+  .production-builder-page {
+    width: min(calc(100% - 1.5rem), 78rem);
+    padding-block: 1.5rem;
+  }
+  .production-builder-context {
+    align-items: start;
+    flex-direction: column;
+  }
+}
+
+/* Production Prompt 06: focused in-session execution and plan-only save. */
+.batch-mode {
+  width: min(calc(100% - 3rem), 78rem);
+  margin-inline: auto;
+  padding-block: clamp(1.5rem, 4vw, 3rem) 6rem;
+}
+.batch-mode-header {
+  margin-bottom: 0.8rem;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(24rem, 0.8fr);
+  gap: 1rem;
+}
+.batch-mode-header h1 {
+  margin-block: 0.2rem;
+  font-size: clamp(1.8rem, 4vw, 3.5rem);
+}
+.batch-mode-header > div > p:last-child {
+  color: var(--steel);
+}
+.batch-mode-header dl {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 0.5rem;
+}
+.batch-mode-header dl > div {
+  padding: 0.75rem;
+  border: 1px solid var(--line);
+}
+.batch-mode-header dt,
+.batch-measurements dt {
+  color: var(--steel);
+  font-size: 0.6rem;
+  text-transform: uppercase;
+}
+.batch-mode-header dd,
+.batch-measurements dd {
+  margin: 0.25rem 0 0;
+  color: var(--bone);
+}
+.batch-phase-tabs {
+  margin-bottom: 0.7rem;
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+}
+.batch-phase-tabs button {
+  min-height: 48px;
+  border: 1px solid var(--line);
+  color: var(--steel);
+  background: rgba(13, 13, 17, 0.8);
+}
+.batch-phase-tabs button[aria-pressed="true"] {
+  border-color: var(--champagne);
+  color: var(--bone);
+  background: rgba(42, 15, 74, 0.72);
+}
+.batch-mode-panel {
+  margin-bottom: 0.7rem;
+  padding: clamp(1rem, 2.5vw, 1.5rem);
+  border: 1px solid var(--line);
+  background: rgba(13, 13, 17, 0.72);
+}
+.batch-mode-section-heading {
+  margin-bottom: 1rem;
+}
+.batch-mode-section-heading h2 {
+  margin-block: 0.2rem;
+}
+.batch-mode-section-heading > strong {
+  color: var(--champagne);
+}
+.batch-measurements ol,
+.batch-step-panel ol {
+  margin: 0;
+  padding: 0;
+  display: grid;
+  gap: 0.55rem;
+  list-style: none;
+}
+.batch-measurements li {
+  padding: 1rem;
+  border: 1px solid var(--line);
+  display: grid;
+  grid-template-columns: 4rem minmax(12rem, 1fr) minmax(20rem, 1fr);
+  align-items: center;
+  gap: 0.75rem;
+}
+.batch-measurements li > span {
+  color: var(--champagne);
+}
+.batch-measurements h3 {
+  margin: 0;
+}
+.batch-measurements dl {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 0.5rem;
+}
+.batch-measurements dd {
+  font-size: clamp(1rem, 2vw, 1.4rem);
+}
+.batch-step-panel li {
+  min-height: 64px;
+  padding: 0.75rem;
+  border: 1px solid var(--line);
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr);
+  align-items: start;
+  gap: 0.6rem;
+}
+.batch-step-check {
+  display: grid;
+  gap: 0.5rem;
+}
+.batch-step-check > label {
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+}
+.batch-step-check input,
+.batch-step-required input {
+  width: 1.4rem;
+  height: 1.4rem;
+}
+.batch-step-reorder {
+  display: flex;
+}
+.batch-step-reorder button {
+  min-width: 44px;
+  min-height: 44px;
+  padding: 0;
+}
+.batch-step-fields {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 0.7rem;
+}
+.batch-step-fields label {
+  display: grid;
+  gap: 0.3rem;
+}
+.batch-step-fields label:nth-child(2) {
+  grid-column: 1 / -1;
+}
+.batch-step-fields input:not([type="checkbox"]),
+.batch-step-fields textarea {
+  width: 100%;
+}
+.batch-step-fields .batch-step-required {
+  display: flex;
+  align-items: center;
+  gap: 0.45rem;
+}
+.batch-step-panel small,
+.batch-notes-panel > p {
+  color: var(--steel);
+}
+.batch-notes-panel label {
+  display: grid;
+  gap: 0.5rem;
+}
+.batch-notes-panel textarea {
+  width: 100%;
+}
+.batch-mode-actions {
+  position: sticky;
+  z-index: 3;
+  bottom: 0.75rem;
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  box-shadow: 0 1rem 3rem rgba(0, 0, 0, 0.55);
+}
+.batch-mode-actions button {
+  min-height: 52px;
+}
+@media (max-width: 700px) {
+  .batch-mode {
+    width: min(calc(100% - 1.5rem), 78rem);
+    padding-block: 1rem 7rem;
+  }
+  .batch-mode-header {
+    grid-template-columns: 1fr;
+  }
+  .batch-mode-panel {
+    display: none;
+  }
+  .batch-mode-panel[data-active="true"] {
+    display: block;
+  }
+  .batch-measurements li {
+    grid-template-columns: 1fr;
+  }
+  .batch-measurements dl {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+  .batch-measurements dl > div:last-child {
+    grid-column: 1 / -1;
+  }
+  .batch-step-panel li,
+  .batch-step-fields {
+    grid-template-columns: 1fr;
+  }
+  .batch-step-fields label:nth-child(2) {
+    grid-column: auto;
+  }
+  .batch-mode-actions {
+    bottom: calc(64px + env(safe-area-inset-bottom));
+  }
+  .batch-mode-actions button {
+    padding-inline: 0.35rem;
+    font-size: 0.62rem;
+  }
+}
 html[data-reduced-motion="true"] .product-development-page .product-card:hover,
 html[data-reduced-motion="true"]
   .product-development-page
@@ -4817,6 +5164,280 @@ html[data-reduced-motion="true"]
 .product-create-flow :is(button, input, select, textarea):focus-visible {
   outline: 2px solid #caa765;
   outline-offset: 3px;
+}
+
+/* Production Prompt 08: locked visual elevation, scoped to Production. */
+.production-home,
+.production-builder-page,
+.batch-mode {
+  --production-glass: linear-gradient(
+    145deg,
+    rgba(31, 22, 39, 0.9),
+    rgba(11, 10, 14, 0.94)
+  );
+  --production-edge: rgba(226, 190, 114, 0.24);
+}
+
+.production-module-header,
+.production-builder-header {
+  position: relative;
+  padding-left: 1rem;
+  border-left: 2px solid var(--champagne);
+}
+
+.production-module-header::after,
+.production-builder-header::after {
+  content: "";
+  position: absolute;
+  bottom: -0.65rem;
+  left: 1rem;
+  width: min(9rem, 35vw);
+  height: 1px;
+  background: linear-gradient(90deg, var(--champagne), transparent);
+}
+
+.production-active-formula,
+.production-setup-state,
+.production-builder-context,
+.production-builder-page .batch-calculator,
+.batch-mode-header dl > div,
+.batch-phase-tabs,
+.batch-mode-panel {
+  border: 1px solid var(--production-edge);
+  border-radius: 1.2rem;
+  background: var(--production-glass);
+  box-shadow:
+    inset 0 1px rgba(255, 248, 226, 0.06),
+    0 1.25rem 3.5rem rgba(0, 0, 0, 0.24);
+  backdrop-filter: blur(16px);
+}
+
+.production-active-formula {
+  overflow: hidden;
+}
+
+.production-active-formula::before {
+  content: "";
+  position: absolute;
+  inset: 0 0 auto;
+  height: 2px;
+  background: linear-gradient(
+    90deg,
+    transparent,
+    var(--champagne),
+    transparent
+  );
+}
+
+.production-active-formula {
+  position: relative;
+}
+
+.production-build-action {
+  min-width: 10rem;
+  box-shadow: 0 0.8rem 2rem rgba(113, 68, 20, 0.2);
+}
+
+.production-builder-context {
+  padding: 1.25rem 1.4rem;
+}
+
+.production-builder-page .batch-calculator {
+  overflow: hidden;
+}
+
+.production-builder-page .calculator-controls {
+  padding: clamp(1rem, 2.5vw, 1.75rem);
+  gap: 1rem;
+}
+
+.production-builder-page .calculator-controls > label,
+.production-builder-page .calculator-controls fieldset {
+  padding: 1rem;
+  border: 1px solid rgba(226, 190, 114, 0.16);
+  border-radius: 1rem;
+  background: rgba(8, 7, 11, 0.5);
+}
+
+.production-builder-page .calculator-controls > label,
+.production-builder-page .calculator-controls fieldset > label {
+  display: grid;
+  align-content: start;
+  gap: 0.45rem;
+}
+
+.production-builder-page .preset-row {
+  gap: 0.4rem;
+  margin-block: 0.7rem;
+}
+
+.production-builder-page .preset-row button {
+  min-width: 3.5rem;
+  min-height: 3.25rem;
+  border-radius: 0.8rem;
+  font-size: 0.85rem;
+}
+
+.production-builder-page .preset-row button[aria-pressed="true"] {
+  border-color: var(--champagne);
+  color: var(--bone);
+  background: linear-gradient(
+    145deg,
+    rgba(111, 68, 25, 0.72),
+    rgba(60, 31, 79, 0.82)
+  );
+}
+
+.production-builder-page .batch-summary {
+  gap: 1px;
+  padding: 1px;
+  background: rgba(226, 190, 114, 0.12);
+}
+
+.production-builder-page .batch-summary article {
+  min-height: 8.5rem;
+  border: 0;
+  align-content: center;
+  background: rgba(10, 8, 13, 0.92);
+}
+
+.production-builder-page .batch-summary strong {
+  font-size: clamp(1.5rem, 3vw, 2.25rem);
+}
+
+.production-builder-page .batch-lines {
+  padding: clamp(0.8rem, 2vw, 1.25rem);
+  display: grid;
+  gap: 0.65rem;
+}
+
+.production-builder-page .batch-lines > article {
+  border: 1px solid rgba(226, 190, 114, 0.14);
+  border-radius: 1rem;
+  background: linear-gradient(
+    110deg,
+    rgba(27, 19, 34, 0.82),
+    rgba(10, 9, 12, 0.88)
+  );
+}
+
+.production-builder-page .batch-lines dd {
+  margin-top: 0.2rem;
+  color: var(--bone);
+  font-size: clamp(1rem, 2vw, 1.3rem);
+}
+
+.batch-mode-header dl > div {
+  border-radius: 0.9rem;
+}
+
+.batch-phase-tabs {
+  padding: 0.3rem;
+  gap: 0.3rem;
+}
+
+.batch-phase-tabs button {
+  border-radius: 0.85rem;
+}
+
+.batch-mode-panel {
+  display: none;
+  min-height: 22rem;
+}
+
+.batch-mode-panel[data-active="true"] {
+  display: block;
+}
+
+.batch-measurements ol,
+.batch-step-panel ol {
+  gap: 0.75rem;
+}
+
+.batch-measurements li,
+.batch-step-panel li {
+  border-color: rgba(226, 190, 114, 0.16);
+  border-radius: 1rem;
+  background: linear-gradient(
+    110deg,
+    rgba(30, 20, 38, 0.72),
+    rgba(10, 9, 13, 0.86)
+  );
+}
+
+.batch-measurements dd {
+  color: var(--bone);
+  font-size: clamp(1.25rem, 2.5vw, 1.85rem);
+  font-variant-numeric: tabular-nums;
+}
+
+.batch-step-check > label {
+  min-width: 4.5rem;
+  min-height: 3rem;
+  padding: 0.4rem;
+  border-radius: 0.8rem;
+  background: rgba(8, 7, 11, 0.55);
+}
+
+.batch-step-check input:checked {
+  accent-color: var(--champagne);
+}
+
+.batch-mode-actions {
+  overflow: hidden;
+  padding: 0.3rem;
+  gap: 0.3rem;
+  border: 1px solid var(--production-edge);
+  border-radius: 1rem;
+  background: rgba(10, 9, 13, 0.94);
+  backdrop-filter: blur(18px);
+}
+
+.batch-mode-actions button {
+  border-radius: 0.75rem;
+}
+
+.production-home :is(a, button, input, select, textarea):focus-visible,
+.production-builder-page :is(a, button, input, select, textarea):focus-visible,
+.batch-mode :is(a, button, input, select, textarea):focus-visible {
+  outline: 2px solid var(--champagne);
+  outline-offset: 3px;
+}
+
+@media (max-width: 700px) {
+  .production-module-header,
+  .production-builder-header {
+    padding-left: 0.75rem;
+  }
+
+  .production-builder-page .calculator-controls > label,
+  .production-builder-page .calculator-controls fieldset {
+    padding: 0.85rem;
+  }
+
+  .production-builder-page .preset-row button {
+    flex: 1 1 3.4rem;
+  }
+
+  .production-builder-page .batch-lines > article {
+    grid-template-columns: 1fr;
+  }
+
+  .production-builder-page .batch-lines dl {
+    grid-template-columns: 1fr;
+  }
+
+  .batch-mode-panel {
+    min-height: 0;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .production-home *,
+  .production-builder-page *,
+  .batch-mode * {
+    scroll-behavior: auto;
+  }
 }
 .product-workspace .fact-list dd,
 .product-workspace .timeline-related-record,
@@ -8226,5 +8847,376 @@ html[data-reduced-motion="true"]
 @media (min-width: 1101px) {
   .sourcing-network-grid {
     grid-template-columns: minmax(0, 1.45fr) repeat(3, minmax(11rem, 0.62fr));
+  }
+}
+
+/* Effective homepage rebuild cascade: intentionally last so older prompt-era
+   section rules cannot restore square, clipped, or oversized treatments. */
+.command-page
+  > :is(.product-build-workspace, .development-portfolio, .command-workspace) {
+  width: min(calc(100% - 3rem), 78rem);
+  padding-block: clamp(2.25rem, 4vw, 3.5rem);
+}
+.product-build-heading,
+.portfolio-heading,
+.command-section-heading {
+  margin-bottom: 1rem;
+}
+.product-build-heading h2,
+.portfolio-heading h2,
+.command-section-heading h2 {
+  color: #f3eee6;
+  font-size: clamp(1.8rem, 3.2vw, 2.85rem);
+  line-height: 1.02;
+  letter-spacing: -0.025em;
+  text-shadow: none;
+}
+.product-build-heading > p,
+.command-section-heading > p,
+.portfolio-heading > div > p:last-child {
+  display: none;
+}
+.continue-building-card,
+.command-feature,
+.launch-product,
+.portfolio-selected-actions,
+.portfolio-empty-state {
+  min-height: 14.5rem;
+  border: 1px solid rgba(202, 167, 101, 0.27);
+  border-radius: 1.3rem;
+  clip-path: none;
+  background:
+    radial-gradient(
+      circle at 80% 12%,
+      rgba(193, 143, 49, 0.1),
+      transparent 28%
+    ),
+    linear-gradient(145deg, rgba(64, 34, 82, 0.78), rgba(20, 10, 28, 0.9));
+  box-shadow:
+    inset 0 1px rgba(255, 244, 218, 0.08),
+    0 1rem 2.8rem rgba(3, 1, 5, 0.3);
+  backdrop-filter: blur(16px);
+}
+.continue-building-card {
+  padding: clamp(1.3rem, 2.5vw, 2rem);
+}
+.continue-building-card::before,
+.command-feature::before {
+  inset: 0;
+  border: 0;
+  border-radius: inherit;
+  clip-path: none;
+  background: linear-gradient(
+    135deg,
+    rgba(255, 244, 218, 0.045),
+    transparent 34%
+  );
+}
+.continue-building-card::after {
+  opacity: 0.25;
+}
+.continue-building-signal {
+  width: 0.25rem;
+  border: 0;
+  border-radius: 999px;
+  background: linear-gradient(#caa765, #5b2b77);
+}
+.continue-building-copy .card-eyebrow,
+.continuation-basis,
+.continue-building-copy h3 + p {
+  color: #caa765;
+}
+.continue-building-copy h3 {
+  color: #f3eee6;
+  text-shadow: none;
+}
+.continuation-facts span {
+  border: 1px solid rgba(202, 167, 101, 0.25);
+  border-radius: 999px;
+  color: #f3eee6;
+  background: rgba(29, 14, 40, 0.72);
+  box-shadow: inset 0 1px rgba(255, 244, 218, 0.055);
+}
+.product-build-primary {
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 20rem), 1fr));
+  gap: 0.7rem;
+}
+.new-product-paths {
+  gap: 0.6rem;
+}
+.new-product-path,
+.product-dock > a,
+.portfolio-capsule,
+.portfolio-stage-track button,
+.readiness-path li {
+  border: 1px solid rgba(202, 167, 101, 0.19);
+  border-radius: 1rem;
+  clip-path: none;
+  background: linear-gradient(
+    145deg,
+    rgba(46, 24, 61, 0.76),
+    rgba(17, 9, 24, 0.86)
+  );
+  box-shadow:
+    inset 0 1px rgba(255, 244, 218, 0.065),
+    0 0.75rem 1.8rem rgba(3, 1, 5, 0.22);
+  backdrop-filter: blur(14px);
+}
+.new-product-path {
+  min-height: 6rem;
+}
+.new-product-path::before {
+  display: none;
+}
+.new-product-path:hover,
+.new-product-path:focus-visible,
+.product-dock > a:hover,
+.product-dock > a:focus-visible {
+  border-color: rgba(202, 167, 101, 0.42);
+  background: linear-gradient(
+    145deg,
+    rgba(64, 32, 79, 0.88),
+    rgba(22, 11, 30, 0.9)
+  );
+  transform: translateY(-1px);
+}
+.path-icon,
+.instrument-icon,
+.readiness-marker {
+  border-radius: 0.8rem;
+}
+.product-dock-block {
+  padding-block: 1rem;
+}
+.product-dock > a {
+  min-height: 6.6rem;
+}
+.build-stage-rail,
+.portfolio-line-filter,
+.command-tool-rail,
+.launch-actions {
+  overflow: hidden;
+  border: 1px solid rgba(202, 167, 101, 0.17);
+  border-radius: 0.95rem;
+  background: rgba(25, 13, 34, 0.72);
+  box-shadow: inset 0 1px rgba(255, 244, 218, 0.05);
+  backdrop-filter: blur(12px);
+}
+.portfolio-stage-track button {
+  min-height: 6rem;
+}
+.portfolio-capsule[aria-pressed="true"],
+.portfolio-stage-track button[aria-pressed="true"],
+.portfolio-line-filter button[aria-pressed="true"] {
+  border-color: #c18f31;
+  background:
+    radial-gradient(
+      circle at 72% 16%,
+      rgba(91, 43, 119, 0.45),
+      transparent 40%
+    ),
+    linear-gradient(145deg, rgba(51, 27, 66, 0.94), rgba(20, 10, 28, 0.96));
+  box-shadow: 0 0 1.5rem rgba(88, 39, 116, 0.18);
+}
+.portfolio-selected-actions {
+  min-height: 0;
+  border-left: 1px solid rgba(202, 167, 101, 0.27);
+}
+.command-workspace-grid {
+  grid-template-columns: minmax(0, 1.35fr) repeat(2, minmax(12rem, 0.72fr));
+  gap: 0.7rem;
+}
+.sourcing-network-grid,
+.cost-studio-grid,
+.memory-grid {
+  grid-template-columns: minmax(0, 1.4fr) repeat(3, minmax(10rem, 0.72fr));
+}
+.command-feature {
+  padding: clamp(1.15rem, 2vw, 1.55rem);
+}
+.command-instrument,
+.network-instrument,
+.cost-instrument,
+.memory-instrument {
+  min-height: 14.5rem;
+  padding: 1rem;
+  border: 1px solid rgba(202, 167, 101, 0.18);
+  border-radius: 1rem;
+  background: linear-gradient(
+    145deg,
+    rgba(41, 22, 55, 0.72),
+    rgba(15, 8, 21, 0.84)
+  );
+  box-shadow:
+    inset 0 1px rgba(255, 244, 218, 0.06),
+    0 0.75rem 1.8rem rgba(3, 1, 5, 0.22);
+  backdrop-filter: blur(14px);
+}
+.command-instrument::before {
+  display: none;
+}
+.command-instrument p {
+  min-height: 0;
+}
+.command-fact-row {
+  margin-block: 0.9rem;
+}
+.command-tool-rail {
+  margin-top: 0.7rem;
+}
+.command-tool-rail > * {
+  min-height: 3rem;
+}
+.command-tool-rail > :is(a, button):nth-child(2),
+.portfolio-primary-action,
+.launch-actions a:first-child,
+.product-build-workspace .button-primary {
+  border-color: #caa765;
+  border-radius: 0.72rem;
+  clip-path: none;
+  color: #170c20;
+  background: linear-gradient(180deg, #caa765, #b78731 55%, #9e7025);
+  box-shadow: inset 0 1px rgba(255, 242, 207, 0.55);
+}
+.product-build-workspace .button-secondary,
+.portfolio-secondary-action {
+  border-radius: 0.72rem;
+  clip-path: none;
+  color: #f3eee6;
+  background: rgba(41, 27, 69, 0.58);
+}
+.launch-readiness-chamber {
+  border: 0;
+  background: none;
+  box-shadow: none;
+}
+.launch-product {
+  margin-bottom: 0.7rem;
+}
+.launch-product h3 {
+  font-size: clamp(1.55rem, 3vw, 2.5rem);
+}
+.readiness-path {
+  padding: 0;
+  gap: 0.55rem;
+}
+.readiness-path li,
+.readiness-path li:first-child {
+  padding: 0.85rem;
+  border-left: 1px solid rgba(202, 167, 101, 0.19);
+}
+.readiness-marker {
+  margin-bottom: 0.55rem;
+}
+.launch-actions {
+  margin-top: 0.7rem;
+  border-top: 1px solid rgba(202, 167, 101, 0.17);
+}
+
+@media (max-width: 900px) {
+  .sourcing-network-grid,
+  .cost-studio-grid,
+  .memory-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (max-width: 700px) {
+  .command-page
+    > :is(
+      .product-build-workspace,
+      .development-portfolio,
+      .command-workspace
+    ) {
+    width: min(calc(100% - 1.5rem), 78rem);
+    padding-block: 1.6rem;
+  }
+  .product-build-workspace {
+    padding-inline: 0;
+  }
+  .product-build-heading h2,
+  .portfolio-heading h2,
+  .command-section-heading h2 {
+    font-size: clamp(1.65rem, 8vw, 2.2rem);
+  }
+  .continue-building-card {
+    min-height: 0;
+  }
+  .new-product-path {
+    flex-basis: min(82vw, 16rem);
+  }
+  .portfolio-stage-track button {
+    min-height: 6rem;
+  }
+  .portfolio-capsule {
+    width: min(82vw, 16rem);
+    flex-basis: min(82vw, 16rem);
+  }
+  .command-workspace-grid > .command-feature {
+    min-height: 13.5rem;
+    flex-basis: min(88vw, 20rem);
+  }
+  .command-workspace-grid > .command-instrument {
+    min-height: 13.5rem;
+    flex-basis: min(78vw, 16rem);
+  }
+  .command-page {
+    overflow-x: clip;
+  }
+  .new-product-paths,
+  .product-dock,
+  .build-stage-rail > div,
+  .portfolio-line-filter,
+  .portfolio-stage-scroller,
+  .portfolio-capsule-scroller,
+  .command-workspace-grid,
+  .command-tool-rail {
+    overflow-x: auto;
+    overflow-y: hidden;
+    overscroll-behavior-inline: contain;
+    scroll-padding-inline: 0.2rem;
+    scroll-snap-type: x mandatory;
+    scrollbar-width: thin;
+  }
+  .new-product-path,
+  .product-dock > a,
+  .build-stage-rail a,
+  .portfolio-line-filter button,
+  .portfolio-stage-track button,
+  .portfolio-capsule,
+  .command-workspace-grid > *,
+  .command-tool-rail > * {
+    scroll-snap-align: start;
+  }
+  .product-build-workspace :is(a, button),
+  .development-portfolio :is(a, button),
+  .command-workspace :is(a, button) {
+    min-height: 44px;
+  }
+  .portfolio-line-filter button {
+    min-width: 8.75rem;
+  }
+  .portfolio-stage-track {
+    min-width: 720px;
+  }
+  .portfolio-selected-actions small {
+    white-space: normal;
+  }
+  .command-tool-rail > * {
+    flex-basis: 9.5rem;
+  }
+  .readiness-path {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+  .readiness-path li,
+  .readiness-path li:nth-child(n) {
+    min-height: 9rem;
+    border-left: 1px solid rgba(202, 167, 101, 0.19);
+  }
+  .launch-actions {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+  .command-page footer {
+    padding-bottom: calc(6rem + env(safe-area-inset-bottom));
   }
 }

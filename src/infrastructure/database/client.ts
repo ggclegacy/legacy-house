@@ -5,8 +5,9 @@ import { readDatabaseEnvironment, runtimeDataPolicy } from "@/src/config/env";
 
 import * as schema from "./schema";
 import * as commercialSchema from "./commercial-schema";
+import * as productionSchema from "./production-schema";
 
-const databaseSchema = { ...schema, ...commercialSchema };
+const databaseSchema = { ...schema, ...commercialSchema, ...productionSchema };
 
 export function getDatabaseUrl(): string {
   return readDatabaseEnvironment().DATABASE_URL;

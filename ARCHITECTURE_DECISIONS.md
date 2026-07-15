@@ -369,3 +369,11 @@ This is a compact decision log. Decisions are immutable records: supersede them 
 - **Decision:** Render the unchanged root `icon.png` as the permanent identity at the center of the Command hero. Continue to preserve `logo.png` as the existing shell and application emblem outside this specifically scoped hero.
 - **Reason:** The founder explicitly designated the supplied project icon as the permanent Legacy House identity for the opening Command experience while prohibiting regeneration or replacement.
 - **Consequences:** The hero may build lightweight CSS and SVG atmosphere, halo, and precision mechanics behind the sharp source image. It must not edit, blur, recolor, regenerate, or duplicate `icon.png`; header and shell identity remain outside this decision.
+
+## ADR-047 — Batch Plans are immutable planning snapshots without stock effects
+
+- **Status:** Accepted
+- **Date:** 2026-07-15
+- **Decision:** A saved Batch Plan references one exact formula version and snapshots its validated decimal calculation inputs and outputs. Saving a plan has no inventory, lot, reservation, consumption, finished-good, production-completion, or release effect.
+- **Reason:** Operators need a durable worksheet before the later Phase 4 ledger, allocation, actual-usage, genealogy, and quality-release controls exist.
+- **Consequences:** The server recalculates from the authoritative formula before insert. Plans remain planning evidence only; later production execution must reference rather than silently transform them and requires separate controlled records.

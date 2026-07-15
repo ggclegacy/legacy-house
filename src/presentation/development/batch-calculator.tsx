@@ -1,14 +1,17 @@
 "use client";
 
+import Link from "next/link";
 import { useMemo, useState } from "react";
 
 import { labelFor } from "@/src/domain/development/development";
 import type { DevelopmentFormula } from "@/src/domain/development/snapshot";
 import { calculateBatch } from "@/src/domain/formulas/calculation";
+import { asRoute } from "@/src/navigation/as-route";
 
 export function BatchCalculator({
   formula,
   initial,
+  batchModeHref,
 }: {
   formula: DevelopmentFormula;
   initial?: {
@@ -17,6 +20,7 @@ export function BatchCalculator({
     unit: "us_fluid_ounces" | "milliliters" | "grams";
     overage: string;
   };
+  batchModeHref?: string;
 }) {
   const [count, setCount] = useState(
     String(initial?.count ?? formula.defaultBottleCount ?? 20),
@@ -30,6 +34,7 @@ export function BatchCalculator({
   const [overage, setOverage] = useState(
     initial?.overage ?? formula.defaultOveragePercent ?? "5",
   );
+  const [precision, setPrecision] = useState("12");
   const [copied, setCopied] = useState<string | null>(null);
   const result = useMemo(() => {
     try {
@@ -40,6 +45,7 @@ export function BatchCalculator({
           bottleSize: size,
           bottleSizeUnit: unit,
           overagePercent: overage,
+          outputPrecision: Number(precision),
           ingredients: formula.ingredients.map((line) => ({
             id: line.id,
             name: line.ingredientName,
@@ -55,7 +61,7 @@ export function BatchCalculator({
         error: error instanceof Error ? error.message : "Calculation failed.",
       };
     }
-  }, [count, formula, overage, size, unit]);
+  }, [count, formula, overage, precision, size, unit]);
   async function copy(label: string, value: string) {
     await navigator.clipboard.writeText(value);
     setCopied(`${label} copied.`);
@@ -66,7 +72,7 @@ export function BatchCalculator({
         <fieldset>
           <legend>Bottle count</legend>
           <div className="preset-row">
-            {[10, 20, 30, 50, 100].map((preset) => (
+            {[10, 20, 30, 40, 50, 100].map((preset) => (
               <button
                 type="button"
                 key={preset}
@@ -76,6 +82,15 @@ export function BatchCalculator({
                 {preset}
               </button>
             ))}
+            <button
+              type="button"
+              aria-pressed={
+                !["10", "20", "30", "40", "50", "100"].includes(count)
+              }
+              onClick={() => setCount("")}
+            >
+              Custom
+            </button>
           </div>
           <label>
             <span>Custom count</span>
@@ -131,6 +146,18 @@ export function BatchCalculator({
             />
           </label>
         </fieldset>
+        <label>
+          <span>Output precision</span>
+          <select
+            value={precision}
+            onChange={(event) => setPrecision(event.target.value)}
+          >
+            <option value="2">2 decimal places</option>
+            <option value="4">4 decimal places</option>
+            <option value="6">6 decimal places</option>
+            <option value="12">12 decimal places</option>
+          </select>
+        </label>
       </div>
       {result.error ? (
         <div className="error-summary" role="alert">
@@ -155,6 +182,13 @@ export function BatchCalculator({
               <strong>
                 {result.value.totalBatch} {labelFor(result.value.batchUnit)}
               </strong>
+              {result.value.totalFluidOunces &&
+              result.value.totalMilliliters ? (
+                <small>
+                  {result.value.totalFluidOunces} fl oz ·{" "}
+                  {result.value.totalMilliliters} mL
+                </small>
+              ) : null}
             </article>
             <article>
               <span>Formula validity</span>
@@ -225,6 +259,16 @@ export function BatchCalculator({
             >
               Print production worksheet
             </button>
+            {batchModeHref ? (
+              <Link
+                className="button"
+                href={asRoute(
+                  `${batchModeHref}?formula=${formula.versionId}&count=${count}&size=${size}&unit=${unit}&overage=${overage}&precision=${precision}`,
+                )}
+              >
+                Start Batch Mode
+              </Link>
+            ) : null}
           </div>
           {copied ? (
             <p role="status" className="inline-feedback">

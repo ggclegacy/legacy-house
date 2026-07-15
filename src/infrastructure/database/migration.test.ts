@@ -36,6 +36,7 @@ describe("foundation migration", () => {
       "app_user_roles",
       "app_users",
       "audit_events",
+      "batch_plans",
       "cost_assumptions",
       "cost_scenarios",
       "cost_snapshots",

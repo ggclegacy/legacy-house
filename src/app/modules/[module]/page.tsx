@@ -13,6 +13,7 @@ import { QuickCreateButton } from "@/src/presentation/command/quick-create-butto
 import { loadDevelopmentSnapshot } from "@/src/services/development/load-development";
 import { CommercialHub } from "@/src/presentation/commercial/commercial-hub";
 import { loadCommercialSnapshot } from "@/src/services/commercial/load-commercial";
+import { ProductionHome } from "@/src/presentation/production/production-home";
 
 export function generateStaticParams() {
   return navigationDestinations
@@ -139,6 +140,11 @@ export default async function ModuleDestinationPage({
         />
       </div>
     );
+  }
+
+  if (destination.id === "production") {
+    const snapshot = await loadDevelopmentSnapshot();
+    return <ProductionHome development={snapshot} />;
   }
 
   return (

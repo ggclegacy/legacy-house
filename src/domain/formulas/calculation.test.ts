@@ -56,6 +56,7 @@ describe("formula calculation", () => {
     [10, "21"],
     [20, "42"],
     [30, "63"],
+    [40, "84"],
     [50, "105"],
   ])("calculates the canonical Reserve %i-bottle batch", (count, total) => {
     expect(reserveBatch(count).totalFluidOunces).toBe(total);
@@ -65,6 +66,8 @@ describe("formula calculation", () => {
     const result = reserveBatch(20);
     expect(result.requiredFill).toBe("40");
     expect(result.overage).toBe("2");
+    expect(result.totalBatch).toBe("42");
+    expect(result.totalFluidOunces).toBe("42");
     expect(result.totalMilliliters).toBe("1242.088241625");
     expect(result.ingredients.map((line) => line.fluidOunces)).toEqual([
       "31.92",
@@ -96,6 +99,33 @@ describe("formula calculation", () => {
     expect(result.requiredFill).toBe("210");
     expect(result.overage).toBe("7.35");
     expect(result.totalBatch).toBe("217.35");
+  });
+
+  it("applies selected output precision without floating-point arithmetic", () => {
+    expect(
+      calculateBatch({
+        basis: "volume_percentage",
+        bottleCount: 20,
+        bottleSize: "2",
+        bottleSizeUnit: "us_fluid_ounces",
+        overagePercent: "5",
+        outputPrecision: 4,
+        ingredients: reserveIngredients,
+      }).totalMilliliters,
+    ).toBe("1242.0882");
+  });
+
+  it("blocks calculation unless the formula totals exactly 100%", () => {
+    expect(() =>
+      calculateBatch({
+        basis: "volume_percentage",
+        bottleCount: 20,
+        bottleSize: "2",
+        bottleSizeUnit: "us_fluid_ounces",
+        overagePercent: "5",
+        ingredients: [{ id: "a", name: "A", percentage: "99.999999" }],
+      }),
+    ).toThrow("must equal exactly 100%");
   });
 
   it("calculates weight formulas in grams without volume assumptions", () => {
